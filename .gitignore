@@ -43,4 +43,3 @@ nbdist/
 !*/build/*.xml
 
 dev-tools
-logs
