@@ -42,5 +42,5 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
-#dev-tools
 dev-tools
+logs
