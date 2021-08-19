@@ -1,9 +1,12 @@
 package com.ruoyi.product.domain;
 
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.valid.AddGroup;
+import com.ruoyi.common.core.valid.EditGroup;
+import com.ruoyi.common.core.valid.ListValue;
+import com.ruoyi.common.core.web.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.common.core.annotation.Excel;
-import com.ruoyi.common.core.web.domain.BaseEntity;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
@@ -19,15 +22,18 @@ public class PmsBrand extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 品牌id */
+    @NotNull(message = "修改必须指定id", groups = EditGroup.class)
+    @Null(message = "新增不能指定id", groups = AddGroup.class)
     private Long brandId;
 
     /** 品牌名 */
-    @NotBlank(message = "品牌名必须提交")
+    @NotBlank(message = "品牌名必须提交", groups = {AddGroup.class})
     @Excel(name = "品牌名")
     private String name;
 
     /** 品牌logo地址 */
-    @URL(message = "logo必须是一个合法的url地址")
+    @NotBlank(groups = AddGroup.class)
+    @URL(message = "logo必须是一个合法的url地址", groups = {AddGroup.class, EditGroup.class})
     @Excel(name = "品牌logo地址")
     private String logo;
 
@@ -36,18 +42,20 @@ public class PmsBrand extends BaseEntity
     private String descript;
 
     /** 显示状态[0-不显示；1-显示] */
+    @NotNull(groups = AddGroup.class)
+    @ListValue(value = {0, 1}, groups = {AddGroup.class, EditGroup.class})
     @Excel(name = "显示状态[0-不显示；1-显示]")
     private Integer showStatus;
 
     /** 检索首字母 */
-    @NotEmpty
-    @Pattern(regexp = "/^[a-zA-z]$/", message = "检索首字母必须是一个字母")
+    @NotEmpty(groups = AddGroup.class)
+    @Pattern(regexp = "^[a-zA-z]$", message = "检索首字母必须是一个字母", groups = {AddGroup.class, EditGroup.class})
     @Excel(name = "检索首字母")
     private String firstLetter;
 
     /** 排序 */
-    @NotNull
-    @Min(value = 0, message = "排序必须大于等于0")
+    @NotNull(groups = AddGroup.class)
+    @Min(value = 0, message = "排序必须大于等于0", groups = {AddGroup.class, EditGroup.class})
     @Excel(name = "排序")
     private Long sort;
 

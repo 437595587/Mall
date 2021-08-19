@@ -1,6 +1,8 @@
 package com.ruoyi.product.controller;
 
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.valid.AddGroup;
+import com.ruoyi.common.core.valid.EditGroup;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.core.web.page.TableDataInfo;
@@ -11,10 +13,10 @@ import com.ruoyi.product.domain.PmsBrand;
 import com.ruoyi.product.service.IPmsBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +76,7 @@ public class PmsBrandController extends BaseController
     @PreAuthorize(hasPermi = "product:brand:add")
     @Log(title = "品牌", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Valid @RequestBody PmsBrand pmsBrand, BindingResult result)
+    public AjaxResult add(@Validated(AddGroup.class) @RequestBody PmsBrand pmsBrand, BindingResult result)
     {
         //1、获取校验的错误结果
         if (result.hasErrors()) {
@@ -97,7 +99,7 @@ public class PmsBrandController extends BaseController
     @PreAuthorize(hasPermi = "product:brand:edit")
     @Log(title = "品牌", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody PmsBrand pmsBrand)
+    public AjaxResult edit(@Validated(EditGroup.class) @RequestBody PmsBrand pmsBrand)
     {
         return toAjax(pmsBrandService.updatePmsBrand(pmsBrand));
     }
