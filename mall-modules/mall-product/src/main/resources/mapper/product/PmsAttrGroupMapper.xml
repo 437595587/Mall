@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsAttrGroupMapper">
+    
+    <resultMap type="PmsAttrGroup" id="PmsAttrGroupResult">
+        <result property="attrGroupId"    column="attr_group_id"    />
+        <result property="attrGroupName"    column="attr_group_name"    />
+        <result property="sort"    column="sort"    />
+        <result property="descript"    column="descript"    />
+        <result property="icon"    column="icon"    />
+        <result property="catelogId"    column="catelog_id"    />
+    </resultMap>
+
+    <sql id="selectPmsAttrGroupVo">
+        select attr_group_id, attr_group_name, sort, descript, icon, catelog_id from pms_attr_group
+    </sql>
+
+    <select id="selectPmsAttrGroupList" parameterType="PmsAttrGroup" resultMap="PmsAttrGroupResult">
+        <include refid="selectPmsAttrGroupVo"/>
+        <where>  
+            <if test="attrGroupName != null  and attrGroupName != ''"> and attr_group_name like concat('%', #{attrGroupName}, '%')</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="catelogId != null "> and catelog_id = #{catelogId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsAttrGroupByAttrGroupId" parameterType="Long" resultMap="PmsAttrGroupResult">
+        <include refid="selectPmsAttrGroupVo"/>
+        where attr_group_id = #{attrGroupId}
+    </select>
+        
+    <insert id="insertPmsAttrGroup" parameterType="PmsAttrGroup" useGeneratedKeys="true" keyProperty="attrGroupId">
+        insert into pms_attr_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attrGroupName != null">attr_group_name,</if>
+            <if test="sort != null">sort,</if>
+            <if test="descript != null">descript,</if>
+            <if test="icon != null">icon,</if>
+            <if test="catelogId != null">catelog_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attrGroupName != null">#{attrGroupName},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="descript != null">#{descript},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="catelogId != null">#{catelogId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsAttrGroup" parameterType="PmsAttrGroup">
+        update pms_attr_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attrGroupName != null">attr_group_name = #{attrGroupName},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="descript != null">descript = #{descript},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="catelogId != null">catelog_id = #{catelogId},</if>
+        </trim>
+        where attr_group_id = #{attrGroupId}
+    </update>
+
+    <delete id="deletePmsAttrGroupByAttrGroupId" parameterType="Long">
+        delete from pms_attr_group where attr_group_id = #{attrGroupId}
+    </delete>
+
+    <delete id="deletePmsAttrGroupByAttrGroupIds" parameterType="String">
+        delete from pms_attr_group where attr_group_id in 
+        <foreach item="attrGroupId" collection="array" open="(" separator="," close=")">
+            #{attrGroupId}
+        </foreach>
+    </delete>
+</mapper>

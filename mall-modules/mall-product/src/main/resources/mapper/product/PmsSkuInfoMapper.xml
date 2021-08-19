@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSkuInfoMapper">
+    
+    <resultMap type="PmsSkuInfo" id="PmsSkuInfoResult">
+        <result property="skuId"    column="sku_id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="skuName"    column="sku_name"    />
+        <result property="skuDesc"    column="sku_desc"    />
+        <result property="catalogId"    column="catalog_id"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="skuDefaultImg"    column="sku_default_img"    />
+        <result property="skuTitle"    column="sku_title"    />
+        <result property="skuSubtitle"    column="sku_subtitle"    />
+        <result property="price"    column="price"    />
+        <result property="saleCount"    column="sale_count"    />
+    </resultMap>
+
+    <sql id="selectPmsSkuInfoVo">
+        select sku_id, spu_id, sku_name, sku_desc, catalog_id, brand_id, sku_default_img, sku_title, sku_subtitle, price, sale_count from pms_sku_info
+    </sql>
+
+    <select id="selectPmsSkuInfoList" parameterType="PmsSkuInfo" resultMap="PmsSkuInfoResult">
+        <include refid="selectPmsSkuInfoVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuDesc != null  and skuDesc != ''"> and sku_desc = #{skuDesc}</if>
+            <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="skuDefaultImg != null  and skuDefaultImg != ''"> and sku_default_img = #{skuDefaultImg}</if>
+            <if test="skuTitle != null  and skuTitle != ''"> and sku_title = #{skuTitle}</if>
+            <if test="skuSubtitle != null  and skuSubtitle != ''"> and sku_subtitle = #{skuSubtitle}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="saleCount != null "> and sale_count = #{saleCount}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSkuInfoBySkuId" parameterType="Long" resultMap="PmsSkuInfoResult">
+        <include refid="selectPmsSkuInfoVo"/>
+        where sku_id = #{skuId}
+    </select>
+        
+    <insert id="insertPmsSkuInfo" parameterType="PmsSkuInfo" useGeneratedKeys="true" keyProperty="skuId">
+        insert into pms_sku_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuDesc != null">sku_desc,</if>
+            <if test="catalogId != null">catalog_id,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="skuDefaultImg != null">sku_default_img,</if>
+            <if test="skuTitle != null">sku_title,</if>
+            <if test="skuSubtitle != null">sku_subtitle,</if>
+            <if test="price != null">price,</if>
+            <if test="saleCount != null">sale_count,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuDesc != null">#{skuDesc},</if>
+            <if test="catalogId != null">#{catalogId},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="skuDefaultImg != null">#{skuDefaultImg},</if>
+            <if test="skuTitle != null">#{skuTitle},</if>
+            <if test="skuSubtitle != null">#{skuSubtitle},</if>
+            <if test="price != null">#{price},</if>
+            <if test="saleCount != null">#{saleCount},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSkuInfo" parameterType="PmsSkuInfo">
+        update pms_sku_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuDesc != null">sku_desc = #{skuDesc},</if>
+            <if test="catalogId != null">catalog_id = #{catalogId},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="skuDefaultImg != null">sku_default_img = #{skuDefaultImg},</if>
+            <if test="skuTitle != null">sku_title = #{skuTitle},</if>
+            <if test="skuSubtitle != null">sku_subtitle = #{skuSubtitle},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="saleCount != null">sale_count = #{saleCount},</if>
+        </trim>
+        where sku_id = #{skuId}
+    </update>
+
+    <delete id="deletePmsSkuInfoBySkuId" parameterType="Long">
+        delete from pms_sku_info where sku_id = #{skuId}
+    </delete>
+
+    <delete id="deletePmsSkuInfoBySkuIds" parameterType="String">
+        delete from pms_sku_info where sku_id in 
+        <foreach item="skuId" collection="array" open="(" separator="," close=")">
+            #{skuId}
+        </foreach>
+    </delete>
+</mapper>

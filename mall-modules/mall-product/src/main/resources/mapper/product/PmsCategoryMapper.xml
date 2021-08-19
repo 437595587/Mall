@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsCategoryMapper">
+
+    <resultMap type="PmsCategory" id="PmsCategoryResult">
+        <result property="catId"    column="cat_id"    />
+        <result property="name"    column="name"    />
+        <result property="parentCid"    column="parent_cid"    />
+        <result property="catLevel"    column="cat_level"    />
+        <result property="showStatus"    column="show_status"    />
+        <result property="sort"    column="sort"    />
+        <result property="icon"    column="icon"    />
+        <result property="productUnit"    column="product_unit"    />
+        <result property="productCount"    column="product_count"    />
+    </resultMap>
+
+    <sql id="selectPmsCategoryVo">
+        select cat_id, name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count from pms_category
+    </sql>
+
+    <select id="selectPmsCategoryList" parameterType="PmsCategory" resultMap="PmsCategoryResult">
+        <include refid="selectPmsCategoryVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="parentCid != null "> and parent_cid = #{parentCid}</if>
+            <if test="catLevel != null "> and cat_level = #{catLevel}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="productUnit != null  and productUnit != ''"> and product_unit = #{productUnit}</if>
+            <if test="productCount != null "> and product_count = #{productCount}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCategoryByCatId" parameterType="Long" resultMap="PmsCategoryResult">
+        <include refid="selectPmsCategoryVo"/>
+        where cat_id = #{catId}
+    </select>
+
+    <insert id="insertPmsCategory" parameterType="PmsCategory" useGeneratedKeys="true" keyProperty="catId">
+        insert into pms_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="parentCid != null">parent_cid,</if>
+            <if test="catLevel != null">cat_level,</if>
+            <if test="showStatus != null">show_status,</if>
+            <if test="sort != null">sort,</if>
+            <if test="icon != null">icon,</if>
+            <if test="productUnit != null">product_unit,</if>
+            <if test="productCount != null">product_count,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="parentCid != null">#{parentCid},</if>
+            <if test="catLevel != null">#{catLevel},</if>
+            <if test="showStatus != null">#{showStatus},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="productUnit != null">#{productUnit},</if>
+            <if test="productCount != null">#{productCount},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsCategory" parameterType="PmsCategory">
+        update pms_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="parentCid != null">parent_cid = #{parentCid},</if>
+            <if test="catLevel != null">cat_level = #{catLevel},</if>
+            <if test="showStatus != null">show_status = #{showStatus},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="productUnit != null">product_unit = #{productUnit},</if>
+            <if test="productCount != null">product_count = #{productCount},</if>
+        </trim>
+        where cat_id = #{catId}
+    </update>
+
+    <delete id="deletePmsCategoryByCatId" parameterType="Long">
+        delete from pms_category where cat_id = #{catId}
+    </delete>
+
+    <delete id="deletePmsCategoryByCatIds" parameterType="String">
+        delete from pms_category where cat_id in
+        <foreach item="catId" collection="array" open="(" separator="," close=")">
+            #{catId}
+        </foreach>
+    </delete>
+</mapper>

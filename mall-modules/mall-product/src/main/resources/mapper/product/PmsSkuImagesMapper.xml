@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSkuImagesMapper">
+    
+    <resultMap type="PmsSkuImages" id="PmsSkuImagesResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="imgSort"    column="img_sort"    />
+        <result property="defaultImg"    column="default_img"    />
+    </resultMap>
+
+    <sql id="selectPmsSkuImagesVo">
+        select id, sku_id, img_url, img_sort, default_img from pms_sku_images
+    </sql>
+
+    <select id="selectPmsSkuImagesList" parameterType="PmsSkuImages" resultMap="PmsSkuImagesResult">
+        <include refid="selectPmsSkuImagesVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="imgSort != null "> and img_sort = #{imgSort}</if>
+            <if test="defaultImg != null "> and default_img = #{defaultImg}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSkuImagesById" parameterType="Long" resultMap="PmsSkuImagesResult">
+        <include refid="selectPmsSkuImagesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsSkuImages" parameterType="PmsSkuImages" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_images
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="imgSort != null">img_sort,</if>
+            <if test="defaultImg != null">default_img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="imgSort != null">#{imgSort},</if>
+            <if test="defaultImg != null">#{defaultImg},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSkuImages" parameterType="PmsSkuImages">
+        update pms_sku_images
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="imgUrl != null">img_url = #{imgUrl},</if>
+            <if test="imgSort != null">img_sort = #{imgSort},</if>
+            <if test="defaultImg != null">default_img = #{defaultImg},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSkuImagesById" parameterType="Long">
+        delete from pms_sku_images where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSkuImagesByIds" parameterType="String">
+        delete from pms_sku_images where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

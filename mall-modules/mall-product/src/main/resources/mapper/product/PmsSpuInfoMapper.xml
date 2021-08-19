@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSpuInfoMapper">
+    
+    <resultMap type="PmsSpuInfo" id="PmsSpuInfoResult">
+        <result property="id"    column="id"    />
+        <result property="spuName"    column="spu_name"    />
+        <result property="spuDescription"    column="spu_description"    />
+        <result property="catalogId"    column="catalog_id"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="weight"    column="weight"    />
+        <result property="publishStatus"    column="publish_status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPmsSpuInfoVo">
+        select id, spu_name, spu_description, catalog_id, brand_id, weight, publish_status, create_time, update_time from pms_spu_info
+    </sql>
+
+    <select id="selectPmsSpuInfoList" parameterType="PmsSpuInfo" resultMap="PmsSpuInfoResult">
+        <include refid="selectPmsSpuInfoVo"/>
+        <where>  
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="spuDescription != null  and spuDescription != ''"> and spu_description = #{spuDescription}</if>
+            <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="publishStatus != null "> and publish_status = #{publishStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSpuInfoById" parameterType="Long" resultMap="PmsSpuInfoResult">
+        <include refid="selectPmsSpuInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsSpuInfo" parameterType="PmsSpuInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuName != null">spu_name,</if>
+            <if test="spuDescription != null">spu_description,</if>
+            <if test="catalogId != null">catalog_id,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="weight != null">weight,</if>
+            <if test="publishStatus != null">publish_status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuName != null">#{spuName},</if>
+            <if test="spuDescription != null">#{spuDescription},</if>
+            <if test="catalogId != null">#{catalogId},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="publishStatus != null">#{publishStatus},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSpuInfo" parameterType="PmsSpuInfo">
+        update pms_spu_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuName != null">spu_name = #{spuName},</if>
+            <if test="spuDescription != null">spu_description = #{spuDescription},</if>
+            <if test="catalogId != null">catalog_id = #{catalogId},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="publishStatus != null">publish_status = #{publishStatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSpuInfoById" parameterType="Long">
+        delete from pms_spu_info where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSpuInfoByIds" parameterType="String">
+        delete from pms_spu_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

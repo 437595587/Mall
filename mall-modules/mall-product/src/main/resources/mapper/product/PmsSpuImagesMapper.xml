@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSpuImagesMapper">
+    
+    <resultMap type="PmsSpuImages" id="PmsSpuImagesResult">
+        <result property="id"    column="id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="imgName"    column="img_name"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="imgSort"    column="img_sort"    />
+        <result property="defaultImg"    column="default_img"    />
+    </resultMap>
+
+    <sql id="selectPmsSpuImagesVo">
+        select id, spu_id, img_name, img_url, img_sort, default_img from pms_spu_images
+    </sql>
+
+    <select id="selectPmsSpuImagesList" parameterType="PmsSpuImages" resultMap="PmsSpuImagesResult">
+        <include refid="selectPmsSpuImagesVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="imgName != null  and imgName != ''"> and img_name like concat('%', #{imgName}, '%')</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="imgSort != null "> and img_sort = #{imgSort}</if>
+            <if test="defaultImg != null "> and default_img = #{defaultImg}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSpuImagesById" parameterType="Long" resultMap="PmsSpuImagesResult">
+        <include refid="selectPmsSpuImagesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsSpuImages" parameterType="PmsSpuImages" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_images
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="imgName != null">img_name,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="imgSort != null">img_sort,</if>
+            <if test="defaultImg != null">default_img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="imgName != null">#{imgName},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="imgSort != null">#{imgSort},</if>
+            <if test="defaultImg != null">#{defaultImg},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSpuImages" parameterType="PmsSpuImages">
+        update pms_spu_images
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="imgName != null">img_name = #{imgName},</if>
+            <if test="imgUrl != null">img_url = #{imgUrl},</if>
+            <if test="imgSort != null">img_sort = #{imgSort},</if>
+            <if test="defaultImg != null">default_img = #{defaultImg},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSpuImagesById" parameterType="Long">
+        delete from pms_spu_images where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSpuImagesByIds" parameterType="String">
+        delete from pms_spu_images where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

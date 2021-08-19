@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSpuCommentMapper">
+    
+    <resultMap type="PmsSpuComment" id="PmsSpuCommentResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="spuName"    column="spu_name"    />
+        <result property="memberNickName"    column="member_nick_name"    />
+        <result property="star"    column="star"    />
+        <result property="memberIp"    column="member_ip"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="showStatus"    column="show_status"    />
+        <result property="spuAttributes"    column="spu_attributes"    />
+        <result property="likesCount"    column="likes_count"    />
+        <result property="replyCount"    column="reply_count"    />
+        <result property="resources"    column="resources"    />
+        <result property="content"    column="content"    />
+        <result property="memberIcon"    column="member_icon"    />
+        <result property="commentType"    column="comment_type"    />
+    </resultMap>
+
+    <sql id="selectPmsSpuCommentVo">
+        select id, sku_id, spu_id, spu_name, member_nick_name, star, member_ip, create_time, show_status, spu_attributes, likes_count, reply_count, resources, content, member_icon, comment_type from pms_spu_comment
+    </sql>
+
+    <select id="selectPmsSpuCommentList" parameterType="PmsSpuComment" resultMap="PmsSpuCommentResult">
+        <include refid="selectPmsSpuCommentVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="memberNickName != null  and memberNickName != ''"> and member_nick_name like concat('%', #{memberNickName}, '%')</if>
+            <if test="star != null "> and star = #{star}</if>
+            <if test="memberIp != null  and memberIp != ''"> and member_ip = #{memberIp}</if>
+            <if test="showStatus != null "> and show_status = #{showStatus}</if>
+            <if test="spuAttributes != null  and spuAttributes != ''"> and spu_attributes = #{spuAttributes}</if>
+            <if test="likesCount != null "> and likes_count = #{likesCount}</if>
+            <if test="replyCount != null "> and reply_count = #{replyCount}</if>
+            <if test="resources != null  and resources != ''"> and resources = #{resources}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="memberIcon != null  and memberIcon != ''"> and member_icon = #{memberIcon}</if>
+            <if test="commentType != null "> and comment_type = #{commentType}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSpuCommentById" parameterType="Long" resultMap="PmsSpuCommentResult">
+        <include refid="selectPmsSpuCommentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsSpuComment" parameterType="PmsSpuComment" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="spuName != null">spu_name,</if>
+            <if test="memberNickName != null">member_nick_name,</if>
+            <if test="star != null">star,</if>
+            <if test="memberIp != null">member_ip,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="showStatus != null">show_status,</if>
+            <if test="spuAttributes != null">spu_attributes,</if>
+            <if test="likesCount != null">likes_count,</if>
+            <if test="replyCount != null">reply_count,</if>
+            <if test="resources != null">resources,</if>
+            <if test="content != null">content,</if>
+            <if test="memberIcon != null">member_icon,</if>
+            <if test="commentType != null">comment_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="spuName != null">#{spuName},</if>
+            <if test="memberNickName != null">#{memberNickName},</if>
+            <if test="star != null">#{star},</if>
+            <if test="memberIp != null">#{memberIp},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="showStatus != null">#{showStatus},</if>
+            <if test="spuAttributes != null">#{spuAttributes},</if>
+            <if test="likesCount != null">#{likesCount},</if>
+            <if test="replyCount != null">#{replyCount},</if>
+            <if test="resources != null">#{resources},</if>
+            <if test="content != null">#{content},</if>
+            <if test="memberIcon != null">#{memberIcon},</if>
+            <if test="commentType != null">#{commentType},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSpuComment" parameterType="PmsSpuComment">
+        update pms_spu_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="spuName != null">spu_name = #{spuName},</if>
+            <if test="memberNickName != null">member_nick_name = #{memberNickName},</if>
+            <if test="star != null">star = #{star},</if>
+            <if test="memberIp != null">member_ip = #{memberIp},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="showStatus != null">show_status = #{showStatus},</if>
+            <if test="spuAttributes != null">spu_attributes = #{spuAttributes},</if>
+            <if test="likesCount != null">likes_count = #{likesCount},</if>
+            <if test="replyCount != null">reply_count = #{replyCount},</if>
+            <if test="resources != null">resources = #{resources},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="memberIcon != null">member_icon = #{memberIcon},</if>
+            <if test="commentType != null">comment_type = #{commentType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSpuCommentById" parameterType="Long">
+        delete from pms_spu_comment where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSpuCommentByIds" parameterType="String">
+        delete from pms_spu_comment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

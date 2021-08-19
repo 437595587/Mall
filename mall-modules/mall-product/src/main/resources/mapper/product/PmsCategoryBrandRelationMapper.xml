@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsCategoryBrandRelationMapper">
+    
+    <resultMap type="PmsCategoryBrandRelation" id="PmsCategoryBrandRelationResult">
+        <result property="id"    column="id"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="catelogId"    column="catelog_id"    />
+        <result property="brandName"    column="brand_name"    />
+        <result property="catelogName"    column="catelog_name"    />
+    </resultMap>
+
+    <sql id="selectPmsCategoryBrandRelationVo">
+        select id, brand_id, catelog_id, brand_name, catelog_name from pms_category_brand_relation
+    </sql>
+
+    <select id="selectPmsCategoryBrandRelationList" parameterType="PmsCategoryBrandRelation" resultMap="PmsCategoryBrandRelationResult">
+        <include refid="selectPmsCategoryBrandRelationVo"/>
+        <where>  
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="catelogId != null "> and catelog_id = #{catelogId}</if>
+            <if test="brandName != null  and brandName != ''"> and brand_name like concat('%', #{brandName}, '%')</if>
+            <if test="catelogName != null  and catelogName != ''"> and catelog_name like concat('%', #{catelogName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsCategoryBrandRelationById" parameterType="Long" resultMap="PmsCategoryBrandRelationResult">
+        <include refid="selectPmsCategoryBrandRelationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsCategoryBrandRelation" parameterType="PmsCategoryBrandRelation" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_category_brand_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">brand_id,</if>
+            <if test="catelogId != null">catelog_id,</if>
+            <if test="brandName != null">brand_name,</if>
+            <if test="catelogName != null">catelog_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">#{brandId},</if>
+            <if test="catelogId != null">#{catelogId},</if>
+            <if test="brandName != null">#{brandName},</if>
+            <if test="catelogName != null">#{catelogName},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsCategoryBrandRelation" parameterType="PmsCategoryBrandRelation">
+        update pms_category_brand_relation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="catelogId != null">catelog_id = #{catelogId},</if>
+            <if test="brandName != null">brand_name = #{brandName},</if>
+            <if test="catelogName != null">catelog_name = #{catelogName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCategoryBrandRelationById" parameterType="Long">
+        delete from pms_category_brand_relation where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCategoryBrandRelationByIds" parameterType="String">
+        delete from pms_category_brand_relation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

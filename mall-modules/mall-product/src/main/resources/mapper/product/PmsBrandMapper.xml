@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsBrandMapper">
+    
+    <resultMap type="PmsBrand" id="PmsBrandResult">
+        <result property="brandId"    column="brand_id"    />
+        <result property="name"    column="name"    />
+        <result property="logo"    column="logo"    />
+        <result property="descript"    column="descript"    />
+        <result property="showStatus"    column="show_status"    />
+        <result property="firstLetter"    column="first_letter"    />
+        <result property="sort"    column="sort"    />
+    </resultMap>
+
+    <sql id="selectPmsBrandVo">
+        select brand_id, name, logo, descript, show_status, first_letter, sort from pms_brand
+    </sql>
+
+    <select id="selectPmsBrandList" parameterType="PmsBrand" resultMap="PmsBrandResult">
+        <include refid="selectPmsBrandVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
+            <if test="showStatus != null "> and show_status = #{showStatus}</if>
+            <if test="firstLetter != null  and firstLetter != ''"> and first_letter = #{firstLetter}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsBrandByBrandId" parameterType="Long" resultMap="PmsBrandResult">
+        <include refid="selectPmsBrandVo"/>
+        where brand_id = #{brandId}
+    </select>
+        
+    <insert id="insertPmsBrand" parameterType="PmsBrand" useGeneratedKeys="true" keyProperty="brandId">
+        insert into pms_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="logo != null">logo,</if>
+            <if test="descript != null">descript,</if>
+            <if test="showStatus != null">show_status,</if>
+            <if test="firstLetter != null">first_letter,</if>
+            <if test="sort != null">sort,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="descript != null">#{descript},</if>
+            <if test="showStatus != null">#{showStatus},</if>
+            <if test="firstLetter != null">#{firstLetter},</if>
+            <if test="sort != null">#{sort},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsBrand" parameterType="PmsBrand">
+        update pms_brand
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="descript != null">descript = #{descript},</if>
+            <if test="showStatus != null">show_status = #{showStatus},</if>
+            <if test="firstLetter != null">first_letter = #{firstLetter},</if>
+            <if test="sort != null">sort = #{sort},</if>
+        </trim>
+        where brand_id = #{brandId}
+    </update>
+
+    <delete id="deletePmsBrandByBrandId" parameterType="Long">
+        delete from pms_brand where brand_id = #{brandId}
+    </delete>
+
+    <delete id="deletePmsBrandByBrandIds" parameterType="String">
+        delete from pms_brand where brand_id in 
+        <foreach item="brandId" collection="array" open="(" separator="," close=")">
+            #{brandId}
+        </foreach>
+    </delete>
+</mapper>

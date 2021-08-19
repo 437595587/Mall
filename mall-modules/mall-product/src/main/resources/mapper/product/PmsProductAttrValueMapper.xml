@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsProductAttrValueMapper">
+    
+    <resultMap type="PmsProductAttrValue" id="PmsProductAttrValueResult">
+        <result property="id"    column="id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="attrId"    column="attr_id"    />
+        <result property="attrName"    column="attr_name"    />
+        <result property="attrValue"    column="attr_value"    />
+        <result property="attrSort"    column="attr_sort"    />
+        <result property="quickShow"    column="quick_show"    />
+    </resultMap>
+
+    <sql id="selectPmsProductAttrValueVo">
+        select id, spu_id, attr_id, attr_name, attr_value, attr_sort, quick_show from pms_product_attr_value
+    </sql>
+
+    <select id="selectPmsProductAttrValueList" parameterType="PmsProductAttrValue" resultMap="PmsProductAttrValueResult">
+        <include refid="selectPmsProductAttrValueVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="attrId != null "> and attr_id = #{attrId}</if>
+            <if test="attrName != null  and attrName != ''"> and attr_name like concat('%', #{attrName}, '%')</if>
+            <if test="attrValue != null  and attrValue != ''"> and attr_value = #{attrValue}</if>
+            <if test="attrSort != null "> and attr_sort = #{attrSort}</if>
+            <if test="quickShow != null "> and quick_show = #{quickShow}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsProductAttrValueById" parameterType="Long" resultMap="PmsProductAttrValueResult">
+        <include refid="selectPmsProductAttrValueVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsProductAttrValue" parameterType="PmsProductAttrValue" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_attr_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="attrId != null">attr_id,</if>
+            <if test="attrName != null">attr_name,</if>
+            <if test="attrValue != null">attr_value,</if>
+            <if test="attrSort != null">attr_sort,</if>
+            <if test="quickShow != null">quick_show,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="attrId != null">#{attrId},</if>
+            <if test="attrName != null">#{attrName},</if>
+            <if test="attrValue != null">#{attrValue},</if>
+            <if test="attrSort != null">#{attrSort},</if>
+            <if test="quickShow != null">#{quickShow},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsProductAttrValue" parameterType="PmsProductAttrValue">
+        update pms_product_attr_value
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="attrId != null">attr_id = #{attrId},</if>
+            <if test="attrName != null">attr_name = #{attrName},</if>
+            <if test="attrValue != null">attr_value = #{attrValue},</if>
+            <if test="attrSort != null">attr_sort = #{attrSort},</if>
+            <if test="quickShow != null">quick_show = #{quickShow},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsProductAttrValueById" parameterType="Long">
+        delete from pms_product_attr_value where id = #{id}
+    </delete>
+
+    <delete id="deletePmsProductAttrValueByIds" parameterType="String">
+        delete from pms_product_attr_value where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

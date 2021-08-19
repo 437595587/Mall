@@ -1,4 +1,9 @@
-DROP DATABASE IF EXISTS `ry-seata`;
+DROP DATABASE IF EXISTS `mall-seata`;
+
+CREATE DATABASE  `mall-seata` DEFAULT CHARACTER SET utf8mb4;
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 USE `mall-seata`;
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsCommentReplayMapper">
+    
+    <resultMap type="PmsCommentReplay" id="PmsCommentReplayResult">
+        <result property="id"    column="id"    />
+        <result property="commentId"    column="comment_id"    />
+        <result property="replyId"    column="reply_id"    />
+    </resultMap>
+
+    <sql id="selectPmsCommentReplayVo">
+        select id, comment_id, reply_id from pms_comment_replay
+    </sql>
+
+    <select id="selectPmsCommentReplayList" parameterType="PmsCommentReplay" resultMap="PmsCommentReplayResult">
+        <include refid="selectPmsCommentReplayVo"/>
+        <where>  
+            <if test="commentId != null "> and comment_id = #{commentId}</if>
+            <if test="replyId != null "> and reply_id = #{replyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsCommentReplayById" parameterType="Long" resultMap="PmsCommentReplayResult">
+        <include refid="selectPmsCommentReplayVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPmsCommentReplay" parameterType="PmsCommentReplay" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_comment_replay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">comment_id,</if>
+            <if test="replyId != null">reply_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">#{commentId},</if>
+            <if test="replyId != null">#{replyId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsCommentReplay" parameterType="PmsCommentReplay">
+        update pms_comment_replay
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commentId != null">comment_id = #{commentId},</if>
+            <if test="replyId != null">reply_id = #{replyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCommentReplayById" parameterType="Long">
+        delete from pms_comment_replay where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCommentReplayByIds" parameterType="String">
+        delete from pms_comment_replay where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

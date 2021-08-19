@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsSpuInfoDescMapper">
+    
+    <resultMap type="PmsSpuInfoDesc" id="PmsSpuInfoDescResult">
+        <result property="spuId"    column="spu_id"    />
+        <result property="decript"    column="decript"    />
+    </resultMap>
+
+    <sql id="selectPmsSpuInfoDescVo">
+        select spu_id, decript from pms_spu_info_desc
+    </sql>
+
+    <select id="selectPmsSpuInfoDescList" parameterType="PmsSpuInfoDesc" resultMap="PmsSpuInfoDescResult">
+        <include refid="selectPmsSpuInfoDescVo"/>
+        <where>  
+            <if test="decript != null  and decript != ''"> and decript = #{decript}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsSpuInfoDescBySpuId" parameterType="Long" resultMap="PmsSpuInfoDescResult">
+        <include refid="selectPmsSpuInfoDescVo"/>
+        where spu_id = #{spuId}
+    </select>
+        
+    <insert id="insertPmsSpuInfoDesc" parameterType="PmsSpuInfoDesc">
+        insert into pms_spu_info_desc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="decript != null">decript,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="decript != null">#{decript},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsSpuInfoDesc" parameterType="PmsSpuInfoDesc">
+        update pms_spu_info_desc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="decript != null">decript = #{decript},</if>
+        </trim>
+        where spu_id = #{spuId}
+    </update>
+
+    <delete id="deletePmsSpuInfoDescBySpuId" parameterType="Long">
+        delete from pms_spu_info_desc where spu_id = #{spuId}
+    </delete>
+
+    <delete id="deletePmsSpuInfoDescBySpuIds" parameterType="String">
+        delete from pms_spu_info_desc where spu_id in 
+        <foreach item="spuId" collection="array" open="(" separator="," close=")">
+            #{spuId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.product.mapper.PmsAttrMapper">
+    
+    <resultMap type="PmsAttr" id="PmsAttrResult">
+        <result property="attrId"    column="attr_id"    />
+        <result property="attrName"    column="attr_name"    />
+        <result property="searchType"    column="search_type"    />
+        <result property="valueType"    column="value_type"    />
+        <result property="icon"    column="icon"    />
+        <result property="valueSelect"    column="value_select"    />
+        <result property="attrType"    column="attr_type"    />
+        <result property="enable"    column="enable"    />
+        <result property="catelogId"    column="catelog_id"    />
+        <result property="showDesc"    column="show_desc"    />
+    </resultMap>
+
+    <sql id="selectPmsAttrVo">
+        select attr_id, attr_name, search_type, value_type, icon, value_select, attr_type, enable, catelog_id, show_desc from pms_attr
+    </sql>
+
+    <select id="selectPmsAttrList" parameterType="PmsAttr" resultMap="PmsAttrResult">
+        <include refid="selectPmsAttrVo"/>
+        <where>  
+            <if test="attrName != null  and attrName != ''"> and attr_name like concat('%', #{attrName}, '%')</if>
+            <if test="searchType != null "> and search_type = #{searchType}</if>
+            <if test="valueType != null "> and value_type = #{valueType}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="valueSelect != null  and valueSelect != ''"> and value_select = #{valueSelect}</if>
+            <if test="attrType != null "> and attr_type = #{attrType}</if>
+            <if test="enable != null "> and enable = #{enable}</if>
+            <if test="catelogId != null "> and catelog_id = #{catelogId}</if>
+            <if test="showDesc != null "> and show_desc = #{showDesc}</if>
+        </where>
+    </select>
+    
+    <select id="selectPmsAttrByAttrId" parameterType="Long" resultMap="PmsAttrResult">
+        <include refid="selectPmsAttrVo"/>
+        where attr_id = #{attrId}
+    </select>
+        
+    <insert id="insertPmsAttr" parameterType="PmsAttr" useGeneratedKeys="true" keyProperty="attrId">
+        insert into pms_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attrName != null">attr_name,</if>
+            <if test="searchType != null">search_type,</if>
+            <if test="valueType != null">value_type,</if>
+            <if test="icon != null">icon,</if>
+            <if test="valueSelect != null">value_select,</if>
+            <if test="attrType != null">attr_type,</if>
+            <if test="enable != null">enable,</if>
+            <if test="catelogId != null">catelog_id,</if>
+            <if test="showDesc != null">show_desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attrName != null">#{attrName},</if>
+            <if test="searchType != null">#{searchType},</if>
+            <if test="valueType != null">#{valueType},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="valueSelect != null">#{valueSelect},</if>
+            <if test="attrType != null">#{attrType},</if>
+            <if test="enable != null">#{enable},</if>
+            <if test="catelogId != null">#{catelogId},</if>
+            <if test="showDesc != null">#{showDesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePmsAttr" parameterType="PmsAttr">
+        update pms_attr
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attrName != null">attr_name = #{attrName},</if>
+            <if test="searchType != null">search_type = #{searchType},</if>
+            <if test="valueType != null">value_type = #{valueType},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="valueSelect != null">value_select = #{valueSelect},</if>
+            <if test="attrType != null">attr_type = #{attrType},</if>
+            <if test="enable != null">enable = #{enable},</if>
+            <if test="catelogId != null">catelog_id = #{catelogId},</if>
+            <if test="showDesc != null">show_desc = #{showDesc},</if>
+        </trim>
+        where attr_id = #{attrId}
+    </update>
+
+    <delete id="deletePmsAttrByAttrId" parameterType="Long">
+        delete from pms_attr where attr_id = #{attrId}
+    </delete>
+
+    <delete id="deletePmsAttrByAttrIds" parameterType="String">
+        delete from pms_attr where attr_id in 
+        <foreach item="attrId" collection="array" open="(" separator="," close=")">
+            #{attrId}
+        </foreach>
+    </delete>
+</mapper>
