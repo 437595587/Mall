@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.GrowthChangeHistoryMapper">
+    
+    <resultMap type="GrowthChangeHistory" id="GrowthChangeHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="changeCount"    column="change_count"    />
+        <result property="note"    column="note"    />
+        <result property="sourceType"    column="source_type"    />
+    </resultMap>
+
+    <sql id="selectGrowthChangeHistoryVo">
+        select id, member_id, create_time, change_count, note, source_type from ums_growth_change_history
+    </sql>
+
+    <select id="selectGrowthChangeHistoryList" parameterType="GrowthChangeHistory" resultMap="GrowthChangeHistoryResult">
+        <include refid="selectGrowthChangeHistoryVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="changeCount != null "> and change_count = #{changeCount}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="sourceType != null "> and source_type = #{sourceType}</if>
+        </where>
+    </select>
+    
+    <select id="selectGrowthChangeHistoryById" parameterType="Long" resultMap="GrowthChangeHistoryResult">
+        <include refid="selectGrowthChangeHistoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGrowthChangeHistory" parameterType="GrowthChangeHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_growth_change_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="changeCount != null">change_count,</if>
+            <if test="note != null">note,</if>
+            <if test="sourceType != null">source_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="changeCount != null">#{changeCount},</if>
+            <if test="note != null">#{note},</if>
+            <if test="sourceType != null">#{sourceType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGrowthChangeHistory" parameterType="GrowthChangeHistory">
+        update ums_growth_change_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="changeCount != null">change_count = #{changeCount},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGrowthChangeHistoryById" parameterType="Long">
+        delete from ums_growth_change_history where id = #{id}
+    </delete>
+
+    <delete id="deleteGrowthChangeHistoryByIds" parameterType="String">
+        delete from ums_growth_change_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

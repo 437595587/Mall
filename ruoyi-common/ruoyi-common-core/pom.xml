@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ruoyi-common-core</artifactId>
-    
+
     <description>
         ruoyi-common-core核心模块
     </description>
@@ -22,7 +22,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        
+
         <!-- SpringCloud Loadbalancer -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -105,6 +105,11 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
     </dependencies>

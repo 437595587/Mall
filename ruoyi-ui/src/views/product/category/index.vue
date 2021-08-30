@@ -19,8 +19,8 @@
             @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="父分类id" prop="parentCid">
-        <treeselect style="width: 30%" v-model="queryParams.parentCid" :options="categoryOptions" :normalizer="normalizer" placeholder="请选择父分类id" />
+      <el-form-item label="父分类" prop="parentCid">
+        <treeselect style="width: 30%" v-model="queryParams.parentCid" :options="categoryOptions" :normalizer="normalizer" placeholder="请选择父分类" />
       </el-form-item>
       <el-form-item>
 	    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>

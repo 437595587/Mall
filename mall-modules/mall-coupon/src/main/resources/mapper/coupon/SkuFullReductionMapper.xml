@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.SkuFullReductionMapper">
+    
+    <resultMap type="SkuFullReduction" id="SkuFullReductionResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="fullPrice"    column="full_price"    />
+        <result property="reducePrice"    column="reduce_price"    />
+        <result property="addOther"    column="add_other"    />
+    </resultMap>
+
+    <sql id="selectSkuFullReductionVo">
+        select id, sku_id, full_price, reduce_price, add_other from sms_sku_full_reduction
+    </sql>
+
+    <select id="selectSkuFullReductionList" parameterType="SkuFullReduction" resultMap="SkuFullReductionResult">
+        <include refid="selectSkuFullReductionVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="fullPrice != null "> and full_price = #{fullPrice}</if>
+            <if test="reducePrice != null "> and reduce_price = #{reducePrice}</if>
+            <if test="addOther != null "> and add_other = #{addOther}</if>
+        </where>
+    </select>
+    
+    <select id="selectSkuFullReductionById" parameterType="Long" resultMap="SkuFullReductionResult">
+        <include refid="selectSkuFullReductionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSkuFullReduction" parameterType="SkuFullReduction" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_sku_full_reduction
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="fullPrice != null">full_price,</if>
+            <if test="reducePrice != null">reduce_price,</if>
+            <if test="addOther != null">add_other,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="fullPrice != null">#{fullPrice},</if>
+            <if test="reducePrice != null">#{reducePrice},</if>
+            <if test="addOther != null">#{addOther},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSkuFullReduction" parameterType="SkuFullReduction">
+        update sms_sku_full_reduction
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="fullPrice != null">full_price = #{fullPrice},</if>
+            <if test="reducePrice != null">reduce_price = #{reducePrice},</if>
+            <if test="addOther != null">add_other = #{addOther},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSkuFullReductionById" parameterType="Long">
+        delete from sms_sku_full_reduction where id = #{id}
+    </delete>
+
+    <delete id="deleteSkuFullReductionByIds" parameterType="String">
+        delete from sms_sku_full_reduction where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

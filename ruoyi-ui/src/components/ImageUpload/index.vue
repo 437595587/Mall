@@ -18,7 +18,7 @@
     >
       <i class="el-icon-plus"></i>
     </el-upload>
-    
+
     <!-- 上传提示 -->
     <div class="el-upload__tip" slot="tip" v-if="showTip">
       请上传
@@ -66,6 +66,10 @@ export default {
     isShowTip: {
       type: Boolean,
       default: true
+    },
+    valueType: {
+      type: String,
+      default: 'String'
     }
   },
   data() {
@@ -113,12 +117,12 @@ export default {
     handleRemove(file, fileList) {
       const findex = this.fileList.map(f => f.name).indexOf(file.name);
       this.fileList.splice(findex, 1);
-      this.$emit("input", this.listToString(this.fileList));
+      this.$emit("input", this.valueType === 'Array' ? this.listToUrlList(this.fileList) : this.listToString(this.fileList));
     },
     // 上传成功回调
     handleUploadSuccess(res) {
       this.fileList.push({ name: res.data.url, url: res.data.url });
-      this.$emit("input", this.listToString(this.fileList));
+      this.$emit("input", this.valueType === 'Array' ? this.listToUrlList(this.fileList) : this.listToString(this.fileList));
       this.loading.close();
     },
     // 上传前loading加载
@@ -182,6 +186,13 @@ export default {
         strs += list[i].url + separator;
       }
       return strs != '' ? strs.substr(0, strs.length - 1) : '';
+    },
+    listToUrlList(list) {
+      let urlList = [];
+      for (let item of list) {
+        urlList.push(item.url);
+      }
+      return urlList;
     }
   }
 };
@@ -202,4 +213,3 @@ export default {
     transform: translateY(0);
 }
 </style>
-

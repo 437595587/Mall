@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.SpuBoundsMapper">
+    
+    <resultMap type="SpuBounds" id="SpuBoundsResult">
+        <result property="id"    column="id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="growBounds"    column="grow_bounds"    />
+        <result property="buyBounds"    column="buy_bounds"    />
+        <result property="work"    column="work"    />
+    </resultMap>
+
+    <sql id="selectSpuBoundsVo">
+        select id, spu_id, grow_bounds, buy_bounds, work from sms_spu_bounds
+    </sql>
+
+    <select id="selectSpuBoundsList" parameterType="SpuBounds" resultMap="SpuBoundsResult">
+        <include refid="selectSpuBoundsVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="growBounds != null "> and grow_bounds = #{growBounds}</if>
+            <if test="buyBounds != null "> and buy_bounds = #{buyBounds}</if>
+            <if test="work != null "> and work = #{work}</if>
+        </where>
+    </select>
+    
+    <select id="selectSpuBoundsById" parameterType="Long" resultMap="SpuBoundsResult">
+        <include refid="selectSpuBoundsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSpuBounds" parameterType="SpuBounds" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_spu_bounds
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="growBounds != null">grow_bounds,</if>
+            <if test="buyBounds != null">buy_bounds,</if>
+            <if test="work != null">work,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="growBounds != null">#{growBounds},</if>
+            <if test="buyBounds != null">#{buyBounds},</if>
+            <if test="work != null">#{work},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSpuBounds" parameterType="SpuBounds">
+        update sms_spu_bounds
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="growBounds != null">grow_bounds = #{growBounds},</if>
+            <if test="buyBounds != null">buy_bounds = #{buyBounds},</if>
+            <if test="work != null">work = #{work},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSpuBoundsById" parameterType="Long">
+        delete from sms_spu_bounds where id = #{id}
+    </delete>
+
+    <delete id="deleteSpuBoundsByIds" parameterType="String">
+        delete from sms_spu_bounds where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -32,7 +32,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 查询sku信息列表
      */
-    @PreAuthorize(hasPermi = "product:info:list")
+    @PreAuthorize(hasPermi = "product:skuInfo:list")
     @GetMapping("/list")
     public TableDataInfo list(PmsSkuInfo pmsSkuInfo)
     {
@@ -44,7 +44,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 导出sku信息列表
      */
-    @PreAuthorize(hasPermi = "product:info:export")
+    @PreAuthorize(hasPermi = "product:skuInfo:export")
     @Log(title = "sku信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, PmsSkuInfo pmsSkuInfo) throws IOException
@@ -57,7 +57,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 获取sku信息详细信息
      */
-    @PreAuthorize(hasPermi = "product:info:query")
+    @PreAuthorize(hasPermi = "product:skuInfo:query")
     @GetMapping(value = "/{skuId}")
     public AjaxResult getInfo(@PathVariable("skuId") Long skuId)
     {
@@ -67,7 +67,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 新增sku信息
      */
-    @PreAuthorize(hasPermi = "product:info:add")
+    @PreAuthorize(hasPermi = "product:skuInfo:add")
     @Log(title = "sku信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody PmsSkuInfo pmsSkuInfo)
@@ -78,7 +78,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 修改sku信息
      */
-    @PreAuthorize(hasPermi = "product:info:edit")
+    @PreAuthorize(hasPermi = "product:skuInfo:edit")
     @Log(title = "sku信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PmsSkuInfo pmsSkuInfo)
@@ -89,7 +89,7 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 删除sku信息
      */
-    @PreAuthorize(hasPermi = "product:info:remove")
+    @PreAuthorize(hasPermi = "product:skuInfo:remove")
     @Log(title = "sku信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{skuIds}")
     public AjaxResult remove(@PathVariable Long[] skuIds)

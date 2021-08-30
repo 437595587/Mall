@@ -1,19 +1,21 @@
 package com.ruoyi.product.mapper;
 
-import java.util.List;
 import com.ruoyi.product.domain.PmsSkuSaleAttrValue;
+import com.ruoyi.product.domain.vo.SkuItemVo;
+
+import java.util.List;
 
 /**
  * sku销售属性&值Mapper接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
-public interface PmsSkuSaleAttrValueMapper 
+public interface PmsSkuSaleAttrValueMapper
 {
     /**
      * 查询sku销售属性&值
-     * 
+     *
      * @param id sku销售属性&值主键
      * @return sku销售属性&值
      */
@@ -21,7 +23,7 @@ public interface PmsSkuSaleAttrValueMapper
 
     /**
      * 查询sku销售属性&值列表
-     * 
+     *
      * @param pmsSkuSaleAttrValue sku销售属性&值
      * @return sku销售属性&值集合
      */
@@ -29,7 +31,7 @@ public interface PmsSkuSaleAttrValueMapper
 
     /**
      * 新增sku销售属性&值
-     * 
+     *
      * @param pmsSkuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface PmsSkuSaleAttrValueMapper
 
     /**
      * 修改sku销售属性&值
-     * 
+     *
      * @param pmsSkuSaleAttrValue sku销售属性&值
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface PmsSkuSaleAttrValueMapper
 
     /**
      * 删除sku销售属性&值
-     * 
+     *
      * @param id sku销售属性&值主键
      * @return 结果
      */
@@ -53,9 +55,11 @@ public interface PmsSkuSaleAttrValueMapper
 
     /**
      * 批量删除sku销售属性&值
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deletePmsSkuSaleAttrValueByIds(Long[] ids);
+
+    List<SkuItemVo.ItemSaleAttrVo> selectSaleAttrsBySpuId(Long spuId);
 }

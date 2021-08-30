@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.MemberPriceMapper">
+    
+    <resultMap type="MemberPrice" id="MemberPriceResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="memberLevelId"    column="member_level_id"    />
+        <result property="memberLevelName"    column="member_level_name"    />
+        <result property="memberPrice"    column="member_price"    />
+        <result property="addOther"    column="add_other"    />
+    </resultMap>
+
+    <sql id="selectMemberPriceVo">
+        select id, sku_id, member_level_id, member_level_name, member_price, add_other from sms_member_price
+    </sql>
+
+    <select id="selectMemberPriceList" parameterType="MemberPrice" resultMap="MemberPriceResult">
+        <include refid="selectMemberPriceVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="memberLevelId != null "> and member_level_id = #{memberLevelId}</if>
+            <if test="memberLevelName != null  and memberLevelName != ''"> and member_level_name like concat('%', #{memberLevelName}, '%')</if>
+            <if test="memberPrice != null "> and member_price = #{memberPrice}</if>
+            <if test="addOther != null "> and add_other = #{addOther}</if>
+        </where>
+    </select>
+    
+    <select id="selectMemberPriceById" parameterType="Long" resultMap="MemberPriceResult">
+        <include refid="selectMemberPriceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMemberPrice" parameterType="MemberPrice" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_member_price
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="memberLevelId != null">member_level_id,</if>
+            <if test="memberLevelName != null">member_level_name,</if>
+            <if test="memberPrice != null">member_price,</if>
+            <if test="addOther != null">add_other,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="memberLevelId != null">#{memberLevelId},</if>
+            <if test="memberLevelName != null">#{memberLevelName},</if>
+            <if test="memberPrice != null">#{memberPrice},</if>
+            <if test="addOther != null">#{addOther},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMemberPrice" parameterType="MemberPrice">
+        update sms_member_price
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="memberLevelId != null">member_level_id = #{memberLevelId},</if>
+            <if test="memberLevelName != null">member_level_name = #{memberLevelName},</if>
+            <if test="memberPrice != null">member_price = #{memberPrice},</if>
+            <if test="addOther != null">add_other = #{addOther},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberPriceById" parameterType="Long">
+        delete from sms_member_price where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberPriceByIds" parameterType="String">
+        delete from sms_member_price where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

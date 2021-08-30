@@ -59,4 +59,6 @@ public interface IPmsBrandService
      * @return 结果
      */
     public int deletePmsBrandByBrandId(Long brandId);
+
+    List<PmsBrand> selectPmsBrandByIds(List<Long> brandIds);
 }

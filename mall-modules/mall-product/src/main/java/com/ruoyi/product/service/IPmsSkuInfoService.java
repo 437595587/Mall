@@ -1,19 +1,21 @@
 package com.ruoyi.product.service;
 
-import java.util.List;
 import com.ruoyi.product.domain.PmsSkuInfo;
+import com.ruoyi.product.domain.vo.SkuItemVo;
+
+import java.util.List;
 
 /**
  * sku信息Service接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
-public interface IPmsSkuInfoService 
+public interface IPmsSkuInfoService
 {
     /**
      * 查询sku信息
-     * 
+     *
      * @param skuId sku信息主键
      * @return sku信息
      */
@@ -21,7 +23,7 @@ public interface IPmsSkuInfoService
 
     /**
      * 查询sku信息列表
-     * 
+     *
      * @param pmsSkuInfo sku信息
      * @return sku信息集合
      */
@@ -29,7 +31,7 @@ public interface IPmsSkuInfoService
 
     /**
      * 新增sku信息
-     * 
+     *
      * @param pmsSkuInfo sku信息
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface IPmsSkuInfoService
 
     /**
      * 修改sku信息
-     * 
+     *
      * @param pmsSkuInfo sku信息
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface IPmsSkuInfoService
 
     /**
      * 批量删除sku信息
-     * 
+     *
      * @param skuIds 需要删除的sku信息主键集合
      * @return 结果
      */
@@ -53,9 +55,11 @@ public interface IPmsSkuInfoService
 
     /**
      * 删除sku信息信息
-     * 
+     *
      * @param skuId sku信息主键
      * @return 结果
      */
     public int deletePmsSkuInfoBySkuId(Long skuId);
+
+    SkuItemVo item(Long skuId);
 }

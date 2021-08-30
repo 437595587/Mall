@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.PurchaseDetailMapper">
+    
+    <resultMap type="PurchaseDetail" id="PurchaseDetailResult">
+        <result property="id"    column="id"    />
+        <result property="purchaseId"    column="purchase_id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="skuNum"    column="sku_num"    />
+        <result property="skuPrice"    column="sku_price"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectPurchaseDetailVo">
+        select id, purchase_id, sku_id, sku_num, sku_price, ware_id, status from wms_purchase_detail
+    </sql>
+
+    <select id="selectPurchaseDetailList" parameterType="PurchaseDetail" resultMap="PurchaseDetailResult">
+        <include refid="selectPurchaseDetailVo"/>
+        <where>  
+            <if test="purchaseId != null "> and purchase_id = #{purchaseId}</if>
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="skuNum != null "> and sku_num = #{skuNum}</if>
+            <if test="skuPrice != null "> and sku_price = #{skuPrice}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectPurchaseDetailById" parameterType="Long" resultMap="PurchaseDetailResult">
+        <include refid="selectPurchaseDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPurchaseDetail" parameterType="PurchaseDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_purchase_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaseId != null">purchase_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="skuNum != null">sku_num,</if>
+            <if test="skuPrice != null">sku_price,</if>
+            <if test="wareId != null">ware_id,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaseId != null">#{purchaseId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="skuNum != null">#{skuNum},</if>
+            <if test="skuPrice != null">#{skuPrice},</if>
+            <if test="wareId != null">#{wareId},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePurchaseDetail" parameterType="PurchaseDetail">
+        update wms_purchase_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaseId != null">purchase_id = #{purchaseId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="skuNum != null">sku_num = #{skuNum},</if>
+            <if test="skuPrice != null">sku_price = #{skuPrice},</if>
+            <if test="wareId != null">ware_id = #{wareId},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePurchaseDetailById" parameterType="Long">
+        delete from wms_purchase_detail where id = #{id}
+    </delete>
+
+    <delete id="deletePurchaseDetailByIds" parameterType="String">
+        delete from wms_purchase_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

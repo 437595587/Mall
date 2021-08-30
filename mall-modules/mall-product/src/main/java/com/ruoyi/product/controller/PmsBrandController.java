@@ -1,5 +1,6 @@
 package com.ruoyi.product.controller;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.valid.AddGroup;
 import com.ruoyi.common.core.valid.EditGroup;
@@ -34,6 +35,12 @@ public class PmsBrandController extends BaseController
 {
     @Autowired
     private IPmsBrandService pmsBrandService;
+
+    @GetMapping("/infos")
+    public R<List<PmsBrand>> getInfo(@RequestParam("brandIds") List<Long> brandIds) {
+        List<PmsBrand> brands = pmsBrandService.selectPmsBrandByIds(brandIds);
+        return R.ok(brands);
+    }
 
     /**
      * 查询品牌列表

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.WareSkuMapper">
+
+    <resultMap type="WareSku" id="WareSkuResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="stock"    column="stock"    />
+        <result property="skuName"    column="sku_name"    />
+        <result property="stockLocked"    column="stock_locked"    />
+    </resultMap>
+
+    <sql id="selectWareSkuVo">
+        select id, sku_id, ware_id, stock, sku_name, stock_locked from wms_ware_sku
+    </sql>
+
+    <select id="selectWareSkuList" parameterType="WareSku" resultMap="WareSkuResult">
+        <include refid="selectWareSkuVo"/>
+        <where>
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+            <if test="stock != null "> and stock = #{stock}</if>
+            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="stockLocked != null "> and stock_locked = #{stockLocked}</if>
+        </where>
+    </select>
+
+    <select id="selectWareSkuById" parameterType="Long" resultMap="WareSkuResult">
+        <include refid="selectWareSkuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWareSku" parameterType="WareSku" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_ware_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="wareId != null">ware_id,</if>
+            <if test="stock != null">stock,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="stockLocked != null">stock_locked,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="wareId != null">#{wareId},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="stockLocked != null">#{stockLocked},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWareSku" parameterType="WareSku">
+        update wms_ware_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="wareId != null">ware_id = #{wareId},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="stockLocked != null">stock_locked = #{stockLocked},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWareSkuById" parameterType="Long">
+        delete from wms_ware_sku where id = #{id}
+    </delete>
+
+    <delete id="deleteWareSkuByIds" parameterType="String">
+        delete from wms_ware_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectSkuHasStock" resultType="java.lang.Long">
+        select sum(stock-stock_locked) from wms_ware_sku where sku_id = #{skuId}
+    </select>
+</mapper>

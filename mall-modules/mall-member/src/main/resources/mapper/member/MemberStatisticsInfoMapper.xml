@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MemberStatisticsInfoMapper">
+    
+    <resultMap type="MemberStatisticsInfo" id="MemberStatisticsInfoResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="consumeAmount"    column="consume_amount"    />
+        <result property="couponAmount"    column="coupon_amount"    />
+        <result property="orderCount"    column="order_count"    />
+        <result property="couponCount"    column="coupon_count"    />
+        <result property="commentCount"    column="comment_count"    />
+        <result property="returnOrderCount"    column="return_order_count"    />
+        <result property="loginCount"    column="login_count"    />
+        <result property="attendCount"    column="attend_count"    />
+        <result property="fansCount"    column="fans_count"    />
+        <result property="collectProductCount"    column="collect_product_count"    />
+        <result property="collectSubjectCount"    column="collect_subject_count"    />
+        <result property="collectCommentCount"    column="collect_comment_count"    />
+        <result property="inviteFriendCount"    column="invite_friend_count"    />
+    </resultMap>
+
+    <sql id="selectMemberStatisticsInfoVo">
+        select id, member_id, consume_amount, coupon_amount, order_count, coupon_count, comment_count, return_order_count, login_count, attend_count, fans_count, collect_product_count, collect_subject_count, collect_comment_count, invite_friend_count from ums_member_statistics_info
+    </sql>
+
+    <select id="selectMemberStatisticsInfoList" parameterType="MemberStatisticsInfo" resultMap="MemberStatisticsInfoResult">
+        <include refid="selectMemberStatisticsInfoVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="consumeAmount != null "> and consume_amount = #{consumeAmount}</if>
+            <if test="couponAmount != null "> and coupon_amount = #{couponAmount}</if>
+            <if test="orderCount != null "> and order_count = #{orderCount}</if>
+            <if test="couponCount != null "> and coupon_count = #{couponCount}</if>
+            <if test="commentCount != null "> and comment_count = #{commentCount}</if>
+            <if test="returnOrderCount != null "> and return_order_count = #{returnOrderCount}</if>
+            <if test="loginCount != null "> and login_count = #{loginCount}</if>
+            <if test="attendCount != null "> and attend_count = #{attendCount}</if>
+            <if test="fansCount != null "> and fans_count = #{fansCount}</if>
+            <if test="collectProductCount != null "> and collect_product_count = #{collectProductCount}</if>
+            <if test="collectSubjectCount != null "> and collect_subject_count = #{collectSubjectCount}</if>
+            <if test="collectCommentCount != null "> and collect_comment_count = #{collectCommentCount}</if>
+            <if test="inviteFriendCount != null "> and invite_friend_count = #{inviteFriendCount}</if>
+        </where>
+    </select>
+    
+    <select id="selectMemberStatisticsInfoById" parameterType="Long" resultMap="MemberStatisticsInfoResult">
+        <include refid="selectMemberStatisticsInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMemberStatisticsInfo" parameterType="MemberStatisticsInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_statistics_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="consumeAmount != null">consume_amount,</if>
+            <if test="couponAmount != null">coupon_amount,</if>
+            <if test="orderCount != null">order_count,</if>
+            <if test="couponCount != null">coupon_count,</if>
+            <if test="commentCount != null">comment_count,</if>
+            <if test="returnOrderCount != null">return_order_count,</if>
+            <if test="loginCount != null">login_count,</if>
+            <if test="attendCount != null">attend_count,</if>
+            <if test="fansCount != null">fans_count,</if>
+            <if test="collectProductCount != null">collect_product_count,</if>
+            <if test="collectSubjectCount != null">collect_subject_count,</if>
+            <if test="collectCommentCount != null">collect_comment_count,</if>
+            <if test="inviteFriendCount != null">invite_friend_count,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="consumeAmount != null">#{consumeAmount},</if>
+            <if test="couponAmount != null">#{couponAmount},</if>
+            <if test="orderCount != null">#{orderCount},</if>
+            <if test="couponCount != null">#{couponCount},</if>
+            <if test="commentCount != null">#{commentCount},</if>
+            <if test="returnOrderCount != null">#{returnOrderCount},</if>
+            <if test="loginCount != null">#{loginCount},</if>
+            <if test="attendCount != null">#{attendCount},</if>
+            <if test="fansCount != null">#{fansCount},</if>
+            <if test="collectProductCount != null">#{collectProductCount},</if>
+            <if test="collectSubjectCount != null">#{collectSubjectCount},</if>
+            <if test="collectCommentCount != null">#{collectCommentCount},</if>
+            <if test="inviteFriendCount != null">#{inviteFriendCount},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMemberStatisticsInfo" parameterType="MemberStatisticsInfo">
+        update ums_member_statistics_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="consumeAmount != null">consume_amount = #{consumeAmount},</if>
+            <if test="couponAmount != null">coupon_amount = #{couponAmount},</if>
+            <if test="orderCount != null">order_count = #{orderCount},</if>
+            <if test="couponCount != null">coupon_count = #{couponCount},</if>
+            <if test="commentCount != null">comment_count = #{commentCount},</if>
+            <if test="returnOrderCount != null">return_order_count = #{returnOrderCount},</if>
+            <if test="loginCount != null">login_count = #{loginCount},</if>
+            <if test="attendCount != null">attend_count = #{attendCount},</if>
+            <if test="fansCount != null">fans_count = #{fansCount},</if>
+            <if test="collectProductCount != null">collect_product_count = #{collectProductCount},</if>
+            <if test="collectSubjectCount != null">collect_subject_count = #{collectSubjectCount},</if>
+            <if test="collectCommentCount != null">collect_comment_count = #{collectCommentCount},</if>
+            <if test="inviteFriendCount != null">invite_friend_count = #{inviteFriendCount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberStatisticsInfoById" parameterType="Long">
+        delete from ums_member_statistics_info where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberStatisticsInfoByIds" parameterType="String">
+        delete from ums_member_statistics_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

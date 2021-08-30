@@ -1,16 +1,5 @@
 package com.ruoyi.gateway.filter;
 
-import javax.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.core.constant.CacheConstants;
 import com.ruoyi.common.core.constant.Constants;
@@ -21,11 +10,25 @@ import com.ruoyi.common.core.utils.ServletUtils;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.gateway.config.properties.IgnoreWhiteProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 网关鉴权
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -52,6 +55,16 @@ public class AuthFilter implements GlobalFilter, Ordered
         ServerHttpRequest.Builder mutate = request.mutate();
 
         String url = request.getURI().getPath();
+        // 跳过由nginx的mall.com过来的请求
+        HttpHeaders headers = request.getHeaders();
+        List<String> host = headers.get("Host");
+        if (host != null && host.size() > 0) {
+            for (String item : host) {
+                if (item.contains("mall.com")) {
+                    return chain.filter(exchange);
+                }
+            }
+        }
         // 跳过不需要验证的路径
         if (StringUtils.matches(url, ignoreWhite.getWhites()))
         {

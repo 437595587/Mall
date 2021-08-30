@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.WareInfoMapper">
+    
+    <resultMap type="WareInfo" id="WareInfoResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="areacode"    column="areacode"    />
+    </resultMap>
+
+    <sql id="selectWareInfoVo">
+        select id, name, address, areacode from wms_ware_info
+    </sql>
+
+    <select id="selectWareInfoList" parameterType="WareInfo" resultMap="WareInfoResult">
+        <include refid="selectWareInfoVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="areacode != null  and areacode != ''"> and areacode = #{areacode}</if>
+        </where>
+    </select>
+    
+    <select id="selectWareInfoById" parameterType="Long" resultMap="WareInfoResult">
+        <include refid="selectWareInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWareInfo" parameterType="WareInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_ware_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="address != null">address,</if>
+            <if test="areacode != null">areacode,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="address != null">#{address},</if>
+            <if test="areacode != null">#{areacode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWareInfo" parameterType="WareInfo">
+        update wms_ware_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="areacode != null">areacode = #{areacode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWareInfoById" parameterType="Long">
+        delete from wms_ware_info where id = #{id}
+    </delete>
+
+    <delete id="deleteWareInfoByIds" parameterType="String">
+        delete from wms_ware_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -59,4 +59,10 @@ public interface PmsAttrAttrgroupRelationMapper
      * @return 结果
      */
     public int deletePmsAttrAttrgroupRelationByIds(Long[] ids);
+
+    /**
+     * 批量属性&属性分组关联
+     * @param attrIds 属性主键列表
+     */
+    int deletePmsAttrAttrgroupRelationByAttrIds(Long[] attrIds);
 }

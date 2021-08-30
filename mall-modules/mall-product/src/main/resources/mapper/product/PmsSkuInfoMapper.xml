@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsSkuInfoMapper">
-    
+
     <resultMap type="PmsSkuInfo" id="PmsSkuInfoResult">
         <result property="skuId"    column="sku_id"    />
         <result property="spuId"    column="spu_id"    />
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsSkuInfoList" parameterType="PmsSkuInfo" resultMap="PmsSkuInfoResult">
         <include refid="selectPmsSkuInfoVo"/>
-        <where>  
+        <where>
             <if test="spuId != null "> and spu_id = #{spuId}</if>
             <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
             <if test="skuDesc != null  and skuDesc != ''"> and sku_desc = #{skuDesc}</if>
@@ -33,16 +33,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="skuDefaultImg != null  and skuDefaultImg != ''"> and sku_default_img = #{skuDefaultImg}</if>
             <if test="skuTitle != null  and skuTitle != ''"> and sku_title = #{skuTitle}</if>
             <if test="skuSubtitle != null  and skuSubtitle != ''"> and sku_subtitle = #{skuSubtitle}</if>
-            <if test="price != null "> and price = #{price}</if>
+            <if test="priceMin != null and priceMin >0 "> and price <![CDATA[>=]]> #{priceMin}</if>
+            <if test="priceMax != null and priceMax >0 "> and price <![CDATA[<=]]> #{priceMax}</if>
             <if test="saleCount != null "> and sale_count = #{saleCount}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsSkuInfoBySkuId" parameterType="Long" resultMap="PmsSkuInfoResult">
         <include refid="selectPmsSkuInfoVo"/>
         where sku_id = #{skuId}
     </select>
-        
+
     <insert id="insertPmsSkuInfo" parameterType="PmsSkuInfo" useGeneratedKeys="true" keyProperty="skuId">
         insert into pms_sku_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -93,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsSkuInfoBySkuIds" parameterType="String">
-        delete from pms_sku_info where sku_id in 
+        delete from pms_sku_info where sku_id in
         <foreach item="skuId" collection="array" open="(" separator="," close=")">
             #{skuId}
         </foreach>

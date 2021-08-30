@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.PurchaseMapper">
+
+    <resultMap type="Purchase" id="PurchaseResult">
+        <result property="id"    column="id"    />
+        <result property="assigneeId"    column="assignee_id"    />
+        <result property="assigneeName"    column="assignee_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="priority"    column="priority"    />
+        <result property="status"    column="status"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="amount"    column="amount"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPurchaseVo">
+        select id, assignee_id, assignee_name, phone, priority, status, ware_id, amount, create_time, update_time from wms_purchase
+    </sql>
+
+    <select id="selectPurchaseList" parameterType="Purchase" resultMap="PurchaseResult">
+        <include refid="selectPurchaseVo"/>
+        <where>
+            <if test="assigneeId != null "> and assignee_id = #{assigneeId}</if>
+            <if test="assigneeName != null  and assigneeName != ''"> and assignee_name like concat('%', #{assigneeName}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="priority != null "> and priority = #{priority}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+        </where>
+    </select>
+
+    <select id="selectPurchaseById" parameterType="Long" resultMap="PurchaseResult">
+        <include refid="selectPurchaseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPurchase" parameterType="Purchase" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_purchase
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="assigneeId != null">assignee_id,</if>
+            <if test="assigneeName != null">assignee_name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="priority != null">priority,</if>
+            <if test="status != null">status,</if>
+            <if test="wareId != null">ware_id,</if>
+            <if test="amount != null">amount,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="assigneeId != null">#{assigneeId},</if>
+            <if test="assigneeName != null">#{assigneeName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="priority != null">#{priority},</if>
+            <if test="status != null">#{status},</if>
+            <if test="wareId != null">#{wareId},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePurchase" parameterType="Purchase">
+        update wms_purchase
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="assigneeId != null">assignee_id = #{assigneeId},</if>
+            <if test="assigneeName != null">assignee_name = #{assigneeName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="wareId != null">ware_id = #{wareId},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePurchaseById" parameterType="Long">
+        delete from wms_purchase where id = #{id}
+    </delete>
+
+    <delete id="deletePurchaseByIds" parameterType="String">
+        delete from wms_purchase where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectUnReceivePurchaseList" resultType="com.ruoyi.ware.domain.Purchase">
+        <include refid="selectPurchaseVo"/>
+        where status = 0 or status = 1
+    </select>
+</mapper>

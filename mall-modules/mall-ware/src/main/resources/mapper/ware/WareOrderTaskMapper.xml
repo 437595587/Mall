@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.WareOrderTaskMapper">
+    
+    <resultMap type="WareOrderTask" id="WareOrderTaskResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="consignee"    column="consignee"    />
+        <result property="consigneeTel"    column="consignee_tel"    />
+        <result property="deliveryAddress"    column="delivery_address"    />
+        <result property="orderComment"    column="order_comment"    />
+        <result property="paymentWay"    column="payment_way"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="orderBody"    column="order_body"    />
+        <result property="trackingNo"    column="tracking_no"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="taskComment"    column="task_comment"    />
+    </resultMap>
+
+    <sql id="selectWareOrderTaskVo">
+        select id, order_id, order_sn, consignee, consignee_tel, delivery_address, order_comment, payment_way, task_status, order_body, tracking_no, create_time, ware_id, task_comment from wms_ware_order_task
+    </sql>
+
+    <select id="selectWareOrderTaskList" parameterType="WareOrderTask" resultMap="WareOrderTaskResult">
+        <include refid="selectWareOrderTaskVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="consignee != null  and consignee != ''"> and consignee = #{consignee}</if>
+            <if test="consigneeTel != null  and consigneeTel != ''"> and consignee_tel = #{consigneeTel}</if>
+            <if test="deliveryAddress != null  and deliveryAddress != ''"> and delivery_address = #{deliveryAddress}</if>
+            <if test="orderComment != null  and orderComment != ''"> and order_comment = #{orderComment}</if>
+            <if test="paymentWay != null "> and payment_way = #{paymentWay}</if>
+            <if test="taskStatus != null "> and task_status = #{taskStatus}</if>
+            <if test="orderBody != null  and orderBody != ''"> and order_body = #{orderBody}</if>
+            <if test="trackingNo != null  and trackingNo != ''"> and tracking_no = #{trackingNo}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+            <if test="taskComment != null  and taskComment != ''"> and task_comment = #{taskComment}</if>
+        </where>
+    </select>
+    
+    <select id="selectWareOrderTaskById" parameterType="Long" resultMap="WareOrderTaskResult">
+        <include refid="selectWareOrderTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWareOrderTask" parameterType="WareOrderTask" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_ware_order_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="consignee != null">consignee,</if>
+            <if test="consigneeTel != null">consignee_tel,</if>
+            <if test="deliveryAddress != null">delivery_address,</if>
+            <if test="orderComment != null">order_comment,</if>
+            <if test="paymentWay != null">payment_way,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="orderBody != null">order_body,</if>
+            <if test="trackingNo != null">tracking_no,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="wareId != null">ware_id,</if>
+            <if test="taskComment != null">task_comment,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="consignee != null">#{consignee},</if>
+            <if test="consigneeTel != null">#{consigneeTel},</if>
+            <if test="deliveryAddress != null">#{deliveryAddress},</if>
+            <if test="orderComment != null">#{orderComment},</if>
+            <if test="paymentWay != null">#{paymentWay},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+            <if test="orderBody != null">#{orderBody},</if>
+            <if test="trackingNo != null">#{trackingNo},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="wareId != null">#{wareId},</if>
+            <if test="taskComment != null">#{taskComment},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWareOrderTask" parameterType="WareOrderTask">
+        update wms_ware_order_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="consignee != null">consignee = #{consignee},</if>
+            <if test="consigneeTel != null">consignee_tel = #{consigneeTel},</if>
+            <if test="deliveryAddress != null">delivery_address = #{deliveryAddress},</if>
+            <if test="orderComment != null">order_comment = #{orderComment},</if>
+            <if test="paymentWay != null">payment_way = #{paymentWay},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="orderBody != null">order_body = #{orderBody},</if>
+            <if test="trackingNo != null">tracking_no = #{trackingNo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="wareId != null">ware_id = #{wareId},</if>
+            <if test="taskComment != null">task_comment = #{taskComment},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWareOrderTaskById" parameterType="Long">
+        delete from wms_ware_order_task where id = #{id}
+    </delete>
+
+    <delete id="deleteWareOrderTaskByIds" parameterType="String">
+        delete from wms_ware_order_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

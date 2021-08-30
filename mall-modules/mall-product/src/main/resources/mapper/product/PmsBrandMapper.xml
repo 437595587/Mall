@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsBrandMapper">
-    
+
     <resultMap type="PmsBrand" id="PmsBrandResult">
         <result property="brandId"    column="brand_id"    />
         <result property="name"    column="name"    />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsBrandList" parameterType="PmsBrand" resultMap="PmsBrandResult">
         <include refid="selectPmsBrandVo"/>
-        <where>  
+        <where>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
             <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
@@ -29,12 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sort != null "> and sort = #{sort}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsBrandByBrandId" parameterType="Long" resultMap="PmsBrandResult">
         <include refid="selectPmsBrandVo"/>
         where brand_id = #{brandId}
     </select>
-        
+
     <insert id="insertPmsBrand" parameterType="PmsBrand" useGeneratedKeys="true" keyProperty="brandId">
         insert into pms_brand
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,9 +73,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsBrandByBrandIds" parameterType="String">
-        delete from pms_brand where brand_id in 
+        delete from pms_brand where brand_id in
         <foreach item="brandId" collection="array" open="(" separator="," close=")">
             #{brandId}
         </foreach>
     </delete>
+    <select id="selectPmsBrandByIds" resultMap="PmsBrandResult">
+        <include refid="selectPmsBrandVo"/> where brand_id in
+        <foreach item="brandId" collection="list" open="(" separator="," close=")">
+            #{brandId}
+        </foreach>
+    </select>
 </mapper>

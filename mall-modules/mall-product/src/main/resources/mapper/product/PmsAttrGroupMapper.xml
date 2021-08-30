@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsAttrGroupMapper">
-    
+
     <resultMap type="PmsAttrGroup" id="PmsAttrGroupResult">
         <result property="attrGroupId"    column="attr_group_id"    />
         <result property="attrGroupName"    column="attr_group_name"    />
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsAttrGroupList" parameterType="PmsAttrGroup" resultMap="PmsAttrGroupResult">
         <include refid="selectPmsAttrGroupVo"/>
-        <where>  
+        <where>
             <if test="attrGroupName != null  and attrGroupName != ''"> and attr_group_name like concat('%', #{attrGroupName}, '%')</if>
             <if test="sort != null "> and sort = #{sort}</if>
             <if test="descript != null  and descript != ''"> and descript = #{descript}</if>
@@ -27,12 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="catelogId != null "> and catelog_id = #{catelogId}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsAttrGroupByAttrGroupId" parameterType="Long" resultMap="PmsAttrGroupResult">
         <include refid="selectPmsAttrGroupVo"/>
         where attr_group_id = #{attrGroupId}
     </select>
-        
+
     <insert id="insertPmsAttrGroup" parameterType="PmsAttrGroup" useGeneratedKeys="true" keyProperty="attrGroupId">
         insert into pms_attr_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,9 +68,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsAttrGroupByAttrGroupIds" parameterType="String">
-        delete from pms_attr_group where attr_group_id in 
+        delete from pms_attr_group where attr_group_id in
         <foreach item="attrGroupId" collection="array" open="(" separator="," close=")">
             #{attrGroupId}
         </foreach>
     </delete>
+
+    <select id="selectPmsAttrListByGroupId" resultMap="com.ruoyi.product.mapper.PmsAttrMapper.PmsAttrResult">
+        select a.* from pms_attr_attrgroup_relation ag
+                inner join
+                pms_attr_group g on ag.attr_group_id = g.attr_group_id
+                inner join pms_attr a on a.attr_id = ag.attr_id
+        where g.attr_group_id = #{attrGroupId}
+        <if test="pmsAttr!= null and pmsAttr.attrName != null and pmsAttr.attrName != ''">
+            and a.attr_name like concat('%', #{pmsAttr.attrName}, '%')
+        </if>
+    </select>
+
+    <select id="selectPmsAttrNoRelation" resultMap="com.ruoyi.product.mapper.PmsAttrMapper.PmsAttrResult">
+        select a.* from pms_attr a
+                                left join
+                                pms_attr_attrgroup_relation ag on a.attr_id = ag.attr_id
+        where ag.attr_group_id is null and a.attr_type = 1
+        <if test="attrName != null  and attrName != ''">
+            and a.attr_name like concat('%', #{attrName}, '%')
+        </if>
+    </select>
+
+    <resultMap id="SpuItemAttrGroupVo" type="com.ruoyi.product.domain.vo.SkuItemVo$SpuItemAttrGroupVo">
+        <result column="attr_group_name" property="groupName" javaType="string" />
+        <collection property="attrs" ofType="com.ruoyi.product.domain.vo.SkuItemVo$SpuBaseAttrVo">
+            <result column="attr_name" property="attrName" javaType="string" />
+            <result column="attr_value" property="attrValue" javaType="string" />
+        </collection>
+    </resultMap>
+
+    <select id="selectPmsAttrGroupWithAttrsBySpuId" resultMap="SpuItemAttrGroupVo">
+        SELECT pav.`spu_id`, ag.`attr_group_name`, ag.`attr_group_id`, aar.`attr_id`, attr.`attr_name`,pav.`attr_value`
+        FROM `pms_attr_group` ag
+                     LEFT JOIN `pms_attr_attrgroup_relation` aar ON aar.`attr_group_id` = ag.`attr_group_id`
+                     LEFT JOIN `pms_attr` attr ON attr.`attr_id` = aar.`attr_id`
+                     LEFT JOIN `pms_product_attr_value` pav ON pav.`attr_id` = attr.`attr_id`
+        WHERE ag.catelog_id = #{catalogId} AND pav.`spu_id` = #{spuId}
+    </select>
 </mapper>

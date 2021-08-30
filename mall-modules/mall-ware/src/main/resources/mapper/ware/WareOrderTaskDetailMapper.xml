@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ware.mapper.WareOrderTaskDetailMapper">
+    
+    <resultMap type="WareOrderTaskDetail" id="WareOrderTaskDetailResult">
+        <result property="id"    column="id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="skuName"    column="sku_name"    />
+        <result property="skuNum"    column="sku_num"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="lockStatus"    column="lock_status"    />
+    </resultMap>
+
+    <sql id="selectWareOrderTaskDetailVo">
+        select id, sku_id, sku_name, sku_num, task_id, ware_id, lock_status from wms_ware_order_task_detail
+    </sql>
+
+    <select id="selectWareOrderTaskDetailList" parameterType="WareOrderTaskDetail" resultMap="WareOrderTaskDetailResult">
+        <include refid="selectWareOrderTaskDetailVo"/>
+        <where>  
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuNum != null "> and sku_num = #{skuNum}</if>
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+            <if test="lockStatus != null "> and lock_status = #{lockStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectWareOrderTaskDetailById" parameterType="Long" resultMap="WareOrderTaskDetailResult">
+        <include refid="selectWareOrderTaskDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWareOrderTaskDetail" parameterType="WareOrderTaskDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into wms_ware_order_task_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">sku_id,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuNum != null">sku_num,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="wareId != null">ware_id,</if>
+            <if test="lockStatus != null">lock_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="skuId != null">#{skuId},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuNum != null">#{skuNum},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="wareId != null">#{wareId},</if>
+            <if test="lockStatus != null">#{lockStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWareOrderTaskDetail" parameterType="WareOrderTaskDetail">
+        update wms_ware_order_task_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuNum != null">sku_num = #{skuNum},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="wareId != null">ware_id = #{wareId},</if>
+            <if test="lockStatus != null">lock_status = #{lockStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWareOrderTaskDetailById" parameterType="Long">
+        delete from wms_ware_order_task_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteWareOrderTaskDetailByIds" parameterType="String">
+        delete from wms_ware_order_task_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

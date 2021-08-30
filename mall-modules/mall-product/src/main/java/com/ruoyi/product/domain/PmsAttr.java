@@ -7,7 +7,7 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
 
 /**
  * 商品属性对象 pms_attr
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
@@ -38,8 +38,8 @@ public class PmsAttr extends BaseEntity
     @Excel(name = "可选值列表[用逗号分隔]")
     private String valueSelect;
 
-    /** 属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性] */
-    @Excel(name = "属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]")
+    /** 属性类型[0-销售属性，1-基本属性] */
+    @Excel(name = "属性类型[0-销售属性，1-基本属性]")
     private Integer attrType;
 
     /** 启用状态[0 - 禁用，1 - 启用] */
@@ -54,93 +54,93 @@ public class PmsAttr extends BaseEntity
     @Excel(name = "快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整")
     private Integer showDesc;
 
-    public void setAttrId(Long attrId) 
+    public void setAttrId(Long attrId)
     {
         this.attrId = attrId;
     }
 
-    public Long getAttrId() 
+    public Long getAttrId()
     {
         return attrId;
     }
-    public void setAttrName(String attrName) 
+    public void setAttrName(String attrName)
     {
         this.attrName = attrName;
     }
 
-    public String getAttrName() 
+    public String getAttrName()
     {
         return attrName;
     }
-    public void setSearchType(Integer searchType) 
+    public void setSearchType(Integer searchType)
     {
         this.searchType = searchType;
     }
 
-    public Integer getSearchType() 
+    public Integer getSearchType()
     {
         return searchType;
     }
-    public void setValueType(Integer valueType) 
+    public void setValueType(Integer valueType)
     {
         this.valueType = valueType;
     }
 
-    public Integer getValueType() 
+    public Integer getValueType()
     {
         return valueType;
     }
-    public void setIcon(String icon) 
+    public void setIcon(String icon)
     {
         this.icon = icon;
     }
 
-    public String getIcon() 
+    public String getIcon()
     {
         return icon;
     }
-    public void setValueSelect(String valueSelect) 
+    public void setValueSelect(String valueSelect)
     {
         this.valueSelect = valueSelect;
     }
 
-    public String getValueSelect() 
+    public String getValueSelect()
     {
         return valueSelect;
     }
-    public void setAttrType(Integer attrType) 
+    public void setAttrType(Integer attrType)
     {
         this.attrType = attrType;
     }
 
-    public Integer getAttrType() 
+    public Integer getAttrType()
     {
         return attrType;
     }
-    public void setEnable(Long enable) 
+    public void setEnable(Long enable)
     {
         this.enable = enable;
     }
 
-    public Long getEnable() 
+    public Long getEnable()
     {
         return enable;
     }
-    public void setCatelogId(Long catelogId) 
+    public void setCatelogId(Long catelogId)
     {
         this.catelogId = catelogId;
     }
 
-    public Long getCatelogId() 
+    public Long getCatelogId()
     {
         return catelogId;
     }
-    public void setShowDesc(Integer showDesc) 
+    public void setShowDesc(Integer showDesc)
     {
         this.showDesc = showDesc;
     }
 
-    public Integer getShowDesc() 
+    public Integer getShowDesc()
     {
         return showDesc;
     }

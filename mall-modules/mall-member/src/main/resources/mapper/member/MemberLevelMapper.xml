@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MemberLevelMapper">
+
+    <resultMap type="MemberLevel" id="MemberLevelResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="growthPoint"    column="growth_point"    />
+        <result property="defaultStatus"    column="default_status"    />
+        <result property="freeFreightPoint"    column="free_freight_point"    />
+        <result property="commentGrowthPoint"    column="comment_growth_point"    />
+        <result property="priviledgeFreeFreight"    column="priviledge_free_freight"    />
+        <result property="priviledgeMemberPrice"    column="priviledge_member_price"    />
+        <result property="priviledgeBirthday"    column="priviledge_birthday"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectMemberLevelVo">
+        select id, name, growth_point, default_status, free_freight_point, comment_growth_point, priviledge_free_freight, priviledge_member_price, priviledge_birthday, note from ums_member_level
+    </sql>
+
+    <select id="selectMemberLevelList" parameterType="MemberLevel" resultMap="MemberLevelResult">
+        <include refid="selectMemberLevelVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="growthPoint != null "> and growth_point = #{growthPoint}</if>
+            <if test="defaultStatus != null "> and default_status = #{defaultStatus}</if>
+            <if test="freeFreightPoint != null "> and free_freight_point = #{freeFreightPoint}</if>
+            <if test="commentGrowthPoint != null "> and comment_growth_point = #{commentGrowthPoint}</if>
+            <if test="priviledgeFreeFreight != null "> and priviledge_free_freight = #{priviledgeFreeFreight}</if>
+            <if test="priviledgeMemberPrice != null "> and priviledge_member_price = #{priviledgeMemberPrice}</if>
+            <if test="priviledgeBirthday != null "> and priviledge_birthday = #{priviledgeBirthday}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+    </select>
+
+    <select id="selectMemberLevelById" parameterType="Long" resultMap="MemberLevelResult">
+        <include refid="selectMemberLevelVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMemberLevel" parameterType="MemberLevel" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="growthPoint != null">growth_point,</if>
+            <if test="defaultStatus != null">default_status,</if>
+            <if test="freeFreightPoint != null">free_freight_point,</if>
+            <if test="commentGrowthPoint != null">comment_growth_point,</if>
+            <if test="priviledgeFreeFreight != null">priviledge_free_freight,</if>
+            <if test="priviledgeMemberPrice != null">priviledge_member_price,</if>
+            <if test="priviledgeBirthday != null">priviledge_birthday,</if>
+            <if test="note != null">note,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="growthPoint != null">#{growthPoint},</if>
+            <if test="defaultStatus != null">#{defaultStatus},</if>
+            <if test="freeFreightPoint != null">#{freeFreightPoint},</if>
+            <if test="commentGrowthPoint != null">#{commentGrowthPoint},</if>
+            <if test="priviledgeFreeFreight != null">#{priviledgeFreeFreight},</if>
+            <if test="priviledgeMemberPrice != null">#{priviledgeMemberPrice},</if>
+            <if test="priviledgeBirthday != null">#{priviledgeBirthday},</if>
+            <if test="note != null">#{note},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMemberLevel" parameterType="MemberLevel">
+        update ums_member_level
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="growthPoint != null">growth_point = #{growthPoint},</if>
+            <if test="defaultStatus != null">default_status = #{defaultStatus},</if>
+            <if test="freeFreightPoint != null">free_freight_point = #{freeFreightPoint},</if>
+            <if test="commentGrowthPoint != null">comment_growth_point = #{commentGrowthPoint},</if>
+            <if test="priviledgeFreeFreight != null">priviledge_free_freight = #{priviledgeFreeFreight},</if>
+            <if test="priviledgeMemberPrice != null">priviledge_member_price = #{priviledgeMemberPrice},</if>
+            <if test="priviledgeBirthday != null">priviledge_birthday = #{priviledgeBirthday},</if>
+            <if test="note != null">note = #{note},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberLevelById" parameterType="Long">
+        delete from ums_member_level where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberLevelByIds" parameterType="String">
+        delete from ums_member_level where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectDefaultLevel" resultMap="MemberLevelResult">
+        <include refid="selectMemberLevelVo"/> where default_status = 1
+    </select>
+</mapper>

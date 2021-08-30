@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.CouponSpuRelationMapper">
+    
+    <resultMap type="CouponSpuRelation" id="CouponSpuRelationResult">
+        <result property="id"    column="id"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="spuName"    column="spu_name"    />
+    </resultMap>
+
+    <sql id="selectCouponSpuRelationVo">
+        select id, coupon_id, spu_id, spu_name from sms_coupon_spu_relation
+    </sql>
+
+    <select id="selectCouponSpuRelationList" parameterType="CouponSpuRelation" resultMap="CouponSpuRelationResult">
+        <include refid="selectCouponSpuRelationVo"/>
+        <where>  
+            <if test="couponId != null "> and coupon_id = #{couponId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCouponSpuRelationById" parameterType="Long" resultMap="CouponSpuRelationResult">
+        <include refid="selectCouponSpuRelationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCouponSpuRelation" parameterType="CouponSpuRelation" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_coupon_spu_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">coupon_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="spuName != null">spu_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">#{couponId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="spuName != null">#{spuName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCouponSpuRelation" parameterType="CouponSpuRelation">
+        update sms_coupon_spu_relation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="spuName != null">spu_name = #{spuName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCouponSpuRelationById" parameterType="Long">
+        delete from sms_coupon_spu_relation where id = #{id}
+    </delete>
+
+    <delete id="deleteCouponSpuRelationByIds" parameterType="String">
+        delete from sms_coupon_spu_relation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

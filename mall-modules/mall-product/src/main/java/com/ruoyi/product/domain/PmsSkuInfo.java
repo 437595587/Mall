@@ -1,14 +1,15 @@
 package com.ruoyi.product.domain;
 
-import java.math.BigDecimal;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
 import com.ruoyi.common.core.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.math.BigDecimal;
 
 /**
  * sku信息对象 pms_sku_info
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
@@ -59,102 +60,122 @@ public class PmsSkuInfo extends BaseEntity
     @Excel(name = "销量")
     private Long saleCount;
 
-    public void setSkuId(Long skuId) 
+    private BigDecimal priceMin;
+
+    private BigDecimal priceMax;
+
+    public BigDecimal getPriceMin() {
+        return priceMin;
+    }
+
+    public void setPriceMin(BigDecimal priceMin) {
+        this.priceMin = priceMin;
+    }
+
+    public BigDecimal getPriceMax() {
+        return priceMax;
+    }
+
+    public void setPriceMax(BigDecimal priceMax) {
+        this.priceMax = priceMax;
+    }
+
+    public void setSkuId(Long skuId)
     {
         this.skuId = skuId;
     }
 
-    public Long getSkuId() 
+    public Long getSkuId()
     {
         return skuId;
     }
-    public void setSpuId(Long spuId) 
+    public void setSpuId(Long spuId)
     {
         this.spuId = spuId;
     }
 
-    public Long getSpuId() 
+    public Long getSpuId()
     {
         return spuId;
     }
-    public void setSkuName(String skuName) 
+    public void setSkuName(String skuName)
     {
         this.skuName = skuName;
     }
 
-    public String getSkuName() 
+    public String getSkuName()
     {
         return skuName;
     }
-    public void setSkuDesc(String skuDesc) 
+    public void setSkuDesc(String skuDesc)
     {
         this.skuDesc = skuDesc;
     }
 
-    public String getSkuDesc() 
+    public String getSkuDesc()
     {
         return skuDesc;
     }
-    public void setCatalogId(Long catalogId) 
+    public void setCatalogId(Long catalogId)
     {
         this.catalogId = catalogId;
     }
 
-    public Long getCatalogId() 
+    public Long getCatalogId()
     {
         return catalogId;
     }
-    public void setBrandId(Long brandId) 
+    public void setBrandId(Long brandId)
     {
         this.brandId = brandId;
     }
 
-    public Long getBrandId() 
+    public Long getBrandId()
     {
         return brandId;
     }
-    public void setSkuDefaultImg(String skuDefaultImg) 
+    public void setSkuDefaultImg(String skuDefaultImg)
     {
         this.skuDefaultImg = skuDefaultImg;
     }
 
-    public String getSkuDefaultImg() 
+    public String getSkuDefaultImg()
     {
         return skuDefaultImg;
     }
-    public void setSkuTitle(String skuTitle) 
+    public void setSkuTitle(String skuTitle)
     {
         this.skuTitle = skuTitle;
     }
 
-    public String getSkuTitle() 
+    public String getSkuTitle()
     {
         return skuTitle;
     }
-    public void setSkuSubtitle(String skuSubtitle) 
+    public void setSkuSubtitle(String skuSubtitle)
     {
         this.skuSubtitle = skuSubtitle;
     }
 
-    public String getSkuSubtitle() 
+    public String getSkuSubtitle()
     {
         return skuSubtitle;
     }
-    public void setPrice(BigDecimal price) 
+    public void setPrice(BigDecimal price)
     {
         this.price = price;
     }
 
-    public BigDecimal getPrice() 
+    public BigDecimal getPrice()
     {
         return price;
     }
-    public void setSaleCount(Long saleCount) 
+    public void setSaleCount(Long saleCount)
     {
         this.saleCount = saleCount;
     }
 
-    public Long getSaleCount() 
+    public Long getSaleCount()
     {
         return saleCount;
     }

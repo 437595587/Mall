@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.HomeSubjectMapper">
+    
+    <resultMap type="HomeSubject" id="HomeSubjectResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="title"    column="title"    />
+        <result property="subTitle"    column="sub_title"    />
+        <result property="status"    column="status"    />
+        <result property="url"    column="url"    />
+        <result property="sort"    column="sort"    />
+        <result property="img"    column="img"    />
+    </resultMap>
+
+    <sql id="selectHomeSubjectVo">
+        select id, name, title, sub_title, status, url, sort, img from sms_home_subject
+    </sql>
+
+    <select id="selectHomeSubjectList" parameterType="HomeSubject" resultMap="HomeSubjectResult">
+        <include refid="selectHomeSubjectVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="subTitle != null  and subTitle != ''"> and sub_title = #{subTitle}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+        </where>
+    </select>
+    
+    <select id="selectHomeSubjectById" parameterType="Long" resultMap="HomeSubjectResult">
+        <include refid="selectHomeSubjectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHomeSubject" parameterType="HomeSubject" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_home_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="title != null">title,</if>
+            <if test="subTitle != null">sub_title,</if>
+            <if test="status != null">status,</if>
+            <if test="url != null">url,</if>
+            <if test="sort != null">sort,</if>
+            <if test="img != null">img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="title != null">#{title},</if>
+            <if test="subTitle != null">#{subTitle},</if>
+            <if test="status != null">#{status},</if>
+            <if test="url != null">#{url},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="img != null">#{img},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHomeSubject" parameterType="HomeSubject">
+        update sms_home_subject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="subTitle != null">sub_title = #{subTitle},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="img != null">img = #{img},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHomeSubjectById" parameterType="Long">
+        delete from sms_home_subject where id = #{id}
+    </delete>
+
+    <delete id="deleteHomeSubjectByIds" parameterType="String">
+        delete from sms_home_subject where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

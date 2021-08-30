@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.HomeSubjectSpuMapper">
+    
+    <resultMap type="HomeSubjectSpu" id="HomeSubjectSpuResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="subjectId"    column="subject_id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="sort"    column="sort"    />
+    </resultMap>
+
+    <sql id="selectHomeSubjectSpuVo">
+        select id, name, subject_id, spu_id, sort from sms_home_subject_spu
+    </sql>
+
+    <select id="selectHomeSubjectSpuList" parameterType="HomeSubjectSpu" resultMap="HomeSubjectSpuResult">
+        <include refid="selectHomeSubjectSpuVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="subjectId != null "> and subject_id = #{subjectId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectHomeSubjectSpuById" parameterType="Long" resultMap="HomeSubjectSpuResult">
+        <include refid="selectHomeSubjectSpuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHomeSubjectSpu" parameterType="HomeSubjectSpu" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_home_subject_spu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="subjectId != null">subject_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="sort != null">sort,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="subjectId != null">#{subjectId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="sort != null">#{sort},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHomeSubjectSpu" parameterType="HomeSubjectSpu">
+        update sms_home_subject_spu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="subjectId != null">subject_id = #{subjectId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHomeSubjectSpuById" parameterType="Long">
+        delete from sms_home_subject_spu where id = #{id}
+    </delete>
+
+    <delete id="deleteHomeSubjectSpuByIds" parameterType="String">
+        delete from sms_home_subject_spu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

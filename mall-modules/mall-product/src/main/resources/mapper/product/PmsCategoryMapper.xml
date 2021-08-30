@@ -87,4 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{catId}
         </foreach>
     </delete>
+
+    <select id="selectLevel1Categorys" resultMap="PmsCategoryResult">
+        <include refid="selectPmsCategoryVo"/> where parent_cid = 0
+    </select>
 </mapper>

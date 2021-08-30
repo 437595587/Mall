@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.CouponSpuCategoryRelationMapper">
+    
+    <resultMap type="CouponSpuCategoryRelation" id="CouponSpuCategoryRelationResult">
+        <result property="id"    column="id"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="categoryName"    column="category_name"    />
+    </resultMap>
+
+    <sql id="selectCouponSpuCategoryRelationVo">
+        select id, coupon_id, category_id, category_name from sms_coupon_spu_category_relation
+    </sql>
+
+    <select id="selectCouponSpuCategoryRelationList" parameterType="CouponSpuCategoryRelation" resultMap="CouponSpuCategoryRelationResult">
+        <include refid="selectCouponSpuCategoryRelationVo"/>
+        <where>  
+            <if test="couponId != null "> and coupon_id = #{couponId}</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="categoryName != null  and categoryName != ''"> and category_name like concat('%', #{categoryName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCouponSpuCategoryRelationById" parameterType="Long" resultMap="CouponSpuCategoryRelationResult">
+        <include refid="selectCouponSpuCategoryRelationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCouponSpuCategoryRelation" parameterType="CouponSpuCategoryRelation" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_coupon_spu_category_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">coupon_id,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="categoryName != null">category_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">#{couponId},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="categoryName != null">#{categoryName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCouponSpuCategoryRelation" parameterType="CouponSpuCategoryRelation">
+        update sms_coupon_spu_category_relation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="categoryName != null">category_name = #{categoryName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCouponSpuCategoryRelationById" parameterType="Long">
+        delete from sms_coupon_spu_category_relation where id = #{id}
+    </delete>
+
+    <delete id="deleteCouponSpuCategoryRelationByIds" parameterType="String">
+        delete from sms_coupon_spu_category_relation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

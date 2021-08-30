@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsAttrAttrgroupRelationMapper">
-    
+
     <resultMap type="PmsAttrAttrgroupRelation" id="PmsAttrAttrgroupRelationResult">
         <result property="id"    column="id"    />
         <result property="attrId"    column="attr_id"    />
@@ -17,18 +17,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsAttrAttrgroupRelationList" parameterType="PmsAttrAttrgroupRelation" resultMap="PmsAttrAttrgroupRelationResult">
         <include refid="selectPmsAttrAttrgroupRelationVo"/>
-        <where>  
+        <where>
             <if test="attrId != null "> and attr_id = #{attrId}</if>
             <if test="attrGroupId != null "> and attr_group_id = #{attrGroupId}</if>
             <if test="attrSort != null "> and attr_sort = #{attrSort}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsAttrAttrgroupRelationById" parameterType="Long" resultMap="PmsAttrAttrgroupRelationResult">
         <include refid="selectPmsAttrAttrgroupRelationVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertPmsAttrAttrgroupRelation" parameterType="PmsAttrAttrgroupRelation" useGeneratedKeys="true" keyProperty="id">
         insert into pms_attr_attrgroup_relation
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -58,9 +58,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsAttrAttrgroupRelationByIds" parameterType="String">
-        delete from pms_attr_attrgroup_relation where id in 
+        delete from pms_attr_attrgroup_relation where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deletePmsAttrAttrgroupRelationByAttrIds">
+        delete from pms_attr_attrgroup_relation where attr_id in
+        <foreach item="attrId" collection="array" open="(" separator="," close=")">
+            #{attrId}
         </foreach>
     </delete>
 </mapper>

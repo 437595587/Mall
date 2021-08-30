@@ -1,8 +1,10 @@
 package com.ruoyi.product.service;
 
 import com.ruoyi.product.domain.PmsCategory;
+import com.ruoyi.product.domain.vo.Catelog2Vo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分类管理Service接口
@@ -59,4 +61,8 @@ public interface IPmsCategoryService
      * @return 结果
      */
     public int deletePmsCategoryByCatId(Long catId);
+
+    List<PmsCategory> selectLevel1Categorys();
+
+    Map<String, List<Catelog2Vo>> selectCatalogJson();
 }

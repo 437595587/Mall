@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MemberCollectSpuMapper">
+    
+    <resultMap type="MemberCollectSpu" id="MemberCollectSpuResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="spuName"    column="spu_name"    />
+        <result property="spuImg"    column="spu_img"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectMemberCollectSpuVo">
+        select id, member_id, spu_id, spu_name, spu_img, create_time from ums_member_collect_spu
+    </sql>
+
+    <select id="selectMemberCollectSpuList" parameterType="MemberCollectSpu" resultMap="MemberCollectSpuResult">
+        <include refid="selectMemberCollectSpuVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="spuImg != null  and spuImg != ''"> and spu_img = #{spuImg}</if>
+        </where>
+    </select>
+    
+    <select id="selectMemberCollectSpuById" parameterType="Long" resultMap="MemberCollectSpuResult">
+        <include refid="selectMemberCollectSpuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMemberCollectSpu" parameterType="MemberCollectSpu">
+        insert into ums_member_collect_spu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="memberId != null">member_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="spuName != null">spu_name,</if>
+            <if test="spuImg != null">spu_img,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="memberId != null">#{memberId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="spuName != null">#{spuName},</if>
+            <if test="spuImg != null">#{spuImg},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMemberCollectSpu" parameterType="MemberCollectSpu">
+        update ums_member_collect_spu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="spuName != null">spu_name = #{spuName},</if>
+            <if test="spuImg != null">spu_img = #{spuImg},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberCollectSpuById" parameterType="Long">
+        delete from ums_member_collect_spu where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberCollectSpuByIds" parameterType="String">
+        delete from ums_member_collect_spu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

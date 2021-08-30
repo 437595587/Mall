@@ -100,13 +100,6 @@
                 <version>${spring-boot.mybatis}</version>
             </dependency>
 
-            <!-- Mybatis-plus 依赖配置-->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${spring-boot.mybatis-plus}</version>
-            </dependency>
-
             <!-- Swagger 依赖配置 -->
             <dependency>
                 <groupId>io.swagger</groupId>
@@ -244,6 +237,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 系统接口 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-api-mall</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -254,7 +254,6 @@
         <module>ruoyi-modules</module>
         <module>ruoyi-api</module>
         <module>ruoyi-common</module>
-        <module>mall-modules</module>
         <module>mall-modules</module>
     </modules>
     <packaging>pom</packaging>

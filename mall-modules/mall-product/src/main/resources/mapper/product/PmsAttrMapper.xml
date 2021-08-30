@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsAttrMapper">
-    
+
     <resultMap type="PmsAttr" id="PmsAttrResult">
         <result property="attrId"    column="attr_id"    />
         <result property="attrName"    column="attr_name"    />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsAttrList" parameterType="PmsAttr" resultMap="PmsAttrResult">
         <include refid="selectPmsAttrVo"/>
-        <where>  
+        <where>
             <if test="attrName != null  and attrName != ''"> and attr_name like concat('%', #{attrName}, '%')</if>
             <if test="searchType != null "> and search_type = #{searchType}</if>
             <if test="valueType != null "> and value_type = #{valueType}</if>
@@ -35,12 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="showDesc != null "> and show_desc = #{showDesc}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsAttrByAttrId" parameterType="Long" resultMap="PmsAttrResult">
         <include refid="selectPmsAttrVo"/>
         where attr_id = #{attrId}
     </select>
-        
+
     <insert id="insertPmsAttr" parameterType="PmsAttr" useGeneratedKeys="true" keyProperty="attrId">
         insert into pms_attr
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -88,9 +88,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsAttrByAttrIds" parameterType="String">
-        delete from pms_attr where attr_id in 
+        delete from pms_attr where attr_id in
         <foreach item="attrId" collection="array" open="(" separator="," close=")">
             #{attrId}
         </foreach>
     </delete>
+
+    <select id="selectSearchAttrIds" resultType="java.lang.Long">
+        select attr_id from pms_attr where attr_id in
+        <foreach collection="list" item="attrId" open="(" separator="," close=")">
+            #{attrId}
+        </foreach>
+        and search_type = 1
+    </select>
 </mapper>

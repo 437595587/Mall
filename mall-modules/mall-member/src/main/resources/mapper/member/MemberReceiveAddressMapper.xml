@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MemberReceiveAddressMapper">
+    
+    <resultMap type="MemberReceiveAddress" id="MemberReceiveAddressResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="postCode"    column="post_code"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="region"    column="region"    />
+        <result property="detailAddress"    column="detail_address"    />
+        <result property="areacode"    column="areacode"    />
+        <result property="defaultStatus"    column="default_status"    />
+    </resultMap>
+
+    <sql id="selectMemberReceiveAddressVo">
+        select id, member_id, name, phone, post_code, province, city, region, detail_address, areacode, default_status from ums_member_receive_address
+    </sql>
+
+    <select id="selectMemberReceiveAddressList" parameterType="MemberReceiveAddress" resultMap="MemberReceiveAddressResult">
+        <include refid="selectMemberReceiveAddressVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="postCode != null  and postCode != ''"> and post_code = #{postCode}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="detailAddress != null  and detailAddress != ''"> and detail_address = #{detailAddress}</if>
+            <if test="areacode != null  and areacode != ''"> and areacode = #{areacode}</if>
+            <if test="defaultStatus != null "> and default_status = #{defaultStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectMemberReceiveAddressById" parameterType="Long" resultMap="MemberReceiveAddressResult">
+        <include refid="selectMemberReceiveAddressVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMemberReceiveAddress" parameterType="MemberReceiveAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_receive_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="postCode != null">post_code,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="region != null">region,</if>
+            <if test="detailAddress != null">detail_address,</if>
+            <if test="areacode != null">areacode,</if>
+            <if test="defaultStatus != null">default_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="postCode != null">#{postCode},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="region != null">#{region},</if>
+            <if test="detailAddress != null">#{detailAddress},</if>
+            <if test="areacode != null">#{areacode},</if>
+            <if test="defaultStatus != null">#{defaultStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMemberReceiveAddress" parameterType="MemberReceiveAddress">
+        update ums_member_receive_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="postCode != null">post_code = #{postCode},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="region != null">region = #{region},</if>
+            <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+            <if test="areacode != null">areacode = #{areacode},</if>
+            <if test="defaultStatus != null">default_status = #{defaultStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberReceiveAddressById" parameterType="Long">
+        delete from ums_member_receive_address where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberReceiveAddressByIds" parameterType="String">
+        delete from ums_member_receive_address where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

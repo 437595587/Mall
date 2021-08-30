@@ -1,19 +1,20 @@
 package com.ruoyi.product.service;
 
-import java.util.List;
 import com.ruoyi.product.domain.PmsAttrAttrgroupRelation;
+
+import java.util.List;
 
 /**
  * 属性&属性分组关联Service接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
-public interface IPmsAttrAttrgroupRelationService 
+public interface IPmsAttrAttrgroupRelationService
 {
     /**
      * 查询属性&属性分组关联
-     * 
+     *
      * @param id 属性&属性分组关联主键
      * @return 属性&属性分组关联
      */
@@ -21,7 +22,7 @@ public interface IPmsAttrAttrgroupRelationService
 
     /**
      * 查询属性&属性分组关联列表
-     * 
+     *
      * @param pmsAttrAttrgroupRelation 属性&属性分组关联
      * @return 属性&属性分组关联集合
      */
@@ -29,7 +30,7 @@ public interface IPmsAttrAttrgroupRelationService
 
     /**
      * 新增属性&属性分组关联
-     * 
+     *
      * @param pmsAttrAttrgroupRelation 属性&属性分组关联
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IPmsAttrAttrgroupRelationService
 
     /**
      * 修改属性&属性分组关联
-     * 
+     *
      * @param pmsAttrAttrgroupRelation 属性&属性分组关联
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IPmsAttrAttrgroupRelationService
 
     /**
      * 批量删除属性&属性分组关联
-     * 
+     *
      * @param ids 需要删除的属性&属性分组关联主键集合
      * @return 结果
      */
@@ -53,9 +54,16 @@ public interface IPmsAttrAttrgroupRelationService
 
     /**
      * 删除属性&属性分组关联信息
-     * 
+     *
      * @param id 属性&属性分组关联主键
      * @return 结果
      */
     public int deletePmsAttrAttrgroupRelationById(Long id);
+
+    /**
+     * 批量属性&属性分组关联
+     *
+     * @param attrIds 属性主键列表
+     */
+    public int deletePmsAttrAttrgroupRelationByAttrIds(Long[] attrIds);
 }

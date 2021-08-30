@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MemberMapper">
+
+    <resultMap type="Member" id="MemberResult">
+        <result property="id"    column="id"    />
+        <result property="levelId"    column="level_id"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+        <result property="nickname"    column="nickname"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="email"    column="email"    />
+        <result property="header"    column="header"    />
+        <result property="gender"    column="gender"    />
+        <result property="birth"    column="birth"    />
+        <result property="city"    column="city"    />
+        <result property="job"    column="job"    />
+        <result property="sign"    column="sign"    />
+        <result property="sourceType"    column="source_type"    />
+        <result property="integration"    column="integration"    />
+        <result property="growth"    column="growth"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="socialUid"    column="social_uid"    />
+        <result property="accessToken"    column="access_token"    />
+        <result property="expiresIn"    column="expires_in"    />
+    </resultMap>
+
+    <sql id="selectMemberVo">
+        select id, level_id, username, password, nickname, mobile, email, header, gender, birth, city, job, sign, source_type, integration, growth, status, create_time, social_uid, access_token, expires_in from ums_member
+    </sql>
+
+    <select id="selectMemberList" parameterType="Member" resultMap="MemberResult">
+        <include refid="selectMemberVo"/>
+        <where>
+            <if test="levelId != null "> and level_id = #{levelId}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="nickname != null  and nickname != ''"> and nickname like concat('%', #{nickname}, '%')</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="header != null  and header != ''"> and header = #{header}</if>
+            <if test="gender != null "> and gender = #{gender}</if>
+            <if test="birth != null "> and birth = #{birth}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="sign != null  and sign != ''"> and sign = #{sign}</if>
+            <if test="sourceType != null "> and source_type = #{sourceType}</if>
+            <if test="integration != null "> and integration = #{integration}</if>
+            <if test="growth != null "> and growth = #{growth}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="socialUid != null  and socialUid != ''"> and social_uid = #{socialUid}</if>
+            <if test="accessToken != null  and accessToken != ''"> and access_token = #{accessToken}</if>
+            <if test="expiresIn != null  and expiresIn != ''"> and expires_in = #{expiresIn}</if>
+        </where>
+    </select>
+
+    <select id="selectMemberById" parameterType="Long" resultMap="MemberResult">
+        <include refid="selectMemberVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="levelId != null">level_id,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="nickname != null">nickname,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="email != null">email,</if>
+            <if test="header != null">header,</if>
+            <if test="gender != null">gender,</if>
+            <if test="birth != null">birth,</if>
+            <if test="city != null">city,</if>
+            <if test="job != null">job,</if>
+            <if test="sign != null">sign,</if>
+            <if test="sourceType != null">source_type,</if>
+            <if test="integration != null">integration,</if>
+            <if test="growth != null">growth,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="socialUid != null">social_uid,</if>
+            <if test="accessToken != null">access_token,</if>
+            <if test="expiresIn != null">expires_in,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="levelId != null">#{levelId},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="nickname != null">#{nickname},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="email != null">#{email},</if>
+            <if test="header != null">#{header},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="birth != null">#{birth},</if>
+            <if test="city != null">#{city},</if>
+            <if test="job != null">#{job},</if>
+            <if test="sign != null">#{sign},</if>
+            <if test="sourceType != null">#{sourceType},</if>
+            <if test="integration != null">#{integration},</if>
+            <if test="growth != null">#{growth},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="socialUid != null">#{socialUid},</if>
+            <if test="accessToken != null">#{accessToken},</if>
+            <if test="expiresIn != null">#{expiresIn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMember" parameterType="Member">
+        update ums_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="levelId != null">level_id = #{levelId},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="header != null">header = #{header},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="sign != null">sign = #{sign},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+            <if test="integration != null">integration = #{integration},</if>
+            <if test="growth != null">growth = #{growth},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="socialUid != null">social_uid = #{socialUid},</if>
+            <if test="accessToken != null">access_token = #{accessToken},</if>
+            <if test="expiresIn != null">expires_in = #{expiresIn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMemberById" parameterType="Long">
+        delete from ums_member where id = #{id}
+    </delete>
+
+    <delete id="deleteMemberByIds" parameterType="String">
+        delete from ums_member where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectCountByPhone" resultType="int">
+        select count(*) from ums_member where mobile = #{phone}
+    </select>
+
+    <select id="selectCountByUsername" resultType="int">
+        select count(*) from ums_member where username = #{username}
+    </select>
+
+    <select id="selectMemberByLoginAccount" resultMap="MemberResult">
+        <include refid="selectMemberVo"/> where mobile = #{loginAccount} or username = #{loginAccount}
+    </select>
+
+    <select id="selectCountBySocialUid" resultMap="MemberResult">
+        <include refid="selectMemberVo"/> where social_uid = #{id}
+    </select>
+</mapper>

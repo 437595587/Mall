@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.CouponMapper">
+    
+    <resultMap type="Coupon" id="CouponResult">
+        <result property="id"    column="id"    />
+        <result property="couponType"    column="coupon_type"    />
+        <result property="couponImg"    column="coupon_img"    />
+        <result property="couponName"    column="coupon_name"    />
+        <result property="num"    column="num"    />
+        <result property="amount"    column="amount"    />
+        <result property="perLimit"    column="per_limit"    />
+        <result property="minPoint"    column="min_point"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="useType"    column="use_type"    />
+        <result property="note"    column="note"    />
+        <result property="publishCount"    column="publish_count"    />
+        <result property="useCount"    column="use_count"    />
+        <result property="receiveCount"    column="receive_count"    />
+        <result property="enableStartTime"    column="enable_start_time"    />
+        <result property="enableEndTime"    column="enable_end_time"    />
+        <result property="code"    column="code"    />
+        <result property="memberLevel"    column="member_level"    />
+        <result property="publish"    column="publish"    />
+    </resultMap>
+
+    <sql id="selectCouponVo">
+        select id, coupon_type, coupon_img, coupon_name, num, amount, per_limit, min_point, start_time, end_time, use_type, note, publish_count, use_count, receive_count, enable_start_time, enable_end_time, code, member_level, publish from sms_coupon
+    </sql>
+
+    <select id="selectCouponList" parameterType="Coupon" resultMap="CouponResult">
+        <include refid="selectCouponVo"/>
+        <where>  
+            <if test="couponType != null "> and coupon_type = #{couponType}</if>
+            <if test="couponImg != null  and couponImg != ''"> and coupon_img = #{couponImg}</if>
+            <if test="couponName != null  and couponName != ''"> and coupon_name like concat('%', #{couponName}, '%')</if>
+            <if test="num != null "> and num = #{num}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="perLimit != null "> and per_limit = #{perLimit}</if>
+            <if test="minPoint != null "> and min_point = #{minPoint}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="useType != null "> and use_type = #{useType}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="publishCount != null "> and publish_count = #{publishCount}</if>
+            <if test="useCount != null "> and use_count = #{useCount}</if>
+            <if test="receiveCount != null "> and receive_count = #{receiveCount}</if>
+            <if test="enableStartTime != null "> and enable_start_time = #{enableStartTime}</if>
+            <if test="enableEndTime != null "> and enable_end_time = #{enableEndTime}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="memberLevel != null "> and member_level = #{memberLevel}</if>
+            <if test="publish != null "> and publish = #{publish}</if>
+        </where>
+    </select>
+    
+    <select id="selectCouponById" parameterType="Long" resultMap="CouponResult">
+        <include refid="selectCouponVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoupon" parameterType="Coupon" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponType != null">coupon_type,</if>
+            <if test="couponImg != null">coupon_img,</if>
+            <if test="couponName != null">coupon_name,</if>
+            <if test="num != null">num,</if>
+            <if test="amount != null">amount,</if>
+            <if test="perLimit != null">per_limit,</if>
+            <if test="minPoint != null">min_point,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="useType != null">use_type,</if>
+            <if test="note != null">note,</if>
+            <if test="publishCount != null">publish_count,</if>
+            <if test="useCount != null">use_count,</if>
+            <if test="receiveCount != null">receive_count,</if>
+            <if test="enableStartTime != null">enable_start_time,</if>
+            <if test="enableEndTime != null">enable_end_time,</if>
+            <if test="code != null">code,</if>
+            <if test="memberLevel != null">member_level,</if>
+            <if test="publish != null">publish,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponType != null">#{couponType},</if>
+            <if test="couponImg != null">#{couponImg},</if>
+            <if test="couponName != null">#{couponName},</if>
+            <if test="num != null">#{num},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="perLimit != null">#{perLimit},</if>
+            <if test="minPoint != null">#{minPoint},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="useType != null">#{useType},</if>
+            <if test="note != null">#{note},</if>
+            <if test="publishCount != null">#{publishCount},</if>
+            <if test="useCount != null">#{useCount},</if>
+            <if test="receiveCount != null">#{receiveCount},</if>
+            <if test="enableStartTime != null">#{enableStartTime},</if>
+            <if test="enableEndTime != null">#{enableEndTime},</if>
+            <if test="code != null">#{code},</if>
+            <if test="memberLevel != null">#{memberLevel},</if>
+            <if test="publish != null">#{publish},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoupon" parameterType="Coupon">
+        update sms_coupon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="couponType != null">coupon_type = #{couponType},</if>
+            <if test="couponImg != null">coupon_img = #{couponImg},</if>
+            <if test="couponName != null">coupon_name = #{couponName},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="perLimit != null">per_limit = #{perLimit},</if>
+            <if test="minPoint != null">min_point = #{minPoint},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="useType != null">use_type = #{useType},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="publishCount != null">publish_count = #{publishCount},</if>
+            <if test="useCount != null">use_count = #{useCount},</if>
+            <if test="receiveCount != null">receive_count = #{receiveCount},</if>
+            <if test="enableStartTime != null">enable_start_time = #{enableStartTime},</if>
+            <if test="enableEndTime != null">enable_end_time = #{enableEndTime},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="memberLevel != null">member_level = #{memberLevel},</if>
+            <if test="publish != null">publish = #{publish},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCouponById" parameterType="Long">
+        delete from sms_coupon where id = #{id}
+    </delete>
+
+    <delete id="deleteCouponByIds" parameterType="String">
+        delete from sms_coupon where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

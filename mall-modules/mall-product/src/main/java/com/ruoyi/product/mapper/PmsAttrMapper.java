@@ -1,19 +1,20 @@
 package com.ruoyi.product.mapper;
 
-import java.util.List;
 import com.ruoyi.product.domain.PmsAttr;
+
+import java.util.List;
 
 /**
  * 商品属性Mapper接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-17
  */
-public interface PmsAttrMapper 
+public interface PmsAttrMapper
 {
     /**
      * 查询商品属性
-     * 
+     *
      * @param attrId 商品属性主键
      * @return 商品属性
      */
@@ -21,7 +22,7 @@ public interface PmsAttrMapper
 
     /**
      * 查询商品属性列表
-     * 
+     *
      * @param pmsAttr 商品属性
      * @return 商品属性集合
      */
@@ -29,7 +30,7 @@ public interface PmsAttrMapper
 
     /**
      * 新增商品属性
-     * 
+     *
      * @param pmsAttr 商品属性
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface PmsAttrMapper
 
     /**
      * 修改商品属性
-     * 
+     *
      * @param pmsAttr 商品属性
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface PmsAttrMapper
 
     /**
      * 删除商品属性
-     * 
+     *
      * @param attrId 商品属性主键
      * @return 结果
      */
@@ -53,9 +54,11 @@ public interface PmsAttrMapper
 
     /**
      * 批量删除商品属性
-     * 
+     *
      * @param attrIds 需要删除的数据主键集合
      * @return 结果
      */
     public int deletePmsAttrByAttrIds(Long[] attrIds);
+
+    List<Long> selectSearchAttrIds(List<Long> attrIds);
 }

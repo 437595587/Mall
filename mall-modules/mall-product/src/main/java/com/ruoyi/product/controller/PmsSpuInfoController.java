@@ -8,6 +8,7 @@ import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.PreAuthorize;
 import com.ruoyi.product.domain.PmsSpuInfo;
+import com.ruoyi.product.domain.vo.spuSaveVo.SpuSaveVo;
 import com.ruoyi.product.service.IPmsSpuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,17 @@ public class PmsSpuInfoController extends BaseController
     @Autowired
     private IPmsSpuInfoService pmsSpuInfoService;
 
+    @PreAuthorize(hasPermi = "product:spuInfo:up")
+    @Log(title = "spu上架", businessType = BusinessType.OTHER)
+    @PostMapping("/up/{spuId}")
+    public AjaxResult up(@PathVariable Long spuId) {
+        return toAjax(pmsSpuInfoService.spuUp(spuId));
+    }
+
     /**
      * 查询spu信息列表
      */
-    @PreAuthorize(hasPermi = "product:info:list")
+    @PreAuthorize(hasPermi = "product:spuInfo:list")
     @GetMapping("/list")
     public TableDataInfo list(PmsSpuInfo pmsSpuInfo)
     {
@@ -44,7 +52,7 @@ public class PmsSpuInfoController extends BaseController
     /**
      * 导出spu信息列表
      */
-    @PreAuthorize(hasPermi = "product:info:export")
+    @PreAuthorize(hasPermi = "product:spuInfo:export")
     @Log(title = "spu信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, PmsSpuInfo pmsSpuInfo) throws IOException
@@ -57,7 +65,7 @@ public class PmsSpuInfoController extends BaseController
     /**
      * 获取spu信息详细信息
      */
-    @PreAuthorize(hasPermi = "product:info:query")
+    @PreAuthorize(hasPermi = "product:spuInfo:query")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -67,18 +75,18 @@ public class PmsSpuInfoController extends BaseController
     /**
      * 新增spu信息
      */
-    @PreAuthorize(hasPermi = "product:info:add")
+    @PreAuthorize(hasPermi = "product:spuInfo:add")
     @Log(title = "spu信息", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody PmsSpuInfo pmsSpuInfo)
+    public AjaxResult add(@RequestBody SpuSaveVo spuSaveVo)
     {
-        return toAjax(pmsSpuInfoService.insertPmsSpuInfo(pmsSpuInfo));
+        return toAjax(pmsSpuInfoService.insertPmsSpuInfo(spuSaveVo));
     }
 
     /**
      * 修改spu信息
      */
-    @PreAuthorize(hasPermi = "product:info:edit")
+    @PreAuthorize(hasPermi = "product:spuInfo:edit")
     @Log(title = "spu信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PmsSpuInfo pmsSpuInfo)
@@ -89,7 +97,7 @@ public class PmsSpuInfoController extends BaseController
     /**
      * 删除spu信息
      */
-    @PreAuthorize(hasPermi = "product:info:remove")
+    @PreAuthorize(hasPermi = "product:spuInfo:remove")
     @Log(title = "spu信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

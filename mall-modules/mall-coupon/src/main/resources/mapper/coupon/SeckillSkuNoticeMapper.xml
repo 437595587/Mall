@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coupon.mapper.SeckillSkuNoticeMapper">
+    
+    <resultMap type="SeckillSkuNotice" id="SeckillSkuNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="sessionId"    column="session_id"    />
+        <result property="subcribeTime"    column="subcribe_time"    />
+        <result property="sendTime"    column="send_time"    />
+        <result property="noticeType"    column="notice_type"    />
+    </resultMap>
+
+    <sql id="selectSeckillSkuNoticeVo">
+        select id, member_id, sku_id, session_id, subcribe_time, send_time, notice_type from sms_seckill_sku_notice
+    </sql>
+
+    <select id="selectSeckillSkuNoticeList" parameterType="SeckillSkuNotice" resultMap="SeckillSkuNoticeResult">
+        <include refid="selectSeckillSkuNoticeVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="sessionId != null "> and session_id = #{sessionId}</if>
+            <if test="subcribeTime != null "> and subcribe_time = #{subcribeTime}</if>
+            <if test="sendTime != null "> and send_time = #{sendTime}</if>
+            <if test="noticeType != null "> and notice_type = #{noticeType}</if>
+        </where>
+    </select>
+    
+    <select id="selectSeckillSkuNoticeById" parameterType="Long" resultMap="SeckillSkuNoticeResult">
+        <include refid="selectSeckillSkuNoticeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSeckillSkuNotice" parameterType="SeckillSkuNotice" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_seckill_sku_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="sessionId != null">session_id,</if>
+            <if test="subcribeTime != null">subcribe_time,</if>
+            <if test="sendTime != null">send_time,</if>
+            <if test="noticeType != null">notice_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="sessionId != null">#{sessionId},</if>
+            <if test="subcribeTime != null">#{subcribeTime},</if>
+            <if test="sendTime != null">#{sendTime},</if>
+            <if test="noticeType != null">#{noticeType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSeckillSkuNotice" parameterType="SeckillSkuNotice">
+        update sms_seckill_sku_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="sessionId != null">session_id = #{sessionId},</if>
+            <if test="subcribeTime != null">subcribe_time = #{subcribeTime},</if>
+            <if test="sendTime != null">send_time = #{sendTime},</if>
+            <if test="noticeType != null">notice_type = #{noticeType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSeckillSkuNoticeById" parameterType="Long">
+        delete from sms_seckill_sku_notice where id = #{id}
+    </delete>
+
+    <delete id="deleteSeckillSkuNoticeByIds" parameterType="String">
+        delete from sms_seckill_sku_notice where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,23 +1,28 @@
 package com.ruoyi.common.redis.configure;
 
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * redis配置
- * 
+ *
  * @author ruoyi
  */
+@EnableConfigurationProperties(CacheProperties.class)
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport
@@ -28,13 +33,7 @@ public class RedisConfig extends CachingConfigurerSupport
     {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-
-        FastJson2JsonRedisSerializer serializer = new FastJson2JsonRedisSerializer(Object.class);
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        serializer.setObjectMapper(mapper);
+        FastJson2JsonRedisSerializer serializer = getSerializer();
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
@@ -46,5 +45,36 @@ public class RedisConfig extends CachingConfigurerSupport
 
         template.afterPropertiesSet();
         return template;
+    }
+
+    @Bean
+    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+        FastJson2JsonRedisSerializer<Object> serializer = getSerializer();
+        config = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
+        config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
+        CacheProperties.Redis redisProperties = cacheProperties.getRedis();
+        if (redisProperties.getTimeToLive() != null) {
+            config = config.entryTtl(redisProperties.getTimeToLive());
+        }
+        if (redisProperties.getKeyPrefix() != null) {
+            config = config.prefixCacheNameWith(redisProperties.getKeyPrefix());
+        }
+        if (!redisProperties.isCacheNullValues()) {
+            config = config.disableCachingNullValues();
+        }
+        if (!redisProperties.isUseKeyPrefix()) {
+            config = config.disableKeyPrefix();
+        }
+        return config;
+    }
+
+    private FastJson2JsonRedisSerializer<Object> getSerializer() {
+        FastJson2JsonRedisSerializer<Object> serializer = new FastJson2JsonRedisSerializer<>(Object.class);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        serializer.setObjectMapper(mapper);
+        return serializer;
     }
 }
