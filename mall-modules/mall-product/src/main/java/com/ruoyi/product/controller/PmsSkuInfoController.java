@@ -1,5 +1,6 @@
 package com.ruoyi.product.controller;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,6 +30,12 @@ public class PmsSkuInfoController extends BaseController
 {
     @Autowired
     private IPmsSkuInfoService pmsSkuInfoService;
+
+    @GetMapping("/{skuId}/price")
+    public R<BigDecimal> getSkuPrice(@PathVariable("skuId") Long skuId) {
+        PmsSkuInfo pmsSkuInfo = pmsSkuInfoService.selectPmsSkuInfoBySkuId(skuId);
+        return R.ok(pmsSkuInfo.getPrice());
+    }
 
     /**
      * 查询sku信息列表
@@ -57,11 +65,11 @@ public class PmsSkuInfoController extends BaseController
     /**
      * 获取sku信息详细信息
      */
-    @PreAuthorize(hasPermi = "product:skuInfo:query")
+    // @PreAuthorize(hasPermi = "product:skuInfo:query")
     @GetMapping(value = "/{skuId}")
-    public AjaxResult getInfo(@PathVariable("skuId") Long skuId)
+    public R<PmsSkuInfo> getInfo(@PathVariable("skuId") Long skuId)
     {
-        return AjaxResult.success(pmsSkuInfoService.selectPmsSkuInfoBySkuId(skuId));
+        return R.ok(pmsSkuInfoService.selectPmsSkuInfoBySkuId(skuId));
     }
 
     /**

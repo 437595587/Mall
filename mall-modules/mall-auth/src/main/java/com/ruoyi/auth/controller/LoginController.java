@@ -98,7 +98,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(UserLoginVo vo, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String login(UserLoginVo vo, RedirectAttributes redirectAttributes) {
         //远程登录
         UserLoginTo to = new UserLoginTo();
         BeanUtils.copyBeanProp(to, vo);
@@ -106,7 +106,7 @@ public class LoginController {
         if (r.getCode() == 200) {
             //成功
             Member data = r.getData();
-            session.setAttribute(AuthConstant.LOGIN_USER, data);
+            redirectAttributes.addFlashAttribute(AuthConstant.LOGIN_USER, data);
             return "redirect:http://mall.com";
         } else {
             Map<String, String> errors = new HashMap<>();

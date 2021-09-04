@@ -20,6 +20,7 @@
         <module>mall-test-sso-client</module>
         <module>mall-test-sso-client2</module>
         <module>mall-cart</module>
+        <module>mall-order</module>
     </modules>
 
     <artifactId>mall-modules</artifactId>

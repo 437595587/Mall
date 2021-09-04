@@ -76,4 +76,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectSkuHasStock" resultType="java.lang.Long">
         select sum(stock-stock_locked) from wms_ware_sku where sku_id = #{skuId}
     </select>
+
+    <select id="listWareIdHasSkuStock" resultType="java.lang.Long">
+        select ware_id from wms_ware_sku where sku_id = #{skuId} and stock-stock_locked>0
+    </select>
+
+    <update id="lockSkuStock">
+        update wms_ware_sku set stock_locked = stock_locked + #{num}
+        where sku_id = #{skuId} and ware_id = #{wareId} and stock - stock_locked >= #{num}
+    </update>
+
+    <update id="unlockStock">
+        update wms_ware_sku set stock_locked = stock_locked - #{num}
+        where sku_id = #{skuId} and ware_id = #{wareId}
+    </update>
 </mapper>

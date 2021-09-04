@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -22,18 +21,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  *
  * @author ruoyi
  */
-@EnableConfigurationProperties(CacheProperties.class)
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport
 {
     @Bean
-    @SuppressWarnings(value = { "unchecked", "rawtypes" })
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory)
-    {
+    @SuppressWarnings(value = {"unchecked", "rawtypes"})
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory, FastJson2JsonRedisSerializer<Object> serializer) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        FastJson2JsonRedisSerializer serializer = getSerializer();
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
@@ -48,9 +44,8 @@ public class RedisConfig extends CachingConfigurerSupport
     }
 
     @Bean
-    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
+    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties, FastJson2JsonRedisSerializer<Object> serializer) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        FastJson2JsonRedisSerializer<Object> serializer = getSerializer();
         config = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
         config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
         CacheProperties.Redis redisProperties = cacheProperties.getRedis();
@@ -69,7 +64,8 @@ public class RedisConfig extends CachingConfigurerSupport
         return config;
     }
 
-    private FastJson2JsonRedisSerializer<Object> getSerializer() {
+    @Bean("serializer")
+    public FastJson2JsonRedisSerializer<Object> getSerializer() {
         FastJson2JsonRedisSerializer<Object> serializer = new FastJson2JsonRedisSerializer<>(Object.class);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);

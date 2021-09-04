@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.ware.mapper.WareOrderTaskMapper">
-    
+
     <resultMap type="WareOrderTask" id="WareOrderTaskResult">
         <result property="id"    column="id"    />
         <result property="orderId"    column="order_id"    />
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectWareOrderTaskList" parameterType="WareOrderTask" resultMap="WareOrderTaskResult">
         <include refid="selectWareOrderTaskVo"/>
-        <where>  
+        <where>
             <if test="orderId != null "> and order_id = #{orderId}</if>
             <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
             <if test="consignee != null  and consignee != ''"> and consignee = #{consignee}</if>
@@ -42,12 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskComment != null  and taskComment != ''"> and task_comment = #{taskComment}</if>
         </where>
     </select>
-    
+
     <select id="selectWareOrderTaskById" parameterType="Long" resultMap="WareOrderTaskResult">
         <include refid="selectWareOrderTaskVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertWareOrderTask" parameterType="WareOrderTask" useGeneratedKeys="true" keyProperty="id">
         insert into wms_ware_order_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -107,9 +107,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteWareOrderTaskByIds" parameterType="String">
-        delete from wms_ware_order_task where id in 
+        delete from wms_ware_order_task where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectOrderTaskByOrderSn" resultType="com.ruoyi.ware.domain.WareOrderTask">
+        <include refid="selectWareOrderTaskVo"/> where order_sn = #{orderSn}
+    </select>
 </mapper>

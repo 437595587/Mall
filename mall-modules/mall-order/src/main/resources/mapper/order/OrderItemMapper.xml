@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OrderItemMapper">
+    
+    <resultMap type="OrderItem" id="OrderItemResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="spuName"    column="spu_name"    />
+        <result property="spuPic"    column="spu_pic"    />
+        <result property="spuBrand"    column="spu_brand"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="skuName"    column="sku_name"    />
+        <result property="skuPic"    column="sku_pic"    />
+        <result property="skuPrice"    column="sku_price"    />
+        <result property="skuQuantity"    column="sku_quantity"    />
+        <result property="skuAttrsVals"    column="sku_attrs_vals"    />
+        <result property="promotionAmount"    column="promotion_amount"    />
+        <result property="couponAmount"    column="coupon_amount"    />
+        <result property="integrationAmount"    column="integration_amount"    />
+        <result property="realAmount"    column="real_amount"    />
+        <result property="giftIntegration"    column="gift_integration"    />
+        <result property="giftGrowth"    column="gift_growth"    />
+    </resultMap>
+
+    <sql id="selectOrderItemVo">
+        select id, order_id, order_sn, spu_id, spu_name, spu_pic, spu_brand, category_id, sku_id, sku_name, sku_pic, sku_price, sku_quantity, sku_attrs_vals, promotion_amount, coupon_amount, integration_amount, real_amount, gift_integration, gift_growth from oms_order_item
+    </sql>
+
+    <select id="selectOrderItemList" parameterType="OrderItem" resultMap="OrderItemResult">
+        <include refid="selectOrderItemVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
+            <if test="spuPic != null  and spuPic != ''"> and spu_pic = #{spuPic}</if>
+            <if test="spuBrand != null  and spuBrand != ''"> and spu_brand = #{spuBrand}</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuPic != null  and skuPic != ''"> and sku_pic = #{skuPic}</if>
+            <if test="skuPrice != null "> and sku_price = #{skuPrice}</if>
+            <if test="skuQuantity != null "> and sku_quantity = #{skuQuantity}</if>
+            <if test="skuAttrsVals != null  and skuAttrsVals != ''"> and sku_attrs_vals = #{skuAttrsVals}</if>
+            <if test="promotionAmount != null "> and promotion_amount = #{promotionAmount}</if>
+            <if test="couponAmount != null "> and coupon_amount = #{couponAmount}</if>
+            <if test="integrationAmount != null "> and integration_amount = #{integrationAmount}</if>
+            <if test="realAmount != null "> and real_amount = #{realAmount}</if>
+            <if test="giftIntegration != null "> and gift_integration = #{giftIntegration}</if>
+            <if test="giftGrowth != null "> and gift_growth = #{giftGrowth}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderItemById" parameterType="Long" resultMap="OrderItemResult">
+        <include refid="selectOrderItemVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderItem" parameterType="OrderItem" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="spuName != null">spu_name,</if>
+            <if test="spuPic != null">spu_pic,</if>
+            <if test="spuBrand != null">spu_brand,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuPic != null">sku_pic,</if>
+            <if test="skuPrice != null">sku_price,</if>
+            <if test="skuQuantity != null">sku_quantity,</if>
+            <if test="skuAttrsVals != null">sku_attrs_vals,</if>
+            <if test="promotionAmount != null">promotion_amount,</if>
+            <if test="couponAmount != null">coupon_amount,</if>
+            <if test="integrationAmount != null">integration_amount,</if>
+            <if test="realAmount != null">real_amount,</if>
+            <if test="giftIntegration != null">gift_integration,</if>
+            <if test="giftGrowth != null">gift_growth,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="spuName != null">#{spuName},</if>
+            <if test="spuPic != null">#{spuPic},</if>
+            <if test="spuBrand != null">#{spuBrand},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuPic != null">#{skuPic},</if>
+            <if test="skuPrice != null">#{skuPrice},</if>
+            <if test="skuQuantity != null">#{skuQuantity},</if>
+            <if test="skuAttrsVals != null">#{skuAttrsVals},</if>
+            <if test="promotionAmount != null">#{promotionAmount},</if>
+            <if test="couponAmount != null">#{couponAmount},</if>
+            <if test="integrationAmount != null">#{integrationAmount},</if>
+            <if test="realAmount != null">#{realAmount},</if>
+            <if test="giftIntegration != null">#{giftIntegration},</if>
+            <if test="giftGrowth != null">#{giftGrowth},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderItem" parameterType="OrderItem">
+        update oms_order_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="spuName != null">spu_name = #{spuName},</if>
+            <if test="spuPic != null">spu_pic = #{spuPic},</if>
+            <if test="spuBrand != null">spu_brand = #{spuBrand},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuPic != null">sku_pic = #{skuPic},</if>
+            <if test="skuPrice != null">sku_price = #{skuPrice},</if>
+            <if test="skuQuantity != null">sku_quantity = #{skuQuantity},</if>
+            <if test="skuAttrsVals != null">sku_attrs_vals = #{skuAttrsVals},</if>
+            <if test="promotionAmount != null">promotion_amount = #{promotionAmount},</if>
+            <if test="couponAmount != null">coupon_amount = #{couponAmount},</if>
+            <if test="integrationAmount != null">integration_amount = #{integrationAmount},</if>
+            <if test="realAmount != null">real_amount = #{realAmount},</if>
+            <if test="giftIntegration != null">gift_integration = #{giftIntegration},</if>
+            <if test="giftGrowth != null">gift_growth = #{giftGrowth},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderItemById" parameterType="Long">
+        delete from oms_order_item where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderItemByIds" parameterType="String">
+        delete from oms_order_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

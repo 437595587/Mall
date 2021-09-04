@@ -1,4 +1,4 @@
-package com.ruoyi.mall.api.to;
+package com.ruoyi.mall.api.vo;
 
 public class SkuHasStockVo {
     private Long skuId;

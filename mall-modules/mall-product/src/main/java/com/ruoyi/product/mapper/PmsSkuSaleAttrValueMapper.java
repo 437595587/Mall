@@ -62,4 +62,6 @@ public interface PmsSkuSaleAttrValueMapper
     public int deletePmsSkuSaleAttrValueByIds(Long[] ids);
 
     List<SkuItemVo.ItemSaleAttrVo> selectSaleAttrsBySpuId(Long spuId);
+
+    List<String> selectSkuSaleAttrValues(Long skuId);
 }

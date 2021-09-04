@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OrderReturnApplyMapper">
+    
+    <resultMap type="OrderReturnApply" id="OrderReturnApplyResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="memberUsername"    column="member_username"    />
+        <result property="returnAmount"    column="return_amount"    />
+        <result property="returnName"    column="return_name"    />
+        <result property="returnPhone"    column="return_phone"    />
+        <result property="status"    column="status"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="skuImg"    column="sku_img"    />
+        <result property="skuName"    column="sku_name"    />
+        <result property="skuBrand"    column="sku_brand"    />
+        <result property="skuAttrsVals"    column="sku_attrs_vals"    />
+        <result property="skuCount"    column="sku_count"    />
+        <result property="skuPrice"    column="sku_price"    />
+        <result property="skuRealPrice"    column="sku_real_price"    />
+        <result property="reason"    column="reason"    />
+        <result property="description述"    column="description述"    />
+        <result property="descPics"    column="desc_pics"    />
+        <result property="handleNote"    column="handle_note"    />
+        <result property="handleMan"    column="handle_man"    />
+        <result property="receiveMan"    column="receive_man"    />
+        <result property="receiveTime"    column="receive_time"    />
+        <result property="receiveNote"    column="receive_note"    />
+        <result property="receivePhone"    column="receive_phone"    />
+        <result property="companyAddress"    column="company_address"    />
+    </resultMap>
+
+    <sql id="selectOrderReturnApplyVo">
+        select id, order_id, sku_id, order_sn, create_time, member_username, return_amount, return_name, return_phone, status, handle_time, sku_img, sku_name, sku_brand, sku_attrs_vals, sku_count, sku_price, sku_real_price, reason, description述, desc_pics, handle_note, handle_man, receive_man, receive_time, receive_note, receive_phone, company_address from oms_order_return_apply
+    </sql>
+
+    <select id="selectOrderReturnApplyList" parameterType="OrderReturnApply" resultMap="OrderReturnApplyResult">
+        <include refid="selectOrderReturnApplyVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="skuId != null "> and sku_id = #{skuId}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="memberUsername != null  and memberUsername != ''"> and member_username like concat('%', #{memberUsername}, '%')</if>
+            <if test="returnAmount != null "> and return_amount = #{returnAmount}</if>
+            <if test="returnName != null  and returnName != ''"> and return_name like concat('%', #{returnName}, '%')</if>
+            <if test="returnPhone != null  and returnPhone != ''"> and return_phone = #{returnPhone}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="skuImg != null  and skuImg != ''"> and sku_img = #{skuImg}</if>
+            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuBrand != null  and skuBrand != ''"> and sku_brand = #{skuBrand}</if>
+            <if test="skuAttrsVals != null  and skuAttrsVals != ''"> and sku_attrs_vals = #{skuAttrsVals}</if>
+            <if test="skuCount != null "> and sku_count = #{skuCount}</if>
+            <if test="skuPrice != null "> and sku_price = #{skuPrice}</if>
+            <if test="skuRealPrice != null "> and sku_real_price = #{skuRealPrice}</if>
+            <if test="reason != null  and reason != ''"> and reason = #{reason}</if>
+            <if test="description述 != null  and description述 != ''"> and description述 = #{description述}</if>
+            <if test="descPics != null  and descPics != ''"> and desc_pics = #{descPics}</if>
+            <if test="handleNote != null  and handleNote != ''"> and handle_note = #{handleNote}</if>
+            <if test="handleMan != null  and handleMan != ''"> and handle_man = #{handleMan}</if>
+            <if test="receiveMan != null  and receiveMan != ''"> and receive_man = #{receiveMan}</if>
+            <if test="receiveTime != null "> and receive_time = #{receiveTime}</if>
+            <if test="receiveNote != null  and receiveNote != ''"> and receive_note = #{receiveNote}</if>
+            <if test="receivePhone != null  and receivePhone != ''"> and receive_phone = #{receivePhone}</if>
+            <if test="companyAddress != null  and companyAddress != ''"> and company_address = #{companyAddress}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderReturnApplyById" parameterType="Long" resultMap="OrderReturnApplyResult">
+        <include refid="selectOrderReturnApplyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderReturnApply" parameterType="OrderReturnApply" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_return_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="memberUsername != null">member_username,</if>
+            <if test="returnAmount != null">return_amount,</if>
+            <if test="returnName != null">return_name,</if>
+            <if test="returnPhone != null">return_phone,</if>
+            <if test="status != null">status,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="skuImg != null">sku_img,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuBrand != null">sku_brand,</if>
+            <if test="skuAttrsVals != null">sku_attrs_vals,</if>
+            <if test="skuCount != null">sku_count,</if>
+            <if test="skuPrice != null">sku_price,</if>
+            <if test="skuRealPrice != null">sku_real_price,</if>
+            <if test="reason != null">reason,</if>
+            <if test="description述 != null">description述,</if>
+            <if test="descPics != null">desc_pics,</if>
+            <if test="handleNote != null">handle_note,</if>
+            <if test="handleMan != null">handle_man,</if>
+            <if test="receiveMan != null">receive_man,</if>
+            <if test="receiveTime != null">receive_time,</if>
+            <if test="receiveNote != null">receive_note,</if>
+            <if test="receivePhone != null">receive_phone,</if>
+            <if test="companyAddress != null">company_address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="memberUsername != null">#{memberUsername},</if>
+            <if test="returnAmount != null">#{returnAmount},</if>
+            <if test="returnName != null">#{returnName},</if>
+            <if test="returnPhone != null">#{returnPhone},</if>
+            <if test="status != null">#{status},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="skuImg != null">#{skuImg},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuBrand != null">#{skuBrand},</if>
+            <if test="skuAttrsVals != null">#{skuAttrsVals},</if>
+            <if test="skuCount != null">#{skuCount},</if>
+            <if test="skuPrice != null">#{skuPrice},</if>
+            <if test="skuRealPrice != null">#{skuRealPrice},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="description述 != null">#{description述},</if>
+            <if test="descPics != null">#{descPics},</if>
+            <if test="handleNote != null">#{handleNote},</if>
+            <if test="handleMan != null">#{handleMan},</if>
+            <if test="receiveMan != null">#{receiveMan},</if>
+            <if test="receiveTime != null">#{receiveTime},</if>
+            <if test="receiveNote != null">#{receiveNote},</if>
+            <if test="receivePhone != null">#{receivePhone},</if>
+            <if test="companyAddress != null">#{companyAddress},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderReturnApply" parameterType="OrderReturnApply">
+        update oms_order_return_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="memberUsername != null">member_username = #{memberUsername},</if>
+            <if test="returnAmount != null">return_amount = #{returnAmount},</if>
+            <if test="returnName != null">return_name = #{returnName},</if>
+            <if test="returnPhone != null">return_phone = #{returnPhone},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="skuImg != null">sku_img = #{skuImg},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuBrand != null">sku_brand = #{skuBrand},</if>
+            <if test="skuAttrsVals != null">sku_attrs_vals = #{skuAttrsVals},</if>
+            <if test="skuCount != null">sku_count = #{skuCount},</if>
+            <if test="skuPrice != null">sku_price = #{skuPrice},</if>
+            <if test="skuRealPrice != null">sku_real_price = #{skuRealPrice},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="description述 != null">description述 = #{description述},</if>
+            <if test="descPics != null">desc_pics = #{descPics},</if>
+            <if test="handleNote != null">handle_note = #{handleNote},</if>
+            <if test="handleMan != null">handle_man = #{handleMan},</if>
+            <if test="receiveMan != null">receive_man = #{receiveMan},</if>
+            <if test="receiveTime != null">receive_time = #{receiveTime},</if>
+            <if test="receiveNote != null">receive_note = #{receiveNote},</if>
+            <if test="receivePhone != null">receive_phone = #{receivePhone},</if>
+            <if test="companyAddress != null">company_address = #{companyAddress},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderReturnApplyById" parameterType="Long">
+        delete from oms_order_return_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderReturnApplyByIds" parameterType="String">
+        delete from oms_order_return_apply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

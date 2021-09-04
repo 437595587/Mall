@@ -1,5 +1,6 @@
 package com.ruoyi.product.controller;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -29,6 +30,11 @@ public class PmsSpuInfoController extends BaseController
 {
     @Autowired
     private IPmsSpuInfoService pmsSpuInfoService;
+
+    @GetMapping("/{id}/skuId")
+    public R<PmsSpuInfo> getSpuInfoBySkuId(@PathVariable("id") Long skuId) {
+        return R.ok(pmsSpuInfoService.selectPmsSpuInfoBySkuId(skuId));
+    }
 
     @PreAuthorize(hasPermi = "product:spuInfo:up")
     @Log(title = "spu上架", businessType = BusinessType.OTHER)

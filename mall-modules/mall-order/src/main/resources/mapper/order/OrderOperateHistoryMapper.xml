@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OrderOperateHistoryMapper">
+    
+    <resultMap type="OrderOperateHistory" id="OrderOperateHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="operateMan"    column="operate_man"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectOrderOperateHistoryVo">
+        select id, order_id, operate_man, create_time, order_status, note from oms_order_operate_history
+    </sql>
+
+    <select id="selectOrderOperateHistoryList" parameterType="OrderOperateHistory" resultMap="OrderOperateHistoryResult">
+        <include refid="selectOrderOperateHistoryVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="operateMan != null  and operateMan != ''"> and operate_man = #{operateMan}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderOperateHistoryById" parameterType="Long" resultMap="OrderOperateHistoryResult">
+        <include refid="selectOrderOperateHistoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderOperateHistory" parameterType="OrderOperateHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_operate_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="operateMan != null">operate_man,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="note != null">note,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="operateMan != null">#{operateMan},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="note != null">#{note},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderOperateHistory" parameterType="OrderOperateHistory">
+        update oms_order_operate_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="operateMan != null">operate_man = #{operateMan},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="note != null">note = #{note},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderOperateHistoryById" parameterType="Long">
+        delete from oms_order_operate_history where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderOperateHistoryByIds" parameterType="String">
+        delete from oms_order_operate_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

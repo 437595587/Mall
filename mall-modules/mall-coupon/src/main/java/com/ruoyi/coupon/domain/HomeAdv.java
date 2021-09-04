@@ -9,7 +9,7 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
 
 /**
  * 首页轮播广告对象 sms_home_adv
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
@@ -29,12 +29,12 @@ public class HomeAdv extends BaseEntity
     private String pic;
 
     /** 开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date startTime;
 
     /** 结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime;
 
@@ -66,111 +66,111 @@ public class HomeAdv extends BaseEntity
     @Excel(name = "审核者")
     private Long authId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getName() 
+    public String getName()
     {
         return name;
     }
-    public void setPic(String pic) 
+    public void setPic(String pic)
     {
         this.pic = pic;
     }
 
-    public String getPic() 
+    public String getPic()
     {
         return pic;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(Date startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public Date getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Date getEndTime()
     {
         return endTime;
     }
-    public void setStatus(Integer status) 
+    public void setStatus(Integer status)
     {
         this.status = status;
     }
 
-    public Integer getStatus() 
+    public Integer getStatus()
     {
         return status;
     }
-    public void setClickCount(Long clickCount) 
+    public void setClickCount(Long clickCount)
     {
         this.clickCount = clickCount;
     }
 
-    public Long getClickCount() 
+    public Long getClickCount()
     {
         return clickCount;
     }
-    public void setUrl(String url) 
+    public void setUrl(String url)
     {
         this.url = url;
     }
 
-    public String getUrl() 
+    public String getUrl()
     {
         return url;
     }
-    public void setNote(String note) 
+    public void setNote(String note)
     {
         this.note = note;
     }
 
-    public String getNote() 
+    public String getNote()
     {
         return note;
     }
-    public void setSort(Long sort) 
+    public void setSort(Long sort)
     {
         this.sort = sort;
     }
 
-    public Long getSort() 
+    public Long getSort()
     {
         return sort;
     }
-    public void setPublisherId(Long publisherId) 
+    public void setPublisherId(Long publisherId)
     {
         this.publisherId = publisherId;
     }
 
-    public Long getPublisherId() 
+    public Long getPublisherId()
     {
         return publisherId;
     }
-    public void setAuthId(Long authId) 
+    public void setAuthId(Long authId)
     {
         this.authId = authId;
     }
 
-    public Long getAuthId() 
+    public Long getAuthId()
     {
         return authId;
     }

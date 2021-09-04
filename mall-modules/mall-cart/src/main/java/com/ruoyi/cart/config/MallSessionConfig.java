@@ -1,6 +1,6 @@
 package com.ruoyi.cart.config;
 
-import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import com.ruoyi.common.redis.configure.FastJson2JsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -19,7 +19,7 @@ public class MallSessionConfig {
     }
 
     @Bean
-    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        return new GenericFastJsonRedisSerializer();
+    public RedisSerializer<Object> springSessionDefaultRedisSerializer(FastJson2JsonRedisSerializer<Object> serializer) {
+        return serializer;
     }
 }

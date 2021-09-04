@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RefundInfoMapper">
+    
+    <resultMap type="RefundInfo" id="RefundInfoResult">
+        <result property="id"    column="id"    />
+        <result property="orderReturnId"    column="order_return_id"    />
+        <result property="refund"    column="refund"    />
+        <result property="refundSn"    column="refund_sn"    />
+        <result property="refundStatus"    column="refund_status"    />
+        <result property="refundChannel"    column="refund_channel"    />
+        <result property="refundContent"    column="refund_content"    />
+    </resultMap>
+
+    <sql id="selectRefundInfoVo">
+        select id, order_return_id, refund, refund_sn, refund_status, refund_channel, refund_content from oms_refund_info
+    </sql>
+
+    <select id="selectRefundInfoList" parameterType="RefundInfo" resultMap="RefundInfoResult">
+        <include refid="selectRefundInfoVo"/>
+        <where>  
+            <if test="orderReturnId != null "> and order_return_id = #{orderReturnId}</if>
+            <if test="refund != null "> and refund = #{refund}</if>
+            <if test="refundSn != null  and refundSn != ''"> and refund_sn = #{refundSn}</if>
+            <if test="refundStatus != null "> and refund_status = #{refundStatus}</if>
+            <if test="refundChannel != null "> and refund_channel = #{refundChannel}</if>
+            <if test="refundContent != null  and refundContent != ''"> and refund_content = #{refundContent}</if>
+        </where>
+    </select>
+    
+    <select id="selectRefundInfoById" parameterType="Long" resultMap="RefundInfoResult">
+        <include refid="selectRefundInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRefundInfo" parameterType="RefundInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_refund_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderReturnId != null">order_return_id,</if>
+            <if test="refund != null">refund,</if>
+            <if test="refundSn != null">refund_sn,</if>
+            <if test="refundStatus != null">refund_status,</if>
+            <if test="refundChannel != null">refund_channel,</if>
+            <if test="refundContent != null">refund_content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderReturnId != null">#{orderReturnId},</if>
+            <if test="refund != null">#{refund},</if>
+            <if test="refundSn != null">#{refundSn},</if>
+            <if test="refundStatus != null">#{refundStatus},</if>
+            <if test="refundChannel != null">#{refundChannel},</if>
+            <if test="refundContent != null">#{refundContent},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRefundInfo" parameterType="RefundInfo">
+        update oms_refund_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderReturnId != null">order_return_id = #{orderReturnId},</if>
+            <if test="refund != null">refund = #{refund},</if>
+            <if test="refundSn != null">refund_sn = #{refundSn},</if>
+            <if test="refundStatus != null">refund_status = #{refundStatus},</if>
+            <if test="refundChannel != null">refund_channel = #{refundChannel},</if>
+            <if test="refundContent != null">refund_content = #{refundContent},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRefundInfoById" parameterType="Long">
+        delete from oms_refund_info where id = #{id}
+    </delete>
+
+    <delete id="deleteRefundInfoByIds" parameterType="String">
+        delete from oms_refund_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

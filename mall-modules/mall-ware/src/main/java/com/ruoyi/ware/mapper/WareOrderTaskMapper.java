@@ -1,19 +1,20 @@
 package com.ruoyi.ware.mapper;
 
-import java.util.List;
 import com.ruoyi.ware.domain.WareOrderTask;
+
+import java.util.List;
 
 /**
  * 库存工作单Mapper接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
-public interface WareOrderTaskMapper 
+public interface WareOrderTaskMapper
 {
     /**
      * 查询库存工作单
-     * 
+     *
      * @param id 库存工作单主键
      * @return 库存工作单
      */
@@ -21,7 +22,7 @@ public interface WareOrderTaskMapper
 
     /**
      * 查询库存工作单列表
-     * 
+     *
      * @param wareOrderTask 库存工作单
      * @return 库存工作单集合
      */
@@ -29,7 +30,7 @@ public interface WareOrderTaskMapper
 
     /**
      * 新增库存工作单
-     * 
+     *
      * @param wareOrderTask 库存工作单
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface WareOrderTaskMapper
 
     /**
      * 修改库存工作单
-     * 
+     *
      * @param wareOrderTask 库存工作单
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface WareOrderTaskMapper
 
     /**
      * 删除库存工作单
-     * 
+     *
      * @param id 库存工作单主键
      * @return 结果
      */
@@ -53,9 +54,11 @@ public interface WareOrderTaskMapper
 
     /**
      * 批量删除库存工作单
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteWareOrderTaskByIds(Long[] ids);
+
+    WareOrderTask selectOrderTaskByOrderSn(String orderSn);
 }

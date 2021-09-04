@@ -62,4 +62,6 @@ public interface IPmsSkuSaleAttrValueService
     public int deletePmsSkuSaleAttrValueById(Long id);
 
     List<SkuItemVo.ItemSaleAttrVo> selectSaleAttrsBySpuId(Long spuId);
+
+    List<String> selectSkuSaleAttrValues(Long skuId);
 }

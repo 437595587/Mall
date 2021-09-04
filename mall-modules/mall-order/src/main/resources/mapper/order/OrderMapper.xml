@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OrderMapper">
+
+    <resultMap type="Order" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="memberUsername"    column="member_username"    />
+        <result property="totalAmount"    column="total_amount"    />
+        <result property="payAmount"    column="pay_amount"    />
+        <result property="freightAmount"    column="freight_amount"    />
+        <result property="promotionAmount"    column="promotion_amount"    />
+        <result property="integrationAmount"    column="integration_amount"    />
+        <result property="couponAmount"    column="coupon_amount"    />
+        <result property="discountAmount"    column="discount_amount"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="sourceType"    column="source_type"    />
+        <result property="status"    column="status"    />
+        <result property="deliveryCompany"    column="delivery_company"    />
+        <result property="deliverySn"    column="delivery_sn"    />
+        <result property="autoConfirmDay"    column="auto_confirm_day"    />
+        <result property="integration"    column="integration"    />
+        <result property="growth"    column="growth"    />
+        <result property="billType"    column="bill_type"    />
+        <result property="billHeader"    column="bill_header"    />
+        <result property="billContent"    column="bill_content"    />
+        <result property="billReceiverPhone"    column="bill_receiver_phone"    />
+        <result property="billReceiverEmail"    column="bill_receiver_email"    />
+        <result property="receiverName"    column="receiver_name"    />
+        <result property="receiverPhone"    column="receiver_phone"    />
+        <result property="receiverPostCode"    column="receiver_post_code"    />
+        <result property="receiverProvince"    column="receiver_province"    />
+        <result property="receiverCity"    column="receiver_city"    />
+        <result property="receiverRegion"    column="receiver_region"    />
+        <result property="receiverDetailAddress"    column="receiver_detail_address"    />
+        <result property="note"    column="note"    />
+        <result property="confirmStatus"    column="confirm_status"    />
+        <result property="deleteStatus"    column="delete_status"    />
+        <result property="useIntegration"    column="use_integration"    />
+        <result property="paymentTime"    column="payment_time"    />
+        <result property="deliveryTime"    column="delivery_time"    />
+        <result property="receiveTime"    column="receive_time"    />
+        <result property="commentTime"    column="comment_time"    />
+        <result property="modifyTime"    column="modify_time"    />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select id, member_id, order_sn, coupon_id, create_time, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount, coupon_amount, discount_amount, pay_type, source_type, status, delivery_company, delivery_sn, auto_confirm_day, integration, growth, bill_type, bill_header, bill_content, bill_receiver_phone, bill_receiver_email, receiver_name, receiver_phone, receiver_post_code, receiver_province, receiver_city, receiver_region, receiver_detail_address, note, confirm_status, delete_status, use_integration, payment_time, delivery_time, receive_time, comment_time, modify_time from oms_order
+    </sql>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="couponId != null "> and coupon_id = #{couponId}</if>
+            <if test="memberUsername != null  and memberUsername != ''"> and member_username like concat('%', #{memberUsername}, '%')</if>
+            <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+            <if test="payAmount != null "> and pay_amount = #{payAmount}</if>
+            <if test="freightAmount != null "> and freight_amount = #{freightAmount}</if>
+            <if test="promotionAmount != null "> and promotion_amount = #{promotionAmount}</if>
+            <if test="integrationAmount != null "> and integration_amount = #{integrationAmount}</if>
+            <if test="couponAmount != null "> and coupon_amount = #{couponAmount}</if>
+            <if test="discountAmount != null "> and discount_amount = #{discountAmount}</if>
+            <if test="payType != null "> and pay_type = #{payType}</if>
+            <if test="sourceType != null "> and source_type = #{sourceType}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="deliveryCompany != null  and deliveryCompany != ''"> and delivery_company = #{deliveryCompany}</if>
+            <if test="deliverySn != null  and deliverySn != ''"> and delivery_sn = #{deliverySn}</if>
+            <if test="autoConfirmDay != null "> and auto_confirm_day = #{autoConfirmDay}</if>
+            <if test="integration != null "> and integration = #{integration}</if>
+            <if test="growth != null "> and growth = #{growth}</if>
+            <if test="billType != null "> and bill_type = #{billType}</if>
+            <if test="billHeader != null  and billHeader != ''"> and bill_header = #{billHeader}</if>
+            <if test="billContent != null  and billContent != ''"> and bill_content = #{billContent}</if>
+            <if test="billReceiverPhone != null  and billReceiverPhone != ''"> and bill_receiver_phone = #{billReceiverPhone}</if>
+            <if test="billReceiverEmail != null  and billReceiverEmail != ''"> and bill_receiver_email = #{billReceiverEmail}</if>
+            <if test="receiverName != null  and receiverName != ''"> and receiver_name like concat('%', #{receiverName}, '%')</if>
+            <if test="receiverPhone != null  and receiverPhone != ''"> and receiver_phone = #{receiverPhone}</if>
+            <if test="receiverPostCode != null  and receiverPostCode != ''"> and receiver_post_code = #{receiverPostCode}</if>
+            <if test="receiverProvince != null  and receiverProvince != ''"> and receiver_province = #{receiverProvince}</if>
+            <if test="receiverCity != null  and receiverCity != ''"> and receiver_city = #{receiverCity}</if>
+            <if test="receiverRegion != null  and receiverRegion != ''"> and receiver_region = #{receiverRegion}</if>
+            <if test="receiverDetailAddress != null  and receiverDetailAddress != ''"> and receiver_detail_address = #{receiverDetailAddress}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="confirmStatus != null "> and confirm_status = #{confirmStatus}</if>
+            <if test="deleteStatus != null "> and delete_status = #{deleteStatus}</if>
+            <if test="useIntegration != null "> and use_integration = #{useIntegration}</if>
+            <if test="paymentTime != null "> and payment_time = #{paymentTime}</if>
+            <if test="deliveryTime != null "> and delivery_time = #{deliveryTime}</if>
+            <if test="receiveTime != null "> and receive_time = #{receiveTime}</if>
+            <if test="commentTime != null "> and comment_time = #{commentTime}</if>
+            <if test="modifyTime != null "> and modify_time = #{modifyTime}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="couponId != null">coupon_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="memberUsername != null">member_username,</if>
+            <if test="totalAmount != null">total_amount,</if>
+            <if test="payAmount != null">pay_amount,</if>
+            <if test="freightAmount != null">freight_amount,</if>
+            <if test="promotionAmount != null">promotion_amount,</if>
+            <if test="integrationAmount != null">integration_amount,</if>
+            <if test="couponAmount != null">coupon_amount,</if>
+            <if test="discountAmount != null">discount_amount,</if>
+            <if test="payType != null">pay_type,</if>
+            <if test="sourceType != null">source_type,</if>
+            <if test="status != null">status,</if>
+            <if test="deliveryCompany != null">delivery_company,</if>
+            <if test="deliverySn != null">delivery_sn,</if>
+            <if test="autoConfirmDay != null">auto_confirm_day,</if>
+            <if test="integration != null">integration,</if>
+            <if test="growth != null">growth,</if>
+            <if test="billType != null">bill_type,</if>
+            <if test="billHeader != null">bill_header,</if>
+            <if test="billContent != null">bill_content,</if>
+            <if test="billReceiverPhone != null">bill_receiver_phone,</if>
+            <if test="billReceiverEmail != null">bill_receiver_email,</if>
+            <if test="receiverName != null">receiver_name,</if>
+            <if test="receiverPhone != null">receiver_phone,</if>
+            <if test="receiverPostCode != null">receiver_post_code,</if>
+            <if test="receiverProvince != null">receiver_province,</if>
+            <if test="receiverCity != null">receiver_city,</if>
+            <if test="receiverRegion != null">receiver_region,</if>
+            <if test="receiverDetailAddress != null">receiver_detail_address,</if>
+            <if test="note != null">note,</if>
+            <if test="confirmStatus != null">confirm_status,</if>
+            <if test="deleteStatus != null">delete_status,</if>
+            <if test="useIntegration != null">use_integration,</if>
+            <if test="paymentTime != null">payment_time,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="receiveTime != null">receive_time,</if>
+            <if test="commentTime != null">comment_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="couponId != null">#{couponId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="memberUsername != null">#{memberUsername},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="payAmount != null">#{payAmount},</if>
+            <if test="freightAmount != null">#{freightAmount},</if>
+            <if test="promotionAmount != null">#{promotionAmount},</if>
+            <if test="integrationAmount != null">#{integrationAmount},</if>
+            <if test="couponAmount != null">#{couponAmount},</if>
+            <if test="discountAmount != null">#{discountAmount},</if>
+            <if test="payType != null">#{payType},</if>
+            <if test="sourceType != null">#{sourceType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="deliveryCompany != null">#{deliveryCompany},</if>
+            <if test="deliverySn != null">#{deliverySn},</if>
+            <if test="autoConfirmDay != null">#{autoConfirmDay},</if>
+            <if test="integration != null">#{integration},</if>
+            <if test="growth != null">#{growth},</if>
+            <if test="billType != null">#{billType},</if>
+            <if test="billHeader != null">#{billHeader},</if>
+            <if test="billContent != null">#{billContent},</if>
+            <if test="billReceiverPhone != null">#{billReceiverPhone},</if>
+            <if test="billReceiverEmail != null">#{billReceiverEmail},</if>
+            <if test="receiverName != null">#{receiverName},</if>
+            <if test="receiverPhone != null">#{receiverPhone},</if>
+            <if test="receiverPostCode != null">#{receiverPostCode},</if>
+            <if test="receiverProvince != null">#{receiverProvince},</if>
+            <if test="receiverCity != null">#{receiverCity},</if>
+            <if test="receiverRegion != null">#{receiverRegion},</if>
+            <if test="receiverDetailAddress != null">#{receiverDetailAddress},</if>
+            <if test="note != null">#{note},</if>
+            <if test="confirmStatus != null">#{confirmStatus},</if>
+            <if test="deleteStatus != null">#{deleteStatus},</if>
+            <if test="useIntegration != null">#{useIntegration},</if>
+            <if test="paymentTime != null">#{paymentTime},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="receiveTime != null">#{receiveTime},</if>
+            <if test="commentTime != null">#{commentTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update oms_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="memberUsername != null">member_username = #{memberUsername},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="payAmount != null">pay_amount = #{payAmount},</if>
+            <if test="freightAmount != null">freight_amount = #{freightAmount},</if>
+            <if test="promotionAmount != null">promotion_amount = #{promotionAmount},</if>
+            <if test="integrationAmount != null">integration_amount = #{integrationAmount},</if>
+            <if test="couponAmount != null">coupon_amount = #{couponAmount},</if>
+            <if test="discountAmount != null">discount_amount = #{discountAmount},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="deliveryCompany != null">delivery_company = #{deliveryCompany},</if>
+            <if test="deliverySn != null">delivery_sn = #{deliverySn},</if>
+            <if test="autoConfirmDay != null">auto_confirm_day = #{autoConfirmDay},</if>
+            <if test="integration != null">integration = #{integration},</if>
+            <if test="growth != null">growth = #{growth},</if>
+            <if test="billType != null">bill_type = #{billType},</if>
+            <if test="billHeader != null">bill_header = #{billHeader},</if>
+            <if test="billContent != null">bill_content = #{billContent},</if>
+            <if test="billReceiverPhone != null">bill_receiver_phone = #{billReceiverPhone},</if>
+            <if test="billReceiverEmail != null">bill_receiver_email = #{billReceiverEmail},</if>
+            <if test="receiverName != null">receiver_name = #{receiverName},</if>
+            <if test="receiverPhone != null">receiver_phone = #{receiverPhone},</if>
+            <if test="receiverPostCode != null">receiver_post_code = #{receiverPostCode},</if>
+            <if test="receiverProvince != null">receiver_province = #{receiverProvince},</if>
+            <if test="receiverCity != null">receiver_city = #{receiverCity},</if>
+            <if test="receiverRegion != null">receiver_region = #{receiverRegion},</if>
+            <if test="receiverDetailAddress != null">receiver_detail_address = #{receiverDetailAddress},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="confirmStatus != null">confirm_status = #{confirmStatus},</if>
+            <if test="deleteStatus != null">delete_status = #{deleteStatus},</if>
+            <if test="useIntegration != null">use_integration = #{useIntegration},</if>
+            <if test="paymentTime != null">payment_time = #{paymentTime},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="receiveTime != null">receive_time = #{receiveTime},</if>
+            <if test="commentTime != null">comment_time = #{commentTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="Long">
+        delete from oms_order where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from oms_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectOrderByOrderSn" resultMap="OrderResult">
+        <include refid="selectOrderVo"/> where order_sn = #{orderSn}
+    </select>
+
+    <update id="updateOrderByOrderSn" parameterType="Order">
+        update oms_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="memberUsername != null">member_username = #{memberUsername},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="payAmount != null">pay_amount = #{payAmount},</if>
+            <if test="freightAmount != null">freight_amount = #{freightAmount},</if>
+            <if test="promotionAmount != null">promotion_amount = #{promotionAmount},</if>
+            <if test="integrationAmount != null">integration_amount = #{integrationAmount},</if>
+            <if test="couponAmount != null">coupon_amount = #{couponAmount},</if>
+            <if test="discountAmount != null">discount_amount = #{discountAmount},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="deliveryCompany != null">delivery_company = #{deliveryCompany},</if>
+            <if test="deliverySn != null">delivery_sn = #{deliverySn},</if>
+            <if test="autoConfirmDay != null">auto_confirm_day = #{autoConfirmDay},</if>
+            <if test="integration != null">integration = #{integration},</if>
+            <if test="growth != null">growth = #{growth},</if>
+            <if test="billType != null">bill_type = #{billType},</if>
+            <if test="billHeader != null">bill_header = #{billHeader},</if>
+            <if test="billContent != null">bill_content = #{billContent},</if>
+            <if test="billReceiverPhone != null">bill_receiver_phone = #{billReceiverPhone},</if>
+            <if test="billReceiverEmail != null">bill_receiver_email = #{billReceiverEmail},</if>
+            <if test="receiverName != null">receiver_name = #{receiverName},</if>
+            <if test="receiverPhone != null">receiver_phone = #{receiverPhone},</if>
+            <if test="receiverPostCode != null">receiver_post_code = #{receiverPostCode},</if>
+            <if test="receiverProvince != null">receiver_province = #{receiverProvince},</if>
+            <if test="receiverCity != null">receiver_city = #{receiverCity},</if>
+            <if test="receiverRegion != null">receiver_region = #{receiverRegion},</if>
+            <if test="receiverDetailAddress != null">receiver_detail_address = #{receiverDetailAddress},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="confirmStatus != null">confirm_status = #{confirmStatus},</if>
+            <if test="deleteStatus != null">delete_status = #{deleteStatus},</if>
+            <if test="useIntegration != null">use_integration = #{useIntegration},</if>
+            <if test="paymentTime != null">payment_time = #{paymentTime},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="receiveTime != null">receive_time = #{receiveTime},</if>
+            <if test="commentTime != null">comment_time = #{commentTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where order_sn = #{orderSn}
+    </update>
+</mapper>

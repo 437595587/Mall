@@ -1,19 +1,21 @@
 package com.ruoyi.ware.service;
 
-import java.util.List;
 import com.ruoyi.ware.domain.WareInfo;
+import com.ruoyi.ware.domain.vo.FareVo;
+
+import java.util.List;
 
 /**
  * 仓库信息Service接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
-public interface IWareInfoService 
+public interface IWareInfoService
 {
     /**
      * 查询仓库信息
-     * 
+     *
      * @param id 仓库信息主键
      * @return 仓库信息
      */
@@ -21,7 +23,7 @@ public interface IWareInfoService
 
     /**
      * 查询仓库信息列表
-     * 
+     *
      * @param wareInfo 仓库信息
      * @return 仓库信息集合
      */
@@ -29,7 +31,7 @@ public interface IWareInfoService
 
     /**
      * 新增仓库信息
-     * 
+     *
      * @param wareInfo 仓库信息
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface IWareInfoService
 
     /**
      * 修改仓库信息
-     * 
+     *
      * @param wareInfo 仓库信息
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface IWareInfoService
 
     /**
      * 批量删除仓库信息
-     * 
+     *
      * @param ids 需要删除的仓库信息主键集合
      * @return 结果
      */
@@ -53,9 +55,16 @@ public interface IWareInfoService
 
     /**
      * 删除仓库信息信息
-     * 
+     *
      * @param id 仓库信息主键
      * @return 结果
      */
     public int deleteWareInfoById(Long id);
+
+    /**
+     * 根据用户的收获地址计算运费
+     * @param addrId 地址id
+     * @return 运费
+     */
+    FareVo selectFare(Long addrId);
 }

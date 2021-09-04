@@ -1,6 +1,7 @@
 package com.ruoyi.ware.controller;
 
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.exception.BizCodeEnum;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -8,6 +9,7 @@ import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.PreAuthorize;
+import com.ruoyi.mall.api.to.WareSkuLockTo;
 import com.ruoyi.ware.domain.WareSku;
 import com.ruoyi.ware.domain.vo.SkuHasStockVo;
 import com.ruoyi.ware.service.IWareSkuService;
@@ -30,6 +32,16 @@ public class WareSkuController extends BaseController
 {
     @Autowired
     private IWareSkuService wareSkuService;
+
+    @PostMapping("/lock/order")
+    public R<Boolean> orderLockStock(@RequestBody WareSkuLockTo to) {
+        try {
+            boolean result = wareSkuService.orderLockStock(to);
+            return R.ok(result);
+        } catch (Exception e) {
+            return R.fail(BizCodeEnum.NO_STOCK_EXCEPTION.getCode().intValue(), BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
 
     //查询sku是否有库存
     @PostMapping("/hasStock")

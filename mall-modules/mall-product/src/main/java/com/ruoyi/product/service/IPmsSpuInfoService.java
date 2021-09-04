@@ -67,4 +67,6 @@ public interface IPmsSpuInfoService
      * @return 结果
      */
     int spuUp(Long spuId);
+
+    PmsSpuInfo selectPmsSpuInfoBySkuId(Long skuId);
 }

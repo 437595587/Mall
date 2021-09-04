@@ -18,17 +18,21 @@
 					<ul class="header-left">
 						<li>
 
-							<a href="/static/cart/">首页</a>
+							<a href="http://mall.com">首页</a>
 						</li>
 
 					</ul>
 					<ul class="header-right">
-						<li><a href="/static/cart/登录页面\index.html" style="color: red;">你好，请登录</a></li>
-						<li><a href="/static/cart/注册页面\index.html">免费注册</a></li>
+						<li>
+							<a th:if="${session.loginUser==null}" href="http://auth.mall.com/login.html" style="color: red;">你好，请登录</a>
+							<a th:if="${session.loginUser!=null}" style="width: 100px">欢迎：[[${ #strings.isEmpty(session.loginUser.nickname) ? session.loginUser.username : session.loginUser.nickname}]]</a>
+						</li>
+						<li>
+							<a th:if="${session.loginUser==null}" href="http://auth.mall.com/register.html">免费注册</a>
+						</li>
 						<li class="spacer"></li>
 						<li><a href="/static/cart/">我的订单</a></li>
 						<li class="spacer"></li>
-
 					</ul>
 					<div style="clear: both;"></div>
 				</div>
@@ -44,7 +48,7 @@
 			<div class="one_sousuo">
 				<div class="one_search_top">
 					<div class="one_top_left">
-						<a href="/static/cart/" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
+						<a href="http://mall.com" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
 						<a href="/static/cart/#" class="one_left_link">购物车</a>
 					</div>
 					<div class="one_top_right">
@@ -52,10 +56,10 @@
 						<input type="button" value="搜索" class="one_right_btn">
 					</div>
 				</div>
-				<div class="one_search_load">
+				<div class="one_search_load" th:if="${session.loginUser == null}">
 					<img src="/static/cart/img/shop_07.jpg" class="one_load_wraing">
 					<span>您还没有登录！登录后购物车的商品将保存到您账号中</span>
-					<a href="/static/cart/#"><input type="button" onclick="login()" value="立即登录" class="one_load_btn"></a>
+					<a href="http://auth.mall.com/login.html"><input type="button" onclick="login()" value="立即登录" class="one_load_btn"></a>
 				</div>
 			</div>
 		</div>
@@ -80,79 +84,44 @@
 				</div>
 
 				<div class="One_ShopCon">
-					<ul>
-						<li>
-							<div> </div>
-
+					<h1 th:if="${cart.items==null}">
+						购物车还没有商品，<a href="http://mall.com" style="color: blue;text-decoration: underline">去购物</a>
+					</h1>
+					<ul th:if="${cart.items!=null}">
+						<li th:each="item:${cart.items}">
+							<div></div>
 							<div>
 								<ol>
-									<li><input type="checkbox" class="check" onchange="checkSku(this)" /></li>
+									<li><input type="checkbox" th:attr="skuId=${item.skuId}" class="check itemCheck" th:checked="${item.check}"/></li>
 									<li>
-										<dt><img src="/static/cart/img\shop1.jpg" alt=""></dt>
-										<dd>
+										<dt><img th:src="${item.image}" src="/static/cart/img/shop1.jpg" alt=""></dt>
+										<dd style="width: 300px">
 											<p>
-												<span>TCL 55A950C 55英寸32核</span>
+												<span th:text="${item.title}">TCL 55A950C 55英寸32核</span>
+												<br/>
+												<span th:each="attr:${item.skuAttr}" th:text="${attr}+'&nbsp'">TCL 55A950C 55英寸32核</span>
 											</p>
 										</dd>
 									</li>
 									<li>
-										<p class="dj">4599.00</p>
+										<p class="dj" th:text="'￥'+${#numbers.formatDecimal(item.price,1,2)}">4599.00</p>
 									</li>
 									<li>
-										<p>
-											<span>-</span>
-											<span>5</span>
-											<span>+</span>
+										<p th:attr="skuId=${item.skuId}">
+											<span class="countOpsBtn">-</span>
+											<span class="countOpsNum" th:text="${item.count}">5</span>
+											<span class="countOpsBtn">+</span>
 										</p>
 									</li>
 									<li style="font-weight:bold">
-										<p class="zj">￥22995.00</p>
+										<p class="zj">￥[[${#numbers.formatDecimal(item.totalPrice,1,2)}]]</p>
 									</li>
 									<li>
-										<p>删除</p>
+										<p class="deleteItemBtn" th:attr="skuId=${item.skuId}">删除</p>
 									</li>
 								</ol>
 							</div>
 						</li>
-						<!--<li>
-                    <div>
-                    </div>
-                    <div>
-                        <ol>
-                            <li><input type="checkbox"  class="check"></li>
-                            <li>
-                                <dt><img src="/static/cart/img\shop1.jpg" alt=""></dt>
-                                <dd>
-                                    <p>
-
-                                        <span>TCL 55A950C 55英寸32核</span>
-                                        <span>尺码: 55时 超薄曲面 人工智能</span>
-                                    </p>
-                                    <p>人工智能 HDR曲面超薄4K电视金属机</p>
-
-                                </dd>
-                            </li>
-                            <li>
-                                <p class="dj">￥4599.00</p>
-
-                            </li>
-                            <li>
-                                <p>
-                                    <span>-</span>
-                                    <span>5</span>
-                                    <span>+</span>
-                                </p>
-
-                            </li>
-                            <li style="font-weight:bold"><p class="zj">￥22995.00</p></li>
-                            <li>
-                                <p>删除</p>
-
-                            </li>
-                        </ol>
-                    </div>
-                </li>-->
-
 					</ul>
 				</div>
 				<div class="One_ShopFootBuy fix1">
@@ -174,8 +143,8 @@
 					</div>
 					<div>
 						<ol>
-							<li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥0.00</span> </li>
-
+							<li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥[[${#numbers.formatDecimal(cart.totalAmount,1,2)}]]</span> </li>
+							<li>优惠：[[${#numbers.formatDecimal(cart.reduce,1,2)}]]</li>
 						</ol>
 					</div>
 					<div><button onclick="toTrade()" type="button">去结算</button></div>
@@ -197,7 +166,7 @@
 				</dl>
 			</div>
 			<div>
-				<button type="button">删除</button>
+				<button type="button" onclick="deleteItem()">删除</button>
 
 			</div>
 		</div>
@@ -246,7 +215,7 @@
 	<script src="/static/cart/js/index.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		function toTrade() {
-			window.location.href = "http://cart.gmall.com:8087/toTrade";
+			window.location.href = "http://order.mall.com/toTrade";
 		}
 
 		function toItem(skuId) {
@@ -254,8 +223,7 @@
 		}
 
 		function login() {
-			var s = encodeURIComponent("http://cart.gmall.com:8087/cartList");
-			window.location.href = "http://passport.atguigu.com/index?originUrl=" + s;
+			window.location.href = "http://auth.mall.com/login.html"
 		}
 
 		function checkSku(chkbox) {
@@ -798,5 +766,26 @@
 		}).mouseout(function() {
 			$(this).children("p").children("img").attr("src", "img/one_mian_gwc1.png")
 		})
+
+		$(".itemCheck").click(function () {
+			let skuId = $(this).attr("skuId");
+			let check = $(this).prop('checked');
+			location.href = "http://cart.mall.com/checkItem?skuId=" + skuId + "&check=" + (check ? 1 : 0);
+		});
+		$('.countOpsBtn').click(function () {
+			//1.获取skuId
+			let skuId = $(this).parent().attr('skuId');
+			let num = $(this).parent().find('.countOpsNum').text();
+			location.href = "http://cart.mall.com/countItem?skuId=" + skuId + "&num=" + num;
+		});
+
+		var deleteId;
+		function deleteItem() {
+			location.href = "http://cart.mall.com/deleteItem?skuId=" + deleteId;
+		}
+
+		$(".deleteItemBtn").click(function () {
+			deleteId = $(this).attr("skuId");
+		});
 	</script>
 </html>

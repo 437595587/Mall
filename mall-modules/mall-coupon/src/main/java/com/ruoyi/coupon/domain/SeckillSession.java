@@ -1,15 +1,16 @@
 package com.ruoyi.coupon.domain;
 
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
 import com.ruoyi.common.core.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
 
 /**
  * 秒杀活动场次对象 sms_seckill_session
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
@@ -25,12 +26,12 @@ public class SeckillSession extends BaseEntity
     private String name;
 
     /** 每日开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "每日开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date startTime;
 
     /** 每日结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "每日结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime;
 
@@ -38,48 +39,48 @@ public class SeckillSession extends BaseEntity
     @Excel(name = "启用状态")
     private Integer status;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getName() 
+    public String getName()
     {
         return name;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(Date startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public Date getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Date getEndTime()
     {
         return endTime;
     }
-    public void setStatus(Integer status) 
+    public void setStatus(Integer status)
     {
         this.status = status;
     }
 
-    public Integer getStatus() 
+    public Integer getStatus()
     {
         return status;
     }

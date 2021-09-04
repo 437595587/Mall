@@ -1,5 +1,6 @@
 package com.ruoyi.product.controller;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -28,10 +29,16 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     @Autowired
     private IPmsSkuSaleAttrValueService pmsSkuSaleAttrValueService;
 
+    @GetMapping("/skuSaleAttrValues/{skuId}")
+    public R<List<String>> getSkuSaleAttrValues(@PathVariable("skuId") Long skuId) {
+        List<String> list = pmsSkuSaleAttrValueService.selectSkuSaleAttrValues(skuId);
+        return R.ok(list);
+    }
+
     /**
      * 查询sku销售属性&值列表
      */
-    @PreAuthorize(hasPermi = "product:value:list")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:list")
     @GetMapping("/list")
     public TableDataInfo list(PmsSkuSaleAttrValue pmsSkuSaleAttrValue) {
         startPage();
@@ -42,7 +49,7 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     /**
      * 导出sku销售属性&值列表
      */
-    @PreAuthorize(hasPermi = "product:value:export")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:export")
     @Log(title = "sku销售属性&值", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, PmsSkuSaleAttrValue pmsSkuSaleAttrValue) throws IOException {
@@ -54,7 +61,7 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     /**
      * 获取sku销售属性&值详细信息
      */
-    @PreAuthorize(hasPermi = "product:value:query")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:query")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return AjaxResult.success(pmsSkuSaleAttrValueService.selectPmsSkuSaleAttrValueById(id));
@@ -63,7 +70,7 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     /**
      * 新增sku销售属性&值
      */
-    @PreAuthorize(hasPermi = "product:value:add")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:add")
     @Log(title = "sku销售属性&值", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody PmsSkuSaleAttrValue pmsSkuSaleAttrValue) {
@@ -73,7 +80,7 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     /**
      * 修改sku销售属性&值
      */
-    @PreAuthorize(hasPermi = "product:value:edit")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:edit")
     @Log(title = "sku销售属性&值", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PmsSkuSaleAttrValue pmsSkuSaleAttrValue) {
@@ -83,7 +90,7 @@ public class PmsSkuSaleAttrValueController extends BaseController {
     /**
      * 删除sku销售属性&值
      */
-    @PreAuthorize(hasPermi = "product:value:remove")
+    @PreAuthorize(hasPermi = "product:saleAttrValue:remove")
     @Log(title = "sku销售属性&值", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

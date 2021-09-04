@@ -244,6 +244,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 商城核心模块 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>mall-common-core</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.product.mapper.PmsSpuInfoMapper">
-    
+
     <resultMap type="PmsSpuInfo" id="PmsSpuInfoResult">
         <result property="id"    column="id"    />
         <result property="spuName"    column="spu_name"    />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPmsSpuInfoList" parameterType="PmsSpuInfo" resultMap="PmsSpuInfoResult">
         <include refid="selectPmsSpuInfoVo"/>
-        <where>  
+        <where>
             <if test="spuName != null  and spuName != ''"> and spu_name like concat('%', #{spuName}, '%')</if>
             <if test="spuDescription != null  and spuDescription != ''"> and spu_description = #{spuDescription}</if>
             <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
@@ -31,12 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="publishStatus != null "> and publish_status = #{publishStatus}</if>
         </where>
     </select>
-    
+
     <select id="selectPmsSpuInfoById" parameterType="Long" resultMap="PmsSpuInfoResult">
         <include refid="selectPmsSpuInfoVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertPmsSpuInfo" parameterType="PmsSpuInfo" useGeneratedKeys="true" keyProperty="id">
         insert into pms_spu_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePmsSpuInfoByIds" parameterType="String">
-        delete from pms_spu_info where id in 
+        delete from pms_spu_info where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

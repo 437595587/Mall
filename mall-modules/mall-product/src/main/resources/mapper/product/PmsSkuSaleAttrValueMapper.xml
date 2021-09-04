@@ -91,4 +91,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE info.`spu_id` = #{spuId}
         GROUP BY ssav.`attr_id`,ssav.`attr_name`,ssav.`attr_value`
     </select>
+
+    <select id="selectSkuSaleAttrValues" resultType="java.lang.String">
+        select CONCAT(attr_name,"：",attr_value) from `pms_sku_sale_attr_value` where sku_id = #{skuId}
+    </select>
 </mapper>

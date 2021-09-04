@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OrderSettingMapper">
+    
+    <resultMap type="OrderSetting" id="OrderSettingResult">
+        <result property="id"    column="id"    />
+        <result property="flashOrderOvertime"    column="flash_order_overtime"    />
+        <result property="normalOrderOvertime"    column="normal_order_overtime"    />
+        <result property="confirmOvertime"    column="confirm_overtime"    />
+        <result property="finishOvertime"    column="finish_overtime"    />
+        <result property="commentOvertime"    column="comment_overtime"    />
+        <result property="memberLevel"    column="member_level"    />
+    </resultMap>
+
+    <sql id="selectOrderSettingVo">
+        select id, flash_order_overtime, normal_order_overtime, confirm_overtime, finish_overtime, comment_overtime, member_level from oms_order_setting
+    </sql>
+
+    <select id="selectOrderSettingList" parameterType="OrderSetting" resultMap="OrderSettingResult">
+        <include refid="selectOrderSettingVo"/>
+        <where>  
+            <if test="flashOrderOvertime != null "> and flash_order_overtime = #{flashOrderOvertime}</if>
+            <if test="normalOrderOvertime != null "> and normal_order_overtime = #{normalOrderOvertime}</if>
+            <if test="confirmOvertime != null "> and confirm_overtime = #{confirmOvertime}</if>
+            <if test="finishOvertime != null "> and finish_overtime = #{finishOvertime}</if>
+            <if test="commentOvertime != null "> and comment_overtime = #{commentOvertime}</if>
+            <if test="memberLevel != null "> and member_level = #{memberLevel}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderSettingById" parameterType="Long" resultMap="OrderSettingResult">
+        <include refid="selectOrderSettingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderSetting" parameterType="OrderSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="flashOrderOvertime != null">flash_order_overtime,</if>
+            <if test="normalOrderOvertime != null">normal_order_overtime,</if>
+            <if test="confirmOvertime != null">confirm_overtime,</if>
+            <if test="finishOvertime != null">finish_overtime,</if>
+            <if test="commentOvertime != null">comment_overtime,</if>
+            <if test="memberLevel != null">member_level,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="flashOrderOvertime != null">#{flashOrderOvertime},</if>
+            <if test="normalOrderOvertime != null">#{normalOrderOvertime},</if>
+            <if test="confirmOvertime != null">#{confirmOvertime},</if>
+            <if test="finishOvertime != null">#{finishOvertime},</if>
+            <if test="commentOvertime != null">#{commentOvertime},</if>
+            <if test="memberLevel != null">#{memberLevel},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderSetting" parameterType="OrderSetting">
+        update oms_order_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="flashOrderOvertime != null">flash_order_overtime = #{flashOrderOvertime},</if>
+            <if test="normalOrderOvertime != null">normal_order_overtime = #{normalOrderOvertime},</if>
+            <if test="confirmOvertime != null">confirm_overtime = #{confirmOvertime},</if>
+            <if test="finishOvertime != null">finish_overtime = #{finishOvertime},</if>
+            <if test="commentOvertime != null">comment_overtime = #{commentOvertime},</if>
+            <if test="memberLevel != null">member_level = #{memberLevel},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderSettingById" parameterType="Long">
+        delete from oms_order_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderSettingByIds" parameterType="String">
+        delete from oms_order_setting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

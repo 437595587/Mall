@@ -1,6 +1,7 @@
 package com.ruoyi.ware.mapper;
 
 import com.ruoyi.ware.domain.WareSku;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,8 +11,7 @@ import java.util.List;
  * @author xuxing
  * @date 2021-08-23
  */
-public interface WareSkuMapper
-{
+public interface WareSkuMapper {
     /**
      * 查询商品库存
      *
@@ -61,4 +61,10 @@ public interface WareSkuMapper
     public int deleteWareSkuByIds(Long[] ids);
 
     Long selectSkuHasStock(Long skuId);
+
+    List<Long> listWareIdHasSkuStock(Long skuId);
+
+    int lockSkuStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("num") Long num);
+
+    void unlockStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("num") Long num, @Param("taskDetailId") Long taskDetailId);
 }

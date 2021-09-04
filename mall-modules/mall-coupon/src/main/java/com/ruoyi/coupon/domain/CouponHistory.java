@@ -9,7 +9,7 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
 
 /**
  * 优惠券领取历史记录对象 sms_coupon_history
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
@@ -41,7 +41,7 @@ public class CouponHistory extends BaseEntity
     private Integer useType;
 
     /** 使用时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "使用时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date useTime;
 
@@ -53,84 +53,84 @@ public class CouponHistory extends BaseEntity
     @Excel(name = "订单号")
     private Long orderSn;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setCouponId(Long couponId) 
+    public void setCouponId(Long couponId)
     {
         this.couponId = couponId;
     }
 
-    public Long getCouponId() 
+    public Long getCouponId()
     {
         return couponId;
     }
-    public void setMemberId(Long memberId) 
+    public void setMemberId(Long memberId)
     {
         this.memberId = memberId;
     }
 
-    public Long getMemberId() 
+    public Long getMemberId()
     {
         return memberId;
     }
-    public void setMemberNickName(String memberNickName) 
+    public void setMemberNickName(String memberNickName)
     {
         this.memberNickName = memberNickName;
     }
 
-    public String getMemberNickName() 
+    public String getMemberNickName()
     {
         return memberNickName;
     }
-    public void setGetType(Integer getType) 
+    public void setGetType(Integer getType)
     {
         this.getType = getType;
     }
 
-    public Integer getGetType() 
+    public Integer getGetType()
     {
         return getType;
     }
-    public void setUseType(Integer useType) 
+    public void setUseType(Integer useType)
     {
         this.useType = useType;
     }
 
-    public Integer getUseType() 
+    public Integer getUseType()
     {
         return useType;
     }
-    public void setUseTime(Date useTime) 
+    public void setUseTime(Date useTime)
     {
         this.useTime = useTime;
     }
 
-    public Date getUseTime() 
+    public Date getUseTime()
     {
         return useTime;
     }
-    public void setOrderId(Long orderId) 
+    public void setOrderId(Long orderId)
     {
         this.orderId = orderId;
     }
 
-    public Long getOrderId() 
+    public Long getOrderId()
     {
         return orderId;
     }
-    public void setOrderSn(Long orderSn) 
+    public void setOrderSn(Long orderSn)
     {
         this.orderSn = orderSn;
     }
 
-    public Long getOrderSn() 
+    public Long getOrderSn()
     {
         return orderSn;
     }

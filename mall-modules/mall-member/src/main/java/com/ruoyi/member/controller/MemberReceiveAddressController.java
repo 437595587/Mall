@@ -1,5 +1,6 @@
 package com.ruoyi.member.controller;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -29,6 +30,11 @@ public class MemberReceiveAddressController extends BaseController
     @Autowired
     private IMemberReceiveAddressService memberReceiveAddressService;
 
+    @GetMapping("/{memberId}/address")
+    public R<List<MemberReceiveAddress>> getAddress(@PathVariable("memberId") Long memberId) {
+        return R.ok(memberReceiveAddressService.selectMemberReceiveAddressServiceByMemberId(memberId));
+    }
+
     /**
      * 查询会员收货地址列表
      */
@@ -57,11 +63,11 @@ public class MemberReceiveAddressController extends BaseController
     /**
      * 获取会员收货地址详细信息
      */
-    @PreAuthorize(hasPermi = "member:memberReceiveAddress:query")
+    // @PreAuthorize(hasPermi = "member:memberReceiveAddress:query")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    public R<MemberReceiveAddress> getInfo(@PathVariable("id") Long id)
     {
-        return AjaxResult.success(memberReceiveAddressService.selectMemberReceiveAddressById(id));
+        return R.ok(memberReceiveAddressService.selectMemberReceiveAddressById(id));
     }
 
     /**

@@ -17,6 +17,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>mall-common-core</artifactId>
+        </dependency>
+
         <!-- RuoYi Common Core-->
         <dependency>
             <groupId>com.ruoyi</groupId>

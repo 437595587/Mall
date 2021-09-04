@@ -97,4 +97,9 @@ public class PmsSkuSaleAttrValueServiceImpl implements IPmsSkuSaleAttrValueServi
     public List<SkuItemVo.ItemSaleAttrVo> selectSaleAttrsBySpuId(Long spuId) {
         return pmsSkuSaleAttrValueMapper.selectSaleAttrsBySpuId(spuId);
     }
+
+    @Override
+    public List<String> selectSkuSaleAttrValues(Long skuId) {
+        return pmsSkuSaleAttrValueMapper.selectSkuSaleAttrValues(skuId);
+    }
 }

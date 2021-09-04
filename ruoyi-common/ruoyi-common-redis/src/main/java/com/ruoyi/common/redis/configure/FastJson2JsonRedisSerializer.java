@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 /**
  * Redis使用FastJson序列化
- * 
+ *
  * @author ruoyi
  */
 public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T>
@@ -28,6 +28,7 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T>
     static
     {
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        ParserConfig.getGlobalInstance().addAccept("org.springframework.web.servlet.FlashMap");
     }
 
     public FastJson2JsonRedisSerializer(Class<T> clazz)

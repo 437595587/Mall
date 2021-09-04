@@ -1,19 +1,20 @@
 package com.ruoyi.member.mapper;
 
-import java.util.List;
 import com.ruoyi.member.domain.MemberReceiveAddress;
+
+import java.util.List;
 
 /**
  * 会员收货地址Mapper接口
- * 
+ *
  * @author xuxing
  * @date 2021-08-22
  */
-public interface MemberReceiveAddressMapper 
+public interface MemberReceiveAddressMapper
 {
     /**
      * 查询会员收货地址
-     * 
+     *
      * @param id 会员收货地址主键
      * @return 会员收货地址
      */
@@ -21,7 +22,7 @@ public interface MemberReceiveAddressMapper
 
     /**
      * 查询会员收货地址列表
-     * 
+     *
      * @param memberReceiveAddress 会员收货地址
      * @return 会员收货地址集合
      */
@@ -29,7 +30,7 @@ public interface MemberReceiveAddressMapper
 
     /**
      * 新增会员收货地址
-     * 
+     *
      * @param memberReceiveAddress 会员收货地址
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface MemberReceiveAddressMapper
 
     /**
      * 修改会员收货地址
-     * 
+     *
      * @param memberReceiveAddress 会员收货地址
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface MemberReceiveAddressMapper
 
     /**
      * 删除会员收货地址
-     * 
+     *
      * @param id 会员收货地址主键
      * @return 结果
      */
@@ -53,9 +54,11 @@ public interface MemberReceiveAddressMapper
 
     /**
      * 批量删除会员收货地址
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteMemberReceiveAddressByIds(Long[] ids);
+
+    List<MemberReceiveAddress> selectMemberReceiveAddressServiceByMemberId(Long memberId);
 }

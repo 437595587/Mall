@@ -1,5 +1,8 @@
 package com.ruoyi.ware.service;
 
+import com.ruoyi.mall.api.to.WareSkuLockTo;
+import com.ruoyi.mall.api.vo.Order;
+import com.ruoyi.mall.common.core.to.mq.StockLockedTo;
 import com.ruoyi.ware.domain.WareSku;
 import com.ruoyi.ware.domain.vo.SkuHasStockVo;
 
@@ -62,4 +65,10 @@ public interface IWareSkuService
     public int deleteWareSkuById(Long id);
 
     List<SkuHasStockVo> selectSkusHasStock(List<Long> skuIds);
+
+    boolean orderLockStock(WareSkuLockTo to);
+
+    public void unlockStock(StockLockedTo to);
+
+    void unlockStock(Order order);
 }

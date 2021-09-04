@@ -7,10 +7,10 @@ import com.ruoyi.common.core.utils.bean.BeanUtils;
 import com.ruoyi.mall.api.RemoteCouponService;
 import com.ruoyi.mall.api.RemoteSearchService;
 import com.ruoyi.mall.api.RemoteWareService;
-import com.ruoyi.mall.api.to.SkuHasStockVo;
 import com.ruoyi.mall.api.to.SkuReductionTo;
 import com.ruoyi.mall.api.to.SpuBoundTo;
 import com.ruoyi.mall.api.to.es.SkuEsModel;
+import com.ruoyi.mall.api.vo.SkuHasStockVo;
 import com.ruoyi.product.domain.*;
 import com.ruoyi.product.domain.vo.spuSaveVo.*;
 import com.ruoyi.product.mapper.*;
@@ -106,8 +106,9 @@ public class PmsSpuInfoServiceImpl implements IPmsSpuInfoService
      * @param spuSaveVo spu保存
      * @return 结果
      */
-    @Override
+    //seata AT 分布式事务
     @Transactional
+    @Override
     public int insertPmsSpuInfo(SpuSaveVo spuSaveVo)
     {
         int result = 0;
@@ -125,6 +126,7 @@ public class PmsSpuInfoServiceImpl implements IPmsSpuInfoService
             pmsSpuInfoDesc.setDecript(String.join(",", decript));
             result += pmsSpuInfoDescMapper.insertPmsSpuInfoDesc(pmsSpuInfoDesc);
         }
+        //TODO 批量保存后续优化
         //批量保存sqlSession
         SqlSessionFactory sqlSessionFactory = sqlSessionTemplate.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
@@ -346,5 +348,12 @@ public class PmsSpuInfoServiceImpl implements IPmsSpuInfoService
             //TODO 7、 重复调用？接口幂等性；重试机制 xxx
             return 0;
         }
+    }
+
+    @Override
+    public PmsSpuInfo selectPmsSpuInfoBySkuId(Long skuId) {
+        PmsSkuInfo pmsSkuInfo = pmsSkuInfoMapper.selectPmsSkuInfoBySkuId(skuId);
+        Long spuId = pmsSkuInfo.getSpuId();
+        return selectPmsSpuInfoById(spuId);
     }
 }

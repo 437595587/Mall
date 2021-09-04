@@ -1,16 +1,17 @@
 package com.ruoyi.coupon.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
 import com.ruoyi.common.core.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 优惠券信息对象 sms_coupon
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
@@ -50,12 +51,12 @@ public class Coupon extends BaseEntity
     private BigDecimal minPoint;
 
     /** 开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date startTime;
 
     /** 结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime;
 
@@ -80,12 +81,12 @@ public class Coupon extends BaseEntity
     private Long receiveCount;
 
     /** 可以领取的开始日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "可以领取的开始日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date enableStartTime;
 
     /** 可以领取的结束日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "可以领取的结束日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date enableEndTime;
 
@@ -101,183 +102,183 @@ public class Coupon extends BaseEntity
     @Excel(name = "发布状态[0-未发布，1-已发布]")
     private Integer publish;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setCouponType(Integer couponType) 
+    public void setCouponType(Integer couponType)
     {
         this.couponType = couponType;
     }
 
-    public Integer getCouponType() 
+    public Integer getCouponType()
     {
         return couponType;
     }
-    public void setCouponImg(String couponImg) 
+    public void setCouponImg(String couponImg)
     {
         this.couponImg = couponImg;
     }
 
-    public String getCouponImg() 
+    public String getCouponImg()
     {
         return couponImg;
     }
-    public void setCouponName(String couponName) 
+    public void setCouponName(String couponName)
     {
         this.couponName = couponName;
     }
 
-    public String getCouponName() 
+    public String getCouponName()
     {
         return couponName;
     }
-    public void setNum(Long num) 
+    public void setNum(Long num)
     {
         this.num = num;
     }
 
-    public Long getNum() 
+    public Long getNum()
     {
         return num;
     }
-    public void setAmount(BigDecimal amount) 
+    public void setAmount(BigDecimal amount)
     {
         this.amount = amount;
     }
 
-    public BigDecimal getAmount() 
+    public BigDecimal getAmount()
     {
         return amount;
     }
-    public void setPerLimit(Long perLimit) 
+    public void setPerLimit(Long perLimit)
     {
         this.perLimit = perLimit;
     }
 
-    public Long getPerLimit() 
+    public Long getPerLimit()
     {
         return perLimit;
     }
-    public void setMinPoint(BigDecimal minPoint) 
+    public void setMinPoint(BigDecimal minPoint)
     {
         this.minPoint = minPoint;
     }
 
-    public BigDecimal getMinPoint() 
+    public BigDecimal getMinPoint()
     {
         return minPoint;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(Date startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public Date getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Date getEndTime()
     {
         return endTime;
     }
-    public void setUseType(Integer useType) 
+    public void setUseType(Integer useType)
     {
         this.useType = useType;
     }
 
-    public Integer getUseType() 
+    public Integer getUseType()
     {
         return useType;
     }
-    public void setNote(String note) 
+    public void setNote(String note)
     {
         this.note = note;
     }
 
-    public String getNote() 
+    public String getNote()
     {
         return note;
     }
-    public void setPublishCount(Long publishCount) 
+    public void setPublishCount(Long publishCount)
     {
         this.publishCount = publishCount;
     }
 
-    public Long getPublishCount() 
+    public Long getPublishCount()
     {
         return publishCount;
     }
-    public void setUseCount(Long useCount) 
+    public void setUseCount(Long useCount)
     {
         this.useCount = useCount;
     }
 
-    public Long getUseCount() 
+    public Long getUseCount()
     {
         return useCount;
     }
-    public void setReceiveCount(Long receiveCount) 
+    public void setReceiveCount(Long receiveCount)
     {
         this.receiveCount = receiveCount;
     }
 
-    public Long getReceiveCount() 
+    public Long getReceiveCount()
     {
         return receiveCount;
     }
-    public void setEnableStartTime(Date enableStartTime) 
+    public void setEnableStartTime(Date enableStartTime)
     {
         this.enableStartTime = enableStartTime;
     }
 
-    public Date getEnableStartTime() 
+    public Date getEnableStartTime()
     {
         return enableStartTime;
     }
-    public void setEnableEndTime(Date enableEndTime) 
+    public void setEnableEndTime(Date enableEndTime)
     {
         this.enableEndTime = enableEndTime;
     }
 
-    public Date getEnableEndTime() 
+    public Date getEnableEndTime()
     {
         return enableEndTime;
     }
-    public void setCode(String code) 
+    public void setCode(String code)
     {
         this.code = code;
     }
 
-    public String getCode() 
+    public String getCode()
     {
         return code;
     }
-    public void setMemberLevel(Integer memberLevel) 
+    public void setMemberLevel(Integer memberLevel)
     {
         this.memberLevel = memberLevel;
     }
 
-    public Integer getMemberLevel() 
+    public Integer getMemberLevel()
     {
         return memberLevel;
     }
-    public void setPublish(Integer publish) 
+    public void setPublish(Integer publish)
     {
         this.publish = publish;
     }
 
-    public Integer getPublish() 
+    public Integer getPublish()
     {
         return publish;
     }
