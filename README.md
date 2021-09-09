@@ -34,15 +34,26 @@ redis3.2
 
 ## 5、主机Host配置
 192.168.1.16 mall.com
+
 192.168.1.16 search.mall.com
+
 192.168.1.16 item.mall.com
+
 192.168.1.16 auth.mall.com
+
 192.168.1.16 cart.mall.com
+
 192.168.1.16 order.mall.com
+
 192.168.1.16 member.mall.com
+
 192.168.1.16 seckill.mall.com
 
+
+
 127.0.0.1 ssoserver.com
+
 127.0.0.1 client1.com
+
 127.0.0.1 client2.com
 
