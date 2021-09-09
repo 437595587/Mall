@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 秒杀活动场次对象 sms_seckill_session
@@ -38,6 +39,16 @@ public class SeckillSession extends BaseEntity
     /** 启用状态 */
     @Excel(name = "启用状态")
     private Integer status;
+
+    private List<SeckillSkuRelation> relationSkus;
+
+    public List<SeckillSkuRelation> getRelationSkus() {
+        return relationSkus;
+    }
+
+    public void setRelationSkus(List<SeckillSkuRelation> relationSkus) {
+        this.relationSkus = relationSkus;
+    }
 
     public void setId(Long id)
     {

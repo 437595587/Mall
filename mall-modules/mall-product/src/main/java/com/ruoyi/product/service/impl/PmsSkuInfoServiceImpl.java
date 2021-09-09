@@ -1,5 +1,8 @@
 package com.ruoyi.product.service.impl;
 
+import com.ruoyi.common.core.domain.R;
+import com.ruoyi.mall.api.RemoteSeckillService;
+import com.ruoyi.mall.api.vo.SeckillInfoVo;
 import com.ruoyi.product.domain.PmsSkuImages;
 import com.ruoyi.product.domain.PmsSkuInfo;
 import com.ruoyi.product.domain.PmsSpuInfoDesc;
@@ -40,6 +43,9 @@ public class PmsSkuInfoServiceImpl implements IPmsSkuInfoService
 
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
+
+    @Autowired
+    private RemoteSeckillService remoteSeckillService;
 
     /**
      * 查询sku信息
@@ -148,9 +154,19 @@ public class PmsSkuInfoServiceImpl implements IPmsSkuInfoService
             List<PmsSkuImages> images = skuImagesService.selectPmsSkuImagesList(skuImagesQuery);
             skuItemVo.setImages(images);
         }, taskExecutor);
+
+        //3、查询当前sku是否参与秒杀优惠
+        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
+            R<SeckillInfoVo> r = remoteSeckillService.getSkuSeckillInfo(skuId);
+            if (r.getCode() == 200) {
+                SeckillInfoVo seckillInfoVo = r.getData();
+                skuItemVo.setSeckillInfoVo(seckillInfoVo);
+            }
+        }, taskExecutor);
+
         //等待所有任务完成
         try {
-            CompletableFuture.allOf(saleAttrFuture, descFuture, baseAttrFuture, imagesFuture).get();
+            CompletableFuture.allOf(saleAttrFuture, descFuture, baseAttrFuture, imagesFuture, seckillFuture).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

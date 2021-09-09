@@ -1,5 +1,6 @@
 package com.ruoyi.product.domain.vo;
 
+import com.ruoyi.mall.api.vo.SeckillInfoVo;
 import com.ruoyi.product.domain.PmsSkuImages;
 import com.ruoyi.product.domain.PmsSkuInfo;
 import com.ruoyi.product.domain.PmsSpuInfoDesc;
@@ -19,6 +20,9 @@ public class SkuItemVo {
     private PmsSpuInfoDesc desc;
     //5、spu的规格参数信息
     private List<SpuItemAttrGroupVo> groupAttrs;
+
+    //6、秒杀优惠信息
+    private SeckillInfoVo seckillInfoVo;
 
     private boolean hasStock = true;
 

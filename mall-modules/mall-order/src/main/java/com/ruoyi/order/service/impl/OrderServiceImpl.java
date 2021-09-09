@@ -13,6 +13,7 @@ import com.ruoyi.mall.api.RemoteProductService;
 import com.ruoyi.mall.api.RemoteWareService;
 import com.ruoyi.mall.api.to.WareSkuLockTo;
 import com.ruoyi.mall.api.vo.*;
+import com.ruoyi.mall.common.core.to.mq.SeckillOrderTo;
 import com.ruoyi.order.constant.OrderConstant;
 import com.ruoyi.order.domain.Order;
 import com.ruoyi.order.domain.OrderItem;
@@ -309,7 +310,7 @@ public class OrderServiceImpl implements IOrderService
         }
         BigDecimal bigDecimal = order.getPayAmount().setScale(2, RoundingMode.UP);
         payVo.setTotal_amount(bigDecimal.toString());
-        if (orderItem != null) {
+        if (orderItem != null && StringUtils.isNotEmpty(orderItem.getSkuAttrsVals())) {
             payVo.setBody(orderItem.getSkuAttrsVals());
         }
         return payVo;
@@ -359,6 +360,26 @@ public class OrderServiceImpl implements IOrderService
     @Override
     public void updateOrderByOrderSn(Order order) {
         orderMapper.updateOrderByOrderSn(order);
+    }
+
+    @Override
+    public void createSeckillOrder(SeckillOrderTo seckillOrder) {
+        //TODO 保存订单信息
+        Order order = new Order();
+        order.setOrderSn(seckillOrder.getOrderSn());
+        order.setMemberId(seckillOrder.getMemberId());
+        order.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+        BigDecimal payAmount = seckillOrder.getSeckillPrice().multiply(new BigDecimal(seckillOrder.getNum()));
+        order.setPayAmount(payAmount);
+        insertOrder(order);
+        //保存订单项
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrderSn(seckillOrder.getOrderSn());
+        orderItem.setRealAmount(payAmount);
+        //TODO 获取当前sku的详细信息设置 remoteProductService.getSpuInfoBySkuId(skuId)
+        orderItem.setSkuQuantity(seckillOrder.getNum().longValue());
+
+        orderItemMapper.insertOrderItem(orderItem);
     }
 
     private void saveOrder(OrderCreateTo orderCreateTo) {

@@ -17,6 +17,7 @@
 
     <dependencies>
 
+        <!-- Mall Common Core-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>mall-common-core</artifactId>
@@ -26,6 +27,13 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-core</artifactId>
+        </dependency>
+
+        <!-- zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+            <version>2.2.8.RELEASE</version>
         </dependency>
 
     </dependencies>

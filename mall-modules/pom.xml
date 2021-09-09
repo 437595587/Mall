@@ -21,6 +21,7 @@
         <module>mall-test-sso-client2</module>
         <module>mall-cart</module>
         <module>mall-order</module>
+        <module>mall-seckill</module>
     </modules>
 
     <artifactId>mall-modules</artifactId>

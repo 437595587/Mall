@@ -3,9 +3,13 @@ package com.ruoyi.mall.api;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.mall.api.to.SkuReductionTo;
 import com.ruoyi.mall.api.to.SpuBoundTo;
+import com.ruoyi.mall.api.vo.SeckillSession;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @FeignClient("mall-coupon")
 public interface RemoteCouponService {
@@ -25,4 +29,7 @@ public interface RemoteCouponService {
 
     @PostMapping("/skuFullReduction/addSkuSmsInfo")
     public R<Boolean> addSkuSmsInfo(@RequestBody SkuReductionTo skuReductionTo);
+
+    @GetMapping("/seckillSession/latest3DaysSession")
+    public R<List<SeckillSession>> getLatest3DaysSession();
 }

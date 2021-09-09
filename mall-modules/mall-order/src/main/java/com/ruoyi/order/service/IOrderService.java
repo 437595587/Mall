@@ -1,5 +1,6 @@
 package com.ruoyi.order.service;
 
+import com.ruoyi.mall.common.core.to.mq.SeckillOrderTo;
 import com.ruoyi.order.domain.Order;
 import com.ruoyi.order.domain.vo.*;
 
@@ -81,4 +82,6 @@ public interface IOrderService
     String handlePayResult(PayAsyncVo vo) throws ParseException;
 
     void updateOrderByOrderSn(Order order);
+
+    void createSeckillOrder(SeckillOrderTo seckillOrder);
 }

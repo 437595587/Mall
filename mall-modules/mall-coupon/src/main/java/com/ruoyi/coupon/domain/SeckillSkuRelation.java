@@ -5,9 +5,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
 import com.ruoyi.common.core.web.domain.BaseEntity;
 
+import java.math.BigDecimal;
+
 /**
  * 秒杀活动商品关联对象 sms_seckill_sku_relation
- * 
+ *
  * @author xuxing
  * @date 2021-08-23
  */
@@ -32,7 +34,7 @@ public class SeckillSkuRelation extends BaseEntity
 
     /** 秒杀价格 */
     @Excel(name = "秒杀价格")
-    private Long seckillPrice;
+    private BigDecimal seckillPrice;
 
     /** 秒杀总量 */
     @Excel(name = "秒杀总量")
@@ -46,75 +48,75 @@ public class SeckillSkuRelation extends BaseEntity
     @Excel(name = "排序")
     private Long seckillSort;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setPromotionId(Long promotionId) 
+    public void setPromotionId(Long promotionId)
     {
         this.promotionId = promotionId;
     }
 
-    public Long getPromotionId() 
+    public Long getPromotionId()
     {
         return promotionId;
     }
-    public void setPromotionSessionId(Long promotionSessionId) 
+    public void setPromotionSessionId(Long promotionSessionId)
     {
         this.promotionSessionId = promotionSessionId;
     }
 
-    public Long getPromotionSessionId() 
+    public Long getPromotionSessionId()
     {
         return promotionSessionId;
     }
-    public void setSkuId(Long skuId) 
+    public void setSkuId(Long skuId)
     {
         this.skuId = skuId;
     }
 
-    public Long getSkuId() 
+    public Long getSkuId()
     {
         return skuId;
     }
-    public void setSeckillPrice(Long seckillPrice) 
+    public void setSeckillPrice(BigDecimal seckillPrice)
     {
         this.seckillPrice = seckillPrice;
     }
 
-    public Long getSeckillPrice() 
+    public BigDecimal getSeckillPrice()
     {
         return seckillPrice;
     }
-    public void setSeckillCount(Long seckillCount) 
+    public void setSeckillCount(Long seckillCount)
     {
         this.seckillCount = seckillCount;
     }
 
-    public Long getSeckillCount() 
+    public Long getSeckillCount()
     {
         return seckillCount;
     }
-    public void setSeckillLimit(Long seckillLimit) 
+    public void setSeckillLimit(Long seckillLimit)
     {
         this.seckillLimit = seckillLimit;
     }
 
-    public Long getSeckillLimit() 
+    public Long getSeckillLimit()
     {
         return seckillLimit;
     }
-    public void setSeckillSort(Long seckillSort) 
+    public void setSeckillSort(Long seckillSort)
     {
         this.seckillSort = seckillSort;
     }
 
-    public Long getSeckillSort() 
+    public Long getSeckillSort()
     {
         return seckillSort;
     }
